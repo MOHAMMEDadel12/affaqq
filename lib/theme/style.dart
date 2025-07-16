@@ -12,7 +12,7 @@ ThemeData themeData() {
       // buttonColor: cPrimaryColor,
       scaffoldBackgroundColor: Color(0xffFFFFFF),
       fontFamily: 'segoeui',
-      tabBarTheme:  TabBarTheme(
+      tabBarTheme:  TabBarThemeData(
 
           labelColor: Colors.white,
           labelStyle: TextStyle(color: Colors.red), // color for text

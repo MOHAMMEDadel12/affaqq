@@ -14,7 +14,7 @@ description: A new Flutter application.
 version: 1.0.1+2
 
 environment:
-  sdk: ">=3.5.4 <=3.7.2"
+  sdk: ">=3.8.1 <=4.0.0"
 
 
 dependencies:
@@ -37,8 +37,8 @@ dependencies:
   validators: ^3.0.0
   toast: ^0.3.0
   flutter_offline: ^4.0.0
-  firebase_messaging: ^15.1.6
-  flutter_local_notifications: ^18.0.1
+  firebase_messaging: ^15.2.9
+  flutter_local_notifications: 19.2.1
   shimmer: ^3.0.0
   flutter_spinkit: ^5.1.0
   dio: ^5.7.0
@@ -58,8 +58,8 @@ dependencies:
   webview_flutter: any
   gesture_zoom_box: ^0.0.4
   pin_code_text_field: ^1.8.0
-  firebase_core : any
-  share: ^2.0.4
+  firebase_core: ^3.15.1
+  share_plus: ^11.0.0
   permission_handler: any
   webview_flutter_android: ^4.1.0
   webview_flutter_wkwebview: ^3.7.2

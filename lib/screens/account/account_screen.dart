@@ -43,7 +43,7 @@ import 'package:afaq/utils/utils.dart';
 import 'package:afaq/screens/auth/password_recovery_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:validators/validators.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AccountScreen extends StatefulWidget {
   @override
