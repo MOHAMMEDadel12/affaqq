@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:afaq/models/product.dart';
 
 class ProductState extends ChangeNotifier {
-
-
-    Product? _currentProduct;
+  Product? _currentProduct;
 
   void setCurrentProduct(Product product) {
     _currentProduct = product;
@@ -12,6 +10,4 @@ class ProductState extends ChangeNotifier {
   }
 
   Product get currentProduct => _currentProduct!;
-
-
 }

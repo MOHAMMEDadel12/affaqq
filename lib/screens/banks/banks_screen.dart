@@ -50,19 +50,19 @@ class BanksScreen extends StatefulWidget {
 }
 
 class _BanksScreenState extends State<BanksScreen> {
-  double _height=0, _width=0;
+  double _height = 0, _width = 0;
   Future<List<Bank>>? _banksList;
   Services _services = Services();
   StoreState? _storeState;
   AppState? _appState;
   NavigationState? _navigationState;
 
-
   bool _initialRun = true;
   ProgressIndicatorState? _progressIndicatorState;
   Future<List<Bank>> _getBanksList() async {
     Map<dynamic, dynamic> results = await _services.get(
-        'https://mahtco.net/app/api/getbank?page=1&lang=${_appState!.currentLang}&bank_user=${_appState!.currentUser!.userId}');
+      'https://mahtco.net/app/api/getbank?page=1&lang=${_appState!.currentLang}&bank_user=${_appState!.currentUser!.userId}',
+    );
     List<Bank> bankList = <Bank>[];
     if (results['response'] == '1') {
       Iterable iterable = results['bank'];
@@ -74,34 +74,33 @@ class _BanksScreenState extends State<BanksScreen> {
   }
 
   Widget _buildStores() {
-    return LayoutBuilder(builder: (context, constraints) {
-      return   FutureBuilder<List<Bank>>(
-        future: _banksList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data!.length > 0) {
-              return ListView.builder(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FutureBuilder<List<Bank>>(
+          future: _banksList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data!.length > 0) {
+                return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       width: _width,
                       padding: EdgeInsets.all(15),
 
-                      margin:
-                      EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+                      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 12),
                       decoration: BoxDecoration(
-                        color:   Colors.white,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(
-                          color: Color(0xffF9F9F9),
-                        ),
+                        border: Border.all(color: Color(0xffF9F9F9)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.shade300,
-                            blurRadius: 7.0, // has the effect of softening the shadow
-                            spreadRadius: 3.0, // has the effect of extending the shadow
-
-                          )
+                            blurRadius:
+                                7.0, // has the effect of softening the shadow
+                            spreadRadius:
+                                3.0, // has the effect of extending the shadow
+                          ),
                         ],
                       ),
                       child: Stack(
@@ -109,102 +108,106 @@ class _BanksScreenState extends State<BanksScreen> {
                           Column(
                             children: <Widget>[
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("البنك :"),
-                                  Text(snapshot.data![index].bankTitle!)
+                                  Text(snapshot.data![index].bankTitle!),
                                 ],
                               ),
 
                               Divider(),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("اسم الحساب :"),
-                                  Text(snapshot.data![index].bankName!)
+                                  Text(snapshot.data![index].bankName!),
                                 ],
                               ),
                               Divider(),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("رقم الحساب :"),
-                                  Text(snapshot.data![index].bankAcount!)
+                                  Text(snapshot.data![index].bankAcount!),
                                 ],
                               ),
                               Divider(),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("رقم الايبان :"),
-                                  Text(snapshot.data![index].bankIban!)
+                                  Text(snapshot.data![index].bankIban!),
                                 ],
                               ),
-                             SizedBox(height: 20,),
+                              SizedBox(height: 20),
 
-                             CustomButton(
-                               btnColor: cLightLemon,
-                               btnLbl: "حذف الحساب",
-                               onPressedFunction: () async{
-                                 _progressIndicatorState!.setIsLoading(true);
-                                 var results = await _services.get(
-                                     'https://mahtco.net/app/api/do_delete_bank?id=${snapshot.data![index].bankId}&lang=${_appState!.currentLang}');
-                                 _progressIndicatorState!.setIsLoading(false);
-                                 if (results['response'] == '1') {
-                                   showToast(context,message: results['message']);
-                                   _banksList = _getBanksList();
-
-                                 } else {
-                                   showErrorDialog(results['message'], context);
-
-                                 }
-
-
-                               },
-                             )
+                              CustomButton(
+                                btnColor: cLightLemon,
+                                btnLbl: "حذف الحساب",
+                                onPressedFunction: () async {
+                                  _progressIndicatorState!.setIsLoading(true);
+                                  var results = await _services.get(
+                                    'https://mahtco.net/app/api/do_delete_bank?id=${snapshot.data![index].bankId}&lang=${_appState!.currentLang}',
+                                  );
+                                  _progressIndicatorState!.setIsLoading(false);
+                                  if (results['response'] == '1') {
+                                    showToast(
+                                      context,
+                                      message: results['message'],
+                                    );
+                                    _banksList = _getBanksList();
+                                  } else {
+                                    showErrorDialog(
+                                      results['message'],
+                                      context,
+                                    );
+                                  }
+                                },
+                              ),
                             ],
                           ),
-
-
-
                         ],
                       ),
                     );
-                  });
-            } else {
-              return NoData(
-                message:  AppLocalizations.of(context)!.noResults,
-              );
+                  },
+                );
+              } else {
+                return NoData(message: AppLocalizations.of(context)!.noResults);
+              }
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
             }
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
 
-          return Center(
-              child: SpinKitThreeBounce(
-            color: cPrimaryColor,
-            size: 40,
-          ));
-        },
-      ); 
-    });
+            return Center(
+              child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _buildBodyItem() {
-    return  Consumer<AppState>(builder: (context, appState, child) {
-       return  appState.currentUser != null
+    return Consumer<AppState>(
+      builder: (context, appState, child) {
+        return appState.currentUser != null
             ? ListView(
-      children: <Widget>[
-        SizedBox(
-          height: 50,
-        ),
-        Container(
-            // margin: EdgeInsets.only(top: 7, bottom: 20),
-            height: _height - 100,
-            child: _buildStores())
-      ],
-    ) : NotRegistered();
-    });
+                children: <Widget>[
+                  SizedBox(height: 50),
+                  Container(
+                    // margin: EdgeInsets.only(top: 7, bottom: 20),
+                    height: _height - 100,
+                    child: _buildStores(),
+                  ),
+                ],
+              )
+            : NotRegistered();
+      },
+    );
   }
 
   @override
@@ -227,8 +230,9 @@ class _BanksScreenState extends State<BanksScreen> {
     _storeState = Provider.of<StoreState>(context);
     _navigationState = Provider.of<NavigationState>(context);
     _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
-    return  NetworkIndicator( child:PageContainer(
-      child: Scaffold(
+    return NetworkIndicator(
+      child: PageContainer(
+        child: Scaffold(
           backgroundColor: Color(0xffF5F2F2),
           body: Stack(
             children: <Widget>[
@@ -241,35 +245,30 @@ class _BanksScreenState extends State<BanksScreen> {
                   appBarTitle: "الحسابات البنكية",
 
                   leading: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: cBlack,
-                    ),
+                    icon: Icon(Icons.arrow_back_ios, color: cBlack),
                     onPressed: () {
                       _navigationState!.upadateNavigationIndex(3);
                       Navigator.pushReplacementNamed(context, '/navigation');
                     },
                   ),
                   trailing: IconButton(
-                    icon: Icon(
-                      Icons.add,
-                      color: cPrimaryColor,
-                      size: 30,
-                    ),
+                    icon: Icon(Icons.add, color: cPrimaryColor, size: 30),
                     onPressed: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddBankScreen()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddBankScreen(),
+                        ),
+                      );
                     },
                   ),
                 ),
               ),
-              Center(
-                child: ProgressIndicatorComponent(),
-              )
+              Center(child: ProgressIndicatorComponent()),
             ],
-          )),
-    ));
+          ),
+        ),
+      ),
+    );
   }
 }

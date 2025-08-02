@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-class PaymentState extends ChangeNotifier {
 
+class PaymentState extends ChangeNotifier {
   bool _enableCardsAndBankAccounts = true;
 
   void setEnableCardsAndBankAccounts(bool value) {
@@ -10,7 +10,7 @@ class PaymentState extends ChangeNotifier {
 
   bool get enableCardsAndBankAccounts => _enableCardsAndBankAccounts;
 
-     String? _userPhone;
+  String? _userPhone;
 
   void setUserPhone(String phone) {
     _userPhone = phone;

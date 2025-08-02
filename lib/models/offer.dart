@@ -52,8 +52,6 @@ class Offer {
 
   String? offerDate;
 
-
-
   Offer({
     this.offerId,
     this.offerMtger,
@@ -106,7 +104,7 @@ class Offer {
     this.requestPrice3Label2,
     this.requestPrice3Label3,
 
-    this.offerDate
+    this.offerDate,
   });
 
   factory Offer.fromJson(Map<String, dynamic> json) => Offer(
@@ -152,7 +150,6 @@ class Offer {
     requestPrice2Label2: json["requestPrice2Label2"],
     requestPrice2Label3: json["requestPrice2Label3"],
 
-
     requestPrice3Offer1: json["requestPrice3Offer1"],
     requestPrice3Offer1Act: json["requestPrice3Offer1Act"],
     requestPrice3Offer2: json["requestPrice3Offer2"],
@@ -163,7 +160,7 @@ class Offer {
     requestPrice3Label2: json["requestPrice3Label2"],
     requestPrice3Label3: json["requestPrice3Label3"],
 
-    offerDate: json["offer_date"]
+    offerDate: json["offer_date"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -222,5 +219,3 @@ class Offer {
     "offer_date": offerDate,
   };
 }
-
-

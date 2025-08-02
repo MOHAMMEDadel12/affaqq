@@ -43,8 +43,8 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  double _height=0;
-  double _width=0;
+  double _height = 0;
+  double _width = 0;
   Future<List<Category>>? _categoriesList;
   Future<List<Category>>? _subcategoriesList;
   Future<List<Product>>? _productList;
@@ -62,14 +62,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
   ProgressIndicatorState? _progressIndicatorState;
 
-
-
-
-
   Future<String>? _Tawsilfees;
   Future<String> _getTawsilfees() async {
-    var results = await _services.get(
-        'https://mahtco.net/app/api/getOmarAli');
+    var results = await _services.get('https://mahtco.net/app/api/getOmarAli');
     String Tawsilfees = '';
     if (results['response'] == '1') {
       Tawsilfees = results['Tawsilfees'];
@@ -81,8 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<String>? _RequestMin;
   Future<String> _getRequestMin() async {
-    var results = await _services.get(
-        'https://mahtco.net/app/api/getOmarAli');
+    var results = await _services.get('https://mahtco.net/app/api/getOmarAli');
     String RequestMin = '';
     if (results['response'] == '1') {
       RequestMin = results['RequestMin'];
@@ -92,12 +86,9 @@ class _SearchScreenState extends State<SearchScreen> {
     return RequestMin;
   }
 
-
-
   Future<String>? _Vat;
   Future<String> _getVat() async {
-    var results = await _services.get(
-        'https://mahtco.net/app/api/getOmarAli');
+    var results = await _services.get('https://mahtco.net/app/api/getOmarAli');
     String Vat = '';
     if (results['response'] == '1') {
       Vat = results['Vat'];
@@ -107,11 +98,9 @@ class _SearchScreenState extends State<SearchScreen> {
     return Vat;
   }
 
-
   Future<String>? _VatNumber;
   Future<String> _getVatNumber() async {
-    var results = await _services.get(
-        'https://mahtco.net/app/api/getOmarAli');
+    var results = await _services.get('https://mahtco.net/app/api/getOmarAli');
     String VatNumber = '';
     if (results['response'] == '1') {
       VatNumber = results['VatNumber'];
@@ -121,13 +110,13 @@ class _SearchScreenState extends State<SearchScreen> {
     return VatNumber;
   }
 
-
-
-
-
   Future<List<Category>> _getSubCategories() async {
-    String language =  await SharedPreferencesHelper.getUserLang();
-    Map<dynamic, dynamic> results = await _services.get(Utils.SUBCATEGORIES_URL+ language+"&cat_id=${_appState!.selectedCat.mtgerCatId}");
+    String language = await SharedPreferencesHelper.getUserLang();
+    Map<dynamic, dynamic> results = await _services.get(
+      Utils.SUBCATEGORIES_URL +
+          language +
+          "&cat_id=${_appState!.selectedCat.mtgerCatId}",
+    );
     List categoryList = <Category>[];
     if (results['response'] == '1') {
       Iterable iterable = results['cats'];
@@ -138,11 +127,12 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     return categoryList as FutureOr<List<Category>>;
   }
-
 
   Future<List<Category>> _getCategories() async {
-    String language =  await SharedPreferencesHelper.getUserLang();
-    Map<dynamic, dynamic> results = await _services.get(Utils.CATEGORIES_URL+ language);
+    String language = await SharedPreferencesHelper.getUserLang();
+    Map<dynamic, dynamic> results = await _services.get(
+      Utils.CATEGORIES_URL + language,
+    );
     List categoryList = <Category>[];
     if (results['response'] == '1') {
       Iterable iterable = results['cats'];
@@ -153,13 +143,11 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     return categoryList as FutureOr<List<Category>>;
   }
-
-
-
 
   Future<List<Product>> _getProducts() async {
     Map<dynamic, dynamic> results = await _services.get(
-        'https://mahtco.net/app/api/search?lang=${_appState!.currentLang!}&page=1&sValue=${_appState!.searchValue}');
+      'https://mahtco.net/app/api/search?lang=${_appState!.currentLang!}&page=1&sValue=${_appState!.searchValue}',
+    );
     List<Product> productList = <Product>[];
     if (results['response'] == '1') {
       Iterable iterable = results['results'];
@@ -170,10 +158,13 @@ class _SearchScreenState extends State<SearchScreen> {
     return productList;
   }
 
-
-  Future<List<Product>> _getProductsWithSub(String? categoryId,String? subId) async {
+  Future<List<Product>> _getProductsWithSub(
+    String? categoryId,
+    String? subId,
+  ) async {
     Map<dynamic, dynamic> results = await _services.get(
-        'https://mahtco.net/app/api/search?lang=${_appState!.currentLang!}&page=1&cat_id=${_appState!.selectedCat.mtgerCatId}&sub_id=${_appState!.selectedSub!.mtgerCatId!}');
+      'https://mahtco.net/app/api/search?lang=${_appState!.currentLang!}&page=1&cat_id=${_appState!.selectedCat.mtgerCatId}&sub_id=${_appState!.selectedSub!.mtgerCatId!}',
+    );
     List<Product> productList = <Product>[];
     if (results['response'] == '1') {
       Iterable iterable = results['results'];
@@ -183,22 +174,23 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     return productList;
   }
-
-
 
   Future<List<Store>> _getStores(String query) async {
-    Map<dynamic, dynamic> results =
-    await _services.get(Utils.BASE_URL + query);
+    Map<dynamic, dynamic> results = await _services.get(Utils.BASE_URL + query);
     List<Store> storeList = <Store>[];
     if (results['response'] == '1') {
       Iterable iterable = results['results'];
       storeList = iterable.map((model) => Store.fromJson(model)).toList();
       if (_appState!.currentUser != null) {
-// app favourite list on consume on it
+        // app favourite list on consume on it
         for (int i = 0; i < storeList.length; i++) {
-          print('id: ${storeList[i].mtgerId} : favourite ${storeList[i].isAddToFav}');
+          print(
+            'id: ${storeList[i].mtgerId} : favourite ${storeList[i].isAddToFav}',
+          );
           _storeState!.setIsFavourite(
-              storeList[i].mtgerId!, storeList[i].isAddToFav!);
+            storeList[i].mtgerId!,
+            storeList[i].isAddToFav!,
+          );
         }
       }
     } else {
@@ -208,347 +200,419 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildCategoriesList() {
-    return LayoutBuilder(builder: (context, constraints) {
-      return FutureBuilder<List<Category>>(
-        future: _categoriesList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Consumer<AppState>(builder: (context, appState, child) {
-              return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FutureBuilder<List<Category>>(
+          future: _categoriesList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Consumer<AppState>(
+                builder: (context, appState, child) {
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
                         onTap: () {
-
-
-
                           setState(() {
-                            _initialRun=true;
+                            _initialRun = true;
                             _appState!.setSelectedCat(snapshot.data![index]);
-                            _appState!.setSelectedCatName(snapshot.data![index].mtgerCatName!);
+                            _appState!.setSelectedCatName(
+                              snapshot.data![index].mtgerCatName!,
+                            );
 
                             _subcategoriesList = _getSubCategories();
-                            _appState!.setSelectedSub(Category(mtgerCatId: "100000000"));
-                            _initialRun=false;
+                            _appState!.setSelectedSub(
+                              Category(mtgerCatId: "100000000"),
+                            );
+                            _initialRun = false;
                           });
                         },
                         child: Container(
-                          margin:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 7),
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 7,
+                          ),
                           decoration: BoxDecoration(
-                            color: snapshot.data![index].mtgerCatId==_appState!.selectedCat.mtgerCatId?Colors.white:null,
-                            borderRadius:  snapshot.data![index].mtgerCatId==_appState!.selectedCat.mtgerCatId
+                            color:
+                                snapshot.data![index].mtgerCatId ==
+                                    _appState!.selectedCat.mtgerCatId
+                                ? Colors.white
+                                : null,
+                            borderRadius:
+                                snapshot.data![index].mtgerCatId ==
+                                    _appState!.selectedCat.mtgerCatId
                                 ? BorderRadius.circular(15.0)
                                 : BorderRadius.circular(0),
                           ),
                           child: Row(
                             children: <Widget>[
-
                               Container(
-                                  margin: EdgeInsets.only(left: 5,right: 5),
-                                  child: Text(
-                                    snapshot.data![index].mtgerCatName!,
-                                    style: TextStyle(
-                                        color: snapshot.data![index].mtgerCatId==_appState!.selectedCat.mtgerCatId
-                                            ? cLightRed
-                                            : cBlack,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15),
-                                  ))
+                                margin: EdgeInsets.only(left: 5, right: 5),
+                                child: Text(
+                                  snapshot.data![index].mtgerCatName!,
+                                  style: TextStyle(
+                                    color:
+                                        snapshot.data![index].mtgerCatId ==
+                                            _appState!.selectedCat.mtgerCatId
+                                        ? cLightRed
+                                        : cBlack,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                        ));
-                  });
-            });
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
 
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-
-          return Center(
-              child: SpinKitSquareCircle(color: cPrimaryColor, size: 25));
-        },
-      );
-    });
+            return Center(
+              child: SpinKitSquareCircle(color: cPrimaryColor, size: 25),
+            );
+          },
+        );
+      },
+    );
   }
 
-
-
-
-
-
-
-
-
   Widget _buildProducts() {
-    return LayoutBuilder(builder: (context, constraints) {
-      return FutureBuilder<List<Product>>(
-        future: _productList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data!.length > 0) {
-              return GridView.builder(
-
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FutureBuilder<List<Product>>(
+          future: _productList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data!.length > 0) {
+                return GridView.builder(
                   primary: true,
                   padding: const EdgeInsets.all(0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, crossAxisSpacing: 1, mainAxisSpacing: 1,childAspectRatio: 3/5),
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 1,
+                    mainAxisSpacing: 1,
+                    childAspectRatio: 3 / 5,
+                  ),
 
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () async{
-                          //  _productState!.setCurrentProduct(snapshot.data![index]);
+                      onTap: () async {
+                        //  _productState!.setCurrentProduct(snapshot.data![index]);
 
-
-
-
-
-                          showModalBottomSheet<dynamic>(
-                              isScrollControlled: true,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20))),
-                              context: context,
-                              builder: (builder) {
-                                return Container(
-                                  height: _height*.70,
-                                  child: LayoutBuilder(builder: (context, constraints) {
-                                    return Padding(
-                                        padding:
-                                        EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-
-                                            Container(
-                                              height: 30,
-                                              child: Image.asset('assets/images/bottomTop.png'),
-                                            ),
-
-                                            Container(
-                                              padding: EdgeInsets.only(right: 20),
-                                              child: Image.network(snapshot.data![index].adsMtgerPhoto!,width: _width,height: _height*.3,),
-                                            ),
-                                            Padding(padding: EdgeInsets.all(8)),
-                                            Container(
-                                              padding: EdgeInsets.only(right: _width*.06,left:_width*.06),
-                                              child: Text(snapshot.data![index].adsMtgerName!+" / "+snapshot.data![index].adsMtgerColor!,style: TextStyle(color: cText,fontSize: 20,fontWeight: FontWeight.bold),),
-                                            ),
-                                            Padding(padding: EdgeInsets.all(15)),
-                                            Container(
-                                              padding: EdgeInsets.only(right: _width*.06,left:_width*.06),
-                                              child: Row(
-                                                children: [
-                                                  Text(snapshot.data![index].adsMtgerPrice!,style: TextStyle(color: cLightRed,fontSize: 35,fontWeight: FontWeight.bold),),
-                                                  Padding(padding: EdgeInsets.all(2)),
-                                                  Text("ريال",style: TextStyle(color: cText,fontSize: 25,),),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(padding: EdgeInsets.all(6)),
-                                            Container(
-                                              padding: EdgeInsets.only(right: _width*.06,left:_width*.06),
-                                              child: Text(snapshot.data![index].adsMtgerName!,style: TextStyle(color: cText,fontSize: 15),),
-                                            ),
-                                            Padding(padding: EdgeInsets.all(_width*.04)),
-
-                                            snapshot.data![index].adsMtgerState=="1"? CustomButton1(
-                                              btnLbl: "اضافة للسلة",
-                                              onPressedFunction: () async{
-
-
-
-                                                if (_appState!.currentUser != null) {
-                                                  _progressIndicatorState!.setIsLoading(true);
-                                                  var results = await _services.get(
-                                                    'https://mahtco.net/app/api/add_cart?user_id=${_appState!.currentUser!.userId}&ads_id=${snapshot.data![index].adsMtgerId}&amountt=1&lang=${_appState!.currentLang}&cart_price=${snapshot.data![index].adsMtgerPriceAfterDiscount =="1"?snapshot.data![index].ads_mtger_price_after_discount :snapshot.data![index].adsMtgerPrice}',
-                                                  );
-                                                  _progressIndicatorState!.setIsLoading(false);
-                                                  if (results['response'] == '1') {
-
-                                                    _storeState!.setCurrentIsAddToCart(1);
-                                                    // Navigator.pushNamed(context, '/store_screen');
-                                                    showToast(context,message: results['message']);
-                                                    Navigator.pop(context);
-                                                  } else {
-                                                    showErrorDialog(
-                                                        results['message'], context);
-                                                  }
-                                                } else {
-                                                  Navigator.pushNamed(context, '/login_screen');
-                                                }
-
-
-                                              },
-                                            ):Container(
-                                              margin: EdgeInsets.only(right: _width*.06,left:  _width*.06,),
-                                              child: Row(
-                                                children: [
-                                                  Icon(Icons.cancel_outlined,color: Colors.red,size: 22,),
-                                                  Padding(padding: EdgeInsets.all(2)),
-                                                  Text("نفذت الكمية",style: TextStyle(color: Colors.red,fontSize: 22),),
-                                                ],
-                                              ),
-                                            ),
-
-
-
-
-
-                                          ],
-                                        ));
-                                  }),
-                                );
-                              });
-
-
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.only(
-                              top: 0,
-                              left: 5,
-                              right: 5,
-                              bottom:10),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 1.0, color: Color(0xffEBEBEB)),
-                              color: cWhite,
-                              borderRadius: BorderRadius.circular(
-                                10.0,
-                              )),
-                          child: Column(
-                            children: <Widget>[
-                              // Text(_sValue.toString()),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Image.asset("assets/images/plus1.png")
-                                    ],
-                                  ),
-                                  Container(
-
-                                    child: Image.network(
-                                      snapshot.data![index].adsMtgerPhoto!,
-                                      width:
-                                      _width*.3,
-                                      height: _height*.10,
+                        showModalBottomSheet<dynamic>(
+                          isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          context: context,
+                          builder: (builder) {
+                            return Container(
+                              height: _height * .70,
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(
+                                        context,
+                                      ).viewInsets.bottom,
                                     ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding:
-                                    EdgeInsets.only(bottom: 5, right: 0 ,left: 0),
-                                    child: Text(
-                                      snapshot.data![index].adsMtgerName!,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight:FontWeight.bold,
-                                          color: cText
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          height: 30,
+                                          child: Image.asset(
+                                            'assets/images/bottomTop.png',
+                                          ),
+                                        ),
 
-                                      ),
-                                    ),
-                                  ),
-
-
-
-
-                                  Row(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-
-
-                                      Container(
-
+                                        Container(
+                                          padding: EdgeInsets.only(right: 20),
+                                          child: Image.network(
+                                            snapshot
+                                                .data![index]
+                                                .adsMtgerPhoto!,
+                                            width: _width,
+                                            height: _height * .3,
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(8)),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: _width * .06,
+                                            left: _width * .06,
+                                          ),
                                           child: Text(
-                                            snapshot.data![index].adsMtgerPrice!,
+                                            snapshot
+                                                    .data![index]
+                                                    .adsMtgerName! +
+                                                " / " +
+                                                snapshot
+                                                    .data![index]
+                                                    .adsMtgerColor!,
                                             style: TextStyle(
-
-                                              color: cLightRed,
-                                              fontSize: 15,
-
+                                              color: cText,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                          )),
-                                      Padding(padding: EdgeInsets.all(2)),
-                                      Container(
-
-                                        child: Text(
-                                          "ريال",
-                                          style: TextStyle(
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: _width * .06,
+                                            left: _width * .06,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                snapshot
+                                                    .data![index]
+                                                    .adsMtgerPrice!,
+                                                style: TextStyle(
+                                                  color: cLightRed,
+                                                  fontSize: 35,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.all(2),
+                                              ),
+                                              Text(
+                                                "ريال",
+                                                style: TextStyle(
+                                                  color: cText,
+                                                  fontSize: 25,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(6)),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: _width * .06,
+                                            left: _width * .06,
+                                          ),
+                                          child: Text(
+                                            snapshot.data![index].adsMtgerName!,
+                                            style: TextStyle(
                                               color: cText,
                                               fontSize: 15,
-                                              fontWeight: FontWeight.w400),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(_width * .04),
+                                        ),
+
+                                        snapshot.data![index].adsMtgerState ==
+                                                "1"
+                                            ? CustomButton1(
+                                                btnLbl: "اضافة للسلة",
+                                                onPressedFunction: () async {
+                                                  if (_appState!.currentUser !=
+                                                      null) {
+                                                    _progressIndicatorState!
+                                                        .setIsLoading(true);
+                                                    var results =
+                                                        await _services.get(
+                                                          'https://mahtco.net/app/api/add_cart?user_id=${_appState!.currentUser!.userId}&ads_id=${snapshot.data![index].adsMtgerId}&amountt=1&lang=${_appState!.currentLang}&cart_price=${snapshot.data![index].adsMtgerPriceAfterDiscount == "1" ? snapshot.data![index].ads_mtger_price_after_discount : snapshot.data![index].adsMtgerPrice}',
+                                                        );
+                                                    _progressIndicatorState!
+                                                        .setIsLoading(false);
+                                                    if (results['response'] ==
+                                                        '1') {
+                                                      _storeState!
+                                                          .setCurrentIsAddToCart(
+                                                            1,
+                                                          );
+                                                      // Navigator.pushNamed(context, '/store_screen');
+                                                      showToast(
+                                                        context,
+                                                        message:
+                                                            results['message'],
+                                                      );
+                                                      Navigator.pop(context);
+                                                    } else {
+                                                      showErrorDialog(
+                                                        results['message'],
+                                                        context,
+                                                      );
+                                                    }
+                                                  } else {
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      '/login_screen',
+                                                    );
+                                                  }
+                                                },
+                                              )
+                                            : Container(
+                                                margin: EdgeInsets.only(
+                                                  right: _width * .06,
+                                                  left: _width * .06,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.cancel_outlined,
+                                                      color: Colors.red,
+                                                      size: 22,
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                        2,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "نفذت الكمية",
+                                                      style: TextStyle(
+                                                        color: Colors.red,
+                                                        fontSize: 22,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        margin: EdgeInsets.only(
+                          top: 0,
+                          left: 5,
+                          right: 5,
+                          bottom: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1.0,
+                            color: Color(0xffEBEBEB),
+                          ),
+                          color: cWhite,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            // Text(_sValue.toString()),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Image.asset("assets/images/plus1.png"),
+                                  ],
+                                ),
+                                Container(
+                                  child: Image.network(
+                                    snapshot.data![index].adsMtgerPhoto!,
+                                    width: _width * .3,
+                                    height: _height * .10,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.only(
+                                    bottom: 5,
+                                    right: 0,
+                                    left: 0,
+                                  ),
+                                  child: Text(
+                                    snapshot.data![index].adsMtgerName!,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: cText,
+                                    ),
+                                  ),
+                                ),
+
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      child: Text(
+                                        snapshot.data![index].adsMtgerPrice!,
+                                        style: TextStyle(
+                                          color: cLightRed,
+                                          fontSize: 15,
                                         ),
                                       ),
-
-
-
-
-                                    ],
-                                  ),
-
-                                ],
-                              ),
-
-
-
-                            ],
-                          ),
-                        ));
-                  });
-            } else {
-              return NoData(
-                  message: "لا يوجد نتائج"
-              );
+                                    ),
+                                    Padding(padding: EdgeInsets.all(2)),
+                                    Container(
+                                      child: Text(
+                                        "ريال",
+                                        style: TextStyle(
+                                          color: cText,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return NoData(message: "لا يوجد نتائج");
+              }
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
             }
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
 
-          return Center(
-              child: SpinKitThreeBounce(
-                color: cPrimaryColor,
-                size: 40,
-              ));
-        },
-      );
-    });
+            return Center(
+              child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _buildBodyItem() {
-
     return ListView(
       children: <Widget>[
-        SizedBox(
-          height: _height*.06,
-        ),
-
-
-
-
+        SizedBox(height: _height * .06),
 
         Container(
-
-            padding: EdgeInsets.all(10),
-            height: _height*.90,
-            child: _buildProducts()
-
+          padding: EdgeInsets.all(10),
+          height: _height * .90,
+          child: _buildProducts(),
         ),
-
-
-
       ],
     );
   }
@@ -560,15 +624,15 @@ class _SearchScreenState extends State<SearchScreen> {
       _initialRun = false;
       _appState = Provider.of<AppState>(context);
       _navigationState = Provider.of<NavigationState>(context);
-      _productState= Provider.of<ProductState>(context);
+      _productState = Provider.of<ProductState>(context);
       _locationState = Provider.of<LocationState>(context);
 
       _productList = _getProducts();
 
-      _Tawsilfees=_getTawsilfees();
-      _RequestMin=_getRequestMin();
-      _Vat=_getVat();
-      _VatNumber=_getVatNumber();
+      _Tawsilfees = _getTawsilfees();
+      _RequestMin = _getRequestMin();
+      _Vat = _getVat();
+      _VatNumber = _getVatNumber();
     }
   }
 
@@ -577,7 +641,6 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     _categoriesList = _getCategories();
     _subcategoriesList = _getSubCategories();
-
   }
 
   @override
@@ -588,99 +651,100 @@ class _SearchScreenState extends State<SearchScreen> {
     _storeState = Provider.of<StoreState>(context);
     _locationState = Provider.of<LocationState>(context);
     _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
-    return  NetworkIndicator( child:PageContainer(
-      child: Scaffold(
+    return NetworkIndicator(
+      child: PageContainer(
+        child: Scaffold(
           backgroundColor: Colors.white,
           body: Stack(
             children: <Widget>[
               _buildBodyItem(),
               _enableSearch
                   ? Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  height: 50,
-                  decoration: BoxDecoration(
-
-                      color: Color(0xffF9F9F9),
-                      boxShadow: [
-
-                      ]),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      height: 50,
+                      decoration: BoxDecoration(
                         color: Color(0xffF9F9F9),
-                        borderRadius: BorderRadius.circular(23.0)),
-                    child: TextFormField(
-                        cursorColor: Color(0xffC5C5C5),
-                        maxLines: 1,
-                        onChanged: (text) {
-                          print(text);
-                          _sValue=text;
-                          setState(() {
-
-                          });
-                        },
-                        style: TextStyle(
+                        boxShadow: [],
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Color(0xffF9F9F9),
+                          borderRadius: BorderRadius.circular(23.0),
+                        ),
+                        child: TextFormField(
+                          cursorColor: Color(0xffC5C5C5),
+                          maxLines: 1,
+                          onChanged: (text) {
+                            print(text);
+                            _sValue = text;
+                            setState(() {});
+                          },
+                          style: TextStyle(
                             color: cBlack,
                             fontSize: 15,
-                            fontWeight: FontWeight.w400),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(23.0),
-                            borderSide:
-                            BorderSide(color:Color(0xffF9F9F9)),
+                            fontWeight: FontWeight.w400,
                           ),
-                          focusColor: Color(0xffC5C5C5),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                            BorderSide(color: Color(0xffC5C5C5)),
-                            borderRadius: BorderRadius.circular(25.7),
-                          ),
-                          contentPadding:
-                          EdgeInsets.symmetric(horizontal: 12.0),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              Icons.close,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(23.0),
+                              borderSide: BorderSide(color: Color(0xffF9F9F9)),
+                            ),
+                            focusColor: Color(0xffC5C5C5),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xffC5C5C5)),
+                              borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12.0,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.close, color: cPrimaryColor),
+                              onPressed: () {
+                                setState(() {
+                                  _enableSearch = false;
+                                });
+                              },
+                            ),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              size: 24,
                               color: cPrimaryColor,
                             ),
-                            onPressed: () {
-                              setState(() {
-                                _enableSearch = false;
-                              });
-                            },
-                          ),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            size: 24,
-                            color: cPrimaryColor,
-                          ),
-                          hintText: AppLocalizations.of(context)!.search,
-                          errorStyle: TextStyle(fontSize: 12.0),
-                          hintStyle: TextStyle(
+                            hintText: AppLocalizations.of(context)!.search,
+                            errorStyle: TextStyle(fontSize: 12.0),
+                            hintStyle: TextStyle(
                               color: Color(0xffC5C5C5),
                               fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        )),
-                  ))
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   : Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: GradientAppBar(
-                    appBarTitle: "نتيجة البحث",
-                    leading: IconButton(
-                      icon: Image.asset("assets/images/back.png",color: cWhite,),
-                      onPressed: () {
-                        _appState!.setSearchValue(null);
-                        _navigationState!.upadateNavigationIndex(0);
-                        Navigator.pushNamed(context, '/navigation');
-
-                      },
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: GradientAppBar(
+                        appBarTitle: "نتيجة البحث",
+                        leading: IconButton(
+                          icon: Image.asset(
+                            "assets/images/back.png",
+                            color: cWhite,
+                          ),
+                          onPressed: () {
+                            _appState!.setSearchValue(null);
+                            _navigationState!.upadateNavigationIndex(0);
+                            Navigator.pushNamed(context, '/navigation');
+                          },
+                        ),
+                      ),
                     ),
-
-                ) ,
-              ),
             ],
-          )),
-    ));
+          ),
+        ),
+      ),
+    );
   }
 }

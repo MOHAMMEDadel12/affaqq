@@ -29,7 +29,9 @@ class CustomButton extends StatelessWidget {
     return Container(
       height: height,
       margin: EdgeInsets.symmetric(
-        horizontal: defaultMargin ? MediaQuery.of(context).size.width * 0.04 : 0.0,
+        horizontal: defaultMargin
+            ? MediaQuery.of(context).size.width * 0.04
+            : 0.0,
         vertical: MediaQuery.of(context).size.height * 0.01,
       ),
       child: DecoratedBox(
@@ -64,11 +66,7 @@ class CustomButton extends StatelessWidget {
                 ),
               ),
               if (imagePath != null)
-                Positioned(
-                  left: 8,
-                  top: 16,
-                  child: Image.asset(imagePath!),
-                ),
+                Positioned(left: 8, top: 16, child: Image.asset(imagePath!)),
             ],
           ),
         ),

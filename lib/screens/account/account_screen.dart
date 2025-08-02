@@ -83,7 +83,8 @@ class _AccountScreenState extends State<AccountScreen> {
 
   Future<Null> _getUserCredit() async {
     final response = await _services.get(
-        "https://mahtco.net/app/api/get_user_credit?user_id=${_appState!.currentUser!.userId}");
+      "https://mahtco.net/app/api/get_user_credit?user_id=${_appState!.currentUser!.userId}",
+    );
 
     if (response['response'] == '1') {
       setState(() {
@@ -94,7 +95,8 @@ class _AccountScreenState extends State<AccountScreen> {
 
   Future<Null> _getUserReq() async {
     final response = await _services.get(
-        "https://mahtco.net/app/api/get_user_credit?user_id=${_appState!.currentUser!.userId}");
+      "https://mahtco.net/app/api/get_user_credit?user_id=${_appState!.currentUser!.userId}",
+    );
 
     if (response['response'] == '1') {
       setState(() {
@@ -105,7 +107,8 @@ class _AccountScreenState extends State<AccountScreen> {
 
   Future<Null> _getUserReqs() async {
     final response = await _services.get(
-        "https://mahtco.net/app/api/get_user_credit?user_id=${_appState!.currentUser!.userId}");
+      "https://mahtco.net/app/api/get_user_credit?user_id=${_appState!.currentUser!.userId}",
+    );
 
     if (response['response'] == '1') {
       setState(() {
@@ -136,9 +139,7 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget _buildBodyItem() {
     return ListView(
       children: <Widget>[
-        SizedBox(
-          height: 50,
-        ),
+        SizedBox(height: 50),
         _appState!.currentUser == null
             ? Container(
                 alignment: Alignment.centerRight,
@@ -164,14 +165,16 @@ class _AccountScreenState extends State<AccountScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Padding(padding: EdgeInsets.all(4)),
-                        Text("زائر",
-                            style: TextStyle(color: cText, fontSize: 18)),
+                        Text(
+                          "زائر",
+                          style: TextStyle(color: cText, fontSize: 18),
+                        ),
                         Text(
                           "الحساب الشخصي",
                           style: TextStyle(color: cText, fontSize: 16),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               )
@@ -182,36 +185,43 @@ class _AccountScreenState extends State<AccountScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Consumer<AppState>(builder: (context, authProvider, child) {
-                      return CircleAvatar(
-                        backgroundColor: cLightLemon,
-                        backgroundImage: NetworkImage(
+                    Consumer<AppState>(
+                      builder: (context, authProvider, child) {
+                        return CircleAvatar(
+                          backgroundColor: cLightLemon,
+                          backgroundImage: NetworkImage(
                             _appState!.currentUser!.userPhoto != null
                                 ? _appState!.currentUser!.userPhoto!
-                                : ""),
-                        maxRadius: 40,
-                      );
-                    }),
+                                : "",
+                          ),
+                          maxRadius: 40,
+                        );
+                      },
+                    ),
                     Padding(padding: EdgeInsets.all(7)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Padding(padding: EdgeInsets.all(6)),
-                        Text(_appState!.currentUser!.userName!,
-                            style:
-                                TextStyle(color: cPrimaryColor, fontSize: 20)),
+                        Text(
+                          _appState!.currentUser!.userName!,
+                          style: TextStyle(color: cPrimaryColor, fontSize: 20),
+                        ),
                         _appState!.currentUser!.userType == "user"
                             ? Text(
                                 "الحساب الشخصي",
                                 style: TextStyle(
-                                    color: cPrimaryColor, fontSize: 16),
+                                  color: cPrimaryColor,
+                                  fontSize: 16,
+                                ),
                               )
                             : Row(
                                 children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: _appState!.currentUser!.userType ==
+                                      color:
+                                          _appState!.currentUser!.userType ==
                                               "driver"
                                           ? cLightLemon
                                           : cPrimaryColor,
@@ -220,20 +230,26 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ),
                                     padding: EdgeInsets.only(
-                                        right: 11, left: 11, top: 6, bottom: 6),
+                                      right: 11,
+                                      left: 11,
+                                      top: 6,
+                                      bottom: 6,
+                                    ),
                                     child: Text(
                                       _appState!.currentUser!.userType ==
                                               "driver"
                                           ? "مندوب"
                                           : "تاجر",
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 15),
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                      ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -243,15 +259,13 @@ class _AccountScreenState extends State<AccountScreen> {
           decoration: BoxDecoration(
             border: Border.all(width: 1.0, color: Color(0xffEBEBEB)),
             color: cWhite,
-            borderRadius: BorderRadius.circular(
-              6.0,
-            ),
+            borderRadius: BorderRadius.circular(6.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.shade300,
                 blurRadius: 12.0, // has the effect of softening the shadow
                 spreadRadius: 5.0, // has the effect of extending the shadow
-              )
+              ),
             ],
           ),
           child: Column(
@@ -271,18 +285,10 @@ class _AccountScreenState extends State<AccountScreen> {
                         onTap: () {},
                       ),
                     )
-                  : Text(
-                      "",
-                      style: TextStyle(height: 0),
-                    ),
+                  : Text("", style: TextStyle(height: 0)),
               _appState!.currentUser != null
-                  ? Divider(
-                      height: 1,
-                    )
-                  : Text(
-                      "",
-                      style: TextStyle(height: 0),
-                    ),
+                  ? Divider(height: 1)
+                  : Text("", style: TextStyle(height: 0)),
               // Container(
               //   child: ListTile(
               //     leading: Icon(
@@ -310,14 +316,14 @@ class _AccountScreenState extends State<AccountScreen> {
                     style: TextStyle(color: cPrimaryColor, fontSize: 15),
                   ),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AboutScreen()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AboutScreen()),
+                    );
                   },
                 ),
               ),
-              Divider(
-                height: 1,
-              ),
+              Divider(height: 1),
               Container(
                 child: ListTile(
                   leading: Image.asset(
@@ -330,15 +336,13 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => About1Screen()));
+                      context,
+                      MaterialPageRoute(builder: (context) => About1Screen()),
+                    );
                   },
                 ),
               ),
-              Divider(
-                height: 1,
-              ),
+              Divider(height: 1),
               Container(
                 child: ListTile(
                   leading: Image.asset(
@@ -350,14 +354,14 @@ class _AccountScreenState extends State<AccountScreen> {
                     style: TextStyle(color: cPrimaryColor, fontSize: 15),
                   ),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TermsScreen()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TermsScreen()),
+                    );
                   },
                 ),
               ),
-              Divider(
-                height: 1,
-              ),
+              Divider(height: 1),
               Container(
                 child: ListTile(
                   leading: Image.asset(
@@ -370,15 +374,15 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ContactWithUsScreen()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ContactWithUsScreen(),
+                      ),
+                    );
                   },
                 ),
               ),
-              Divider(
-                height: 1,
-              ),
+              Divider(height: 1),
               Container(
                 child: ListTile(
                   leading: Image.asset(
@@ -397,20 +401,21 @@ class _AccountScreenState extends State<AccountScreen> {
                   },
                 ),
               ),
-              Consumer<AppState>(builder: (context, appState, child) {
-                return appState.currentUser != null
-                    ? ListTile(
-                        leading: Icon(
-                          FontAwesomeIcons.signInAlt,
-                          color: cLightRed,
-                          size: 22,
-                        ),
-                        title: Text(
-                          "حذف الحساب",
-                          style: TextStyle(color: cLightRed, fontSize: 15),
-                        ),
-                        onTap: () {
-                          showDialog(
+              Consumer<AppState>(
+                builder: (context, appState, child) {
+                  return appState.currentUser != null
+                      ? ListTile(
+                          leading: Icon(
+                            FontAwesomeIcons.signInAlt,
+                            color: cLightRed,
+                            size: 22,
+                          ),
+                          title: Text(
+                            "حذف الحساب",
+                            style: TextStyle(color: cLightRed, fontSize: 15),
+                          ),
+                          onTap: () {
+                            showDialog(
                               barrierDismissible: true,
                               context: context,
                               builder: (_) {
@@ -418,93 +423,102 @@ class _AccountScreenState extends State<AccountScreen> {
                                   alertMessage:
                                       "هل متاكد انك تريد حذف الحساب ؟",
                                 );
-                              });
-                        },
-                      )
-                    : Text("");
-              }),
-              Consumer<AppState>(builder: (context, appState, child) {
-                return appState.currentUser != null
-                    ? ListTile(
-                        leading: Icon(
-                          FontAwesomeIcons.signInAlt,
-                          color: cLightRed,
-                          size: 22,
-                        ),
-                        title: Text(
-                          AppLocalizations.of(context)!.logOut,
-                          style: TextStyle(color: cLightRed, fontSize: 15),
-                        ),
-                        onTap: () {
-                          showDialog(
+                              },
+                            );
+                          },
+                        )
+                      : Text("");
+                },
+              ),
+              Consumer<AppState>(
+                builder: (context, appState, child) {
+                  return appState.currentUser != null
+                      ? ListTile(
+                          leading: Icon(
+                            FontAwesomeIcons.signInAlt,
+                            color: cLightRed,
+                            size: 22,
+                          ),
+                          title: Text(
+                            AppLocalizations.of(context)!.logOut,
+                            style: TextStyle(color: cLightRed, fontSize: 15),
+                          ),
+                          onTap: () {
+                            showDialog(
                               barrierDismissible: true,
                               context: context,
                               builder: (_) {
                                 return LogoutDialog(
-                                  alertMessage: AppLocalizations.of(context)!
-                                      .wantToLogout,
+                                  alertMessage: AppLocalizations.of(
+                                    context,
+                                  )!.wantToLogout,
                                 );
-                              });
-                        },
-                      )
-                    : ListTile(
-                        leading: Transform.rotate(
-                          angle: 180 * math.pi / 180,
-                          child: Icon(
-                            FontAwesomeIcons.signInAlt,
-                            color: cPrimaryColor,
-                            size: 22,
+                              },
+                            );
+                          },
+                        )
+                      : ListTile(
+                          leading: Transform.rotate(
+                            angle: 180 * math.pi / 180,
+                            child: Icon(
+                              FontAwesomeIcons.signInAlt,
+                              color: cPrimaryColor,
+                              size: 22,
+                            ),
                           ),
-                        ),
-                        title: Text(AppLocalizations.of(context)!.enter,
-                            style:
-                                TextStyle(color: cPrimaryColor, fontSize: 15)),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/login_screen');
-                        },
-                      );
-              }),
+                          title: Text(
+                            AppLocalizations.of(context)!.enter,
+                            style: TextStyle(
+                              color: cPrimaryColor,
+                              fontSize: 15,
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/login_screen');
+                          },
+                        );
+                },
+              ),
               Container(
                 margin: EdgeInsets.symmetric(
-                    horizontal: _width * 0.1, vertical: _height * 0.02),
+                  horizontal: _width * 0.1,
+                  vertical: _height * 0.02,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     GestureDetector(
-                        onTap: () {
-                          _launchURL(_twitterUrl);
-                        },
-                        child: Image.asset(
-                          'assets/images/twitter.png',
-                        )),
+                      onTap: () {
+                        _launchURL(_twitterUrl);
+                      },
+                      child: Image.asset('assets/images/twitter.png'),
+                    ),
                     GestureDetector(
-                        onTap: () {
-                          _launchURL(_linkedinUrl);
-                        },
-                        child: Image.asset(
-                          'assets/images/linkedin.png',
-                        )),
+                      onTap: () {
+                        _launchURL(_linkedinUrl);
+                      },
+                      child: Image.asset('assets/images/linkedin.png'),
+                    ),
                     GestureDetector(
-                        onTap: () {
-                          _launchURL(_instragramUrl);
-                        },
-                        child: Image.asset(
-                          'assets/images/instagram.png',
-                        )),
+                      onTap: () {
+                        _launchURL(_instragramUrl);
+                      },
+                      child: Image.asset('assets/images/instagram.png'),
+                    ),
                     GestureDetector(
-                        onTap: () {
-                          _launchURL("https://api.whatsapp.com/send?phone=" +
-                              _facebookUrl);
-                        },
-                        child: Image.asset(
-                          'assets/images/facebook.png',
-                        )),
+                      onTap: () {
+                        _launchURL(
+                          "https://api.whatsapp.com/send?phone=" + _facebookUrl,
+                        );
+                      },
+                      child: Image.asset('assets/images/facebook.png'),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
@@ -516,8 +530,8 @@ class _AccountScreenState extends State<AccountScreen> {
     _width = MediaQuery.of(context).size.width;
 
     return NetworkIndicator(
-        child: PageContainer(
-      child: Scaffold(
+      child: PageContainer(
+        child: Scaffold(
           backgroundColor: Color(0xffF5F6F8),
           body: Stack(
             children: <Widget>[
@@ -531,7 +545,9 @@ class _AccountScreenState extends State<AccountScreen> {
                   trailing: _appState!.currentUser != null
                       ? Container(
                           padding: EdgeInsets.only(
-                              left: _width * .06, top: _width * .03),
+                            left: _width * .06,
+                            top: _width * .03,
+                          ),
                           child: Row(
                             children: <Widget>[
                               GestureDetector(
@@ -541,7 +557,9 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                                 onTap: () {
                                   Navigator.pushNamed(
-                                      context, '/personal_information_screen');
+                                    context,
+                                    '/personal_information_screen',
+                                  );
                                 },
                               ),
                               Padding(padding: EdgeInsets.all(13)),
@@ -553,17 +571,18 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                                 onTap: () {
                                   showDialog(
-                                      barrierDismissible: true,
-                                      context: context,
-                                      builder: (_) {
-                                        return LogoutDialog(
-                                          alertMessage:
-                                              AppLocalizations.of(context)!
-                                                  .wantToLogout,
-                                        );
-                                      });
+                                    barrierDismissible: true,
+                                    context: context,
+                                    builder: (_) {
+                                      return LogoutDialog(
+                                        alertMessage: AppLocalizations.of(
+                                          context,
+                                        )!.wantToLogout,
+                                      );
+                                    },
+                                  );
                                 },
-                              )
+                              ),
                             ],
                           ),
                         )
@@ -571,7 +590,9 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
             ],
-          )),
-    ));
+          ),
+        ),
+      ),
+    );
   }
 }

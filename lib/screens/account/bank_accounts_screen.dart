@@ -23,7 +23,7 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
   bool _initialRun = true;
   late AppState _appState;
   Services _services = Services();
-  Future<List<Bank>> ?_bankList;
+  Future<List<Bank>>? _bankList;
 
   Future<List<Bank>> _getBankList() async {
     // Map<String, dynamic> results =
@@ -56,13 +56,19 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
           Text(
             title,
             style: TextStyle(
-                color: cBlack, fontSize: 14, fontWeight: FontWeight.w400),
+              color: cBlack,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
           ),
           Text(
             value,
             style: TextStyle(
-                color: cBlack, fontSize: 14, fontWeight: FontWeight.w400),
-          )
+              color: cBlack,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
         ],
       ),
     );
@@ -70,104 +76,115 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
 
   Widget _buildBodyItem() {
     return Container(
-        height: _height,
-        width: _width,
-        child: FutureBuilder<List<Bank>>(
-            future: _bankList,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data!.length > 0) {
-                  return ListView.builder(
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+      height: _height,
+      width: _width,
+      child: FutureBuilder<List<Bank>>(
+        future: _bankList,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.length > 0) {
+              return ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        const Radius.circular(15.00),
+                      ),
+                      border: Border.all(color: cHintColor),
+                    ),
+                    height: 160,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                const Radius.circular(15.00),
-                              ),
-                              border: Border.all(color: cHintColor)),
-                          height: 160,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                  decoration: BoxDecoration(
-                                      color: cPrimaryColor,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: (Radius.circular(15.0)),
-                                          topRight: (Radius.circular(15.0)))),
-                                  height: 45,
-                                  width: _width,
-                                  child: Center(
-                                    child: Text(
-                                      snapshot.data![index].bankTitle??  "",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          color: cBlack),
-                                    ),
-                                  )),
-                              Container(
-                                margin: EdgeInsets.symmetric(vertical: 10),
-                                child: _buildRow(
-                                    'اسم صاحب الحساب  :   ',
-                                    snapshot.data![index].bankName??  ""),
-                              ),
-                              _buildRow(
-                                  'رقم الحساب  :   ',
-                                  snapshot.data![index].bankAcount??""),
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                child: _buildRow(
-                                    'رقم الايبان   :   ',
-                                    snapshot.data![index].bankIban??""),
-                              )
-                            ],
+                            color: cPrimaryColor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: (Radius.circular(15.0)),
+                              topRight: (Radius.circular(15.0)),
+                            ),
                           ),
-                        );
-                      });
-                } else {
-                  return NoData(
-                    message: AppLocalizations.of(context)?.noResults,
+                          height: 45,
+                          width: _width,
+                          child: Center(
+                            child: Text(
+                              snapshot.data![index].bankTitle ?? "",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: cBlack,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          child: _buildRow(
+                            'اسم صاحب الحساب  :   ',
+                            snapshot.data![index].bankName ?? "",
+                          ),
+                        ),
+                        _buildRow(
+                          'رقم الحساب  :   ',
+                          snapshot.data![index].bankAcount ?? "",
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: _buildRow(
+                            'رقم الايبان   :   ',
+                            snapshot.data![index].bankIban ?? "",
+                          ),
+                        ),
+                      ],
+                    ),
                   );
-                }
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              return Center(
-                  child: SpinKitSquareCircle(color: cPrimaryColor, size: 25));
-            }));
+                },
+              );
+            } else {
+              return NoData(message: AppLocalizations.of(context)?.noResults);
+            }
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          return Center(
+            child: SpinKitSquareCircle(color: cPrimaryColor, size: 25),
+          );
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-        backgroundColor: cPrimaryColor,
-        centerTitle: true,
-        title: Text("الحساب البنكيي",
-            style: Theme.of(context).textTheme.bodyMedium),
-        leading: GestureDetector(
-          child: Consumer<AppState>(
-            builder: (context,appState,child){
-              return appState.currentLang == 'ar' ? Image.asset('assets/images/back_ar.png'):
-              Image.asset('assets/images/back_en.png');
-
-            }
-          ),
-          onTap: () {
-            Navigator.pop(context);
+      backgroundColor: cPrimaryColor,
+      centerTitle: true,
+      title: Text(
+        "الحساب البنكيي",
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+      leading: GestureDetector(
+        child: Consumer<AppState>(
+          builder: (context, appState, child) {
+            return appState.currentLang == 'ar'
+                ? Image.asset('assets/images/back_ar.png')
+                : Image.asset('assets/images/back_en.png');
           },
-        ));
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
     _height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     _width = MediaQuery.of(context).size.width;
     _width = MediaQuery.of(context).size.width;
     return NetworkIndicator(
-        child: PageContainer(
-      child: Scaffold(
-        appBar: appBar,
-        body: _buildBodyItem(),
+      child: PageContainer(
+        child: Scaffold(appBar: appBar, body: _buildBodyItem()),
       ),
-    ));
+    );
   }
 }

@@ -9,15 +9,15 @@ class PageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Platform.isIOS ? cWhite : cPrimaryColor,
-        child: SafeArea(
-
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-            child: child,
-          ),
-        ));
+      color: Platform.isIOS ? cWhite : cPrimaryColor,
+      child: SafeArea(
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: child,
+        ),
+      ),
+    );
   }
 }

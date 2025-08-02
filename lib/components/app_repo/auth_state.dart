@@ -19,7 +19,7 @@ class AuthState extends ChangeNotifier {
 
   String get userPhone => _userPhone!;
 
-   String? _codeActivation;
+  String? _codeActivation;
 
   void setcodeActivation(String code) {
     _codeActivation = code;
@@ -28,7 +28,7 @@ class AuthState extends ChangeNotifier {
 
   String get codeActivation => _codeActivation!;
 
-    String? _userId;
+  String? _userId;
 
   void setUserId(String id) {
     _userPhone = id;

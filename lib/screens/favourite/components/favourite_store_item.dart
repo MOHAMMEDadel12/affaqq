@@ -28,80 +28,90 @@ class _StoreCardItemState extends State<FavouriteStoreItem> {
     final appState = Provider.of<AppState>(context);
     final progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
     final navigationState = Provider.of<NavigationState>(context);
-    return LayoutBuilder(builder: (context, constraints) {
-      return Stack(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: Image.network(
-                  widget.favouriteStore!.mtgerPhoto!,
-                  width: constraints.maxWidth * 0.2,
-                  height: constraints.maxHeight,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                width: 1,
-                height: constraints.maxHeight * 0.7,
-                color: Colors.grey,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: 5),
-                    height: constraints.maxHeight * 0.3,
-                    child: Text(
-                      widget.favouriteStore!.mtgerName!,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-                    ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Stack(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  child: Image.network(
+                    widget.favouriteStore!.mtgerPhoto!,
+                    width: constraints.maxWidth * 0.2,
+                    height: constraints.maxHeight,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5),
-                    height: constraints.maxHeight * 0.2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          child: Tab(
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  width: 1,
+                  height: constraints.maxHeight * 0.7,
+                  color: Colors.grey,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      height: constraints.maxHeight * 0.3,
+                      child: Text(
+                        widget.favouriteStore!.mtgerName!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5),
+                      height: constraints.maxHeight * 0.2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 5),
+                            child: Tab(
                               icon: Image.asset(
-                            'assets/images/supermarket.png',
-                            color: cLightLemon,
-                          )),
+                                'assets/images/supermarket.png',
+                                color: cLightLemon,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            widget!.favouriteStore!.mtgerCat!,
+                            style: TextStyle(fontSize: 13),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.location_on,
+                          color: Color(0xffC5C5C5),
+                          size: 20,
                         ),
                         Text(
-                          widget!.favouriteStore!.mtgerCat!,
-                          style: TextStyle(fontSize: 13),
-                        )
+                          widget!.favouriteStore!.mtgerAdress!,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Color(0xffC5C5C5),
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.location_on,
-                        color: Color(0xffC5C5C5),
-                        size: 20,
-                      ),
-                      Text(
-                        widget!.favouriteStore!.mtgerAdress!,
-                        style:
-                            TextStyle(fontSize: 13, color: Color(0xffC5C5C5)),
-                      )
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
-          Positioned(
-                left: appState.currentLang == 'ar' ? 0 : constraints.maxWidth *0.8,
-              right: appState.currentLang != 'ar' ? 0 : constraints.maxWidth *0.8,
+                  ],
+                ),
+              ],
+            ),
+            Positioned(
+              left: appState.currentLang == 'ar'
+                  ? 0
+                  : constraints.maxWidth * 0.8,
+              right: appState.currentLang != 'ar'
+                  ? 0
+                  : constraints.maxWidth * 0.8,
               top: 0,
               child: IconButton(
                 icon: Icon(
@@ -112,19 +122,22 @@ class _StoreCardItemState extends State<FavouriteStoreItem> {
                 onPressed: () async {
                   progressIndicatorState.setIsLoading(true);
                   var results = await _services.get(
-                      'https://mahtco.net/app/api/delete_save_ads?mtger_id=${widget.favouriteStore!.mtgerId}&user_id=${appState.currentUser!.userId}&lang=${appState.currentLang}');
+                    'https://mahtco.net/app/api/delete_save_ads?mtger_id=${widget.favouriteStore!.mtgerId}&user_id=${appState.currentUser!.userId}&lang=${appState.currentLang}',
+                  );
                   progressIndicatorState.setIsLoading(false);
                   if (results['response'] == '1') {
-                    showToast(context,message: results['message']);
+                    showToast(context, message: results['message']);
                     navigationState.upadateNavigationIndex(2);
                     Navigator.pushReplacementNamed(context, '/navigation');
                   } else {
                     showErrorDialog(results['message'], context);
                   }
                 },
-              ))
-        ],
-      );
-    });
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -38,9 +38,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../components/badge_tab_bar.dart';
 
-
-
-
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -73,10 +70,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
   String? zzz;
   String? zzz1;
 
-
-
   Future<String> _getTermsContent() async {
-    var results =     await _services.get("https://mahtco.net/app/api/get_unread_notify?user_id=0");
+    var results = await _services.get(
+      "https://mahtco.net/app/api/get_unread_notify?user_id=0",
+    );
     String termsContent = '';
     if (results['response'] == '1') {
       termsContent = results['Number'];
@@ -86,42 +83,39 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return termsContent;
   }
 
-
-
   Future<String> getUnreadNotify() async {
-    final response =
-    await _services.get("https://mahtco.net/app/api/get_unread_notify?user_id=${_appState!.currentUser!.userId}");
+    final response = await _services.get(
+      "https://mahtco.net/app/api/get_unread_notify?user_id=${_appState!.currentUser!.userId}",
+    );
     String messages = '';
     if (response['response'] == '1') {
       messages = response['Number'];
       setState(() {
-        zzz=response['Number'];
-
+        zzz = response['Number'];
       });
     }
     return messages;
   }
+
   Future<String> getUnreadCartt() async {
-    final response =
-    await _services.get("https://mahtco.net/app/api/get_unread_cartt?user_id=${_appState!.currentUser!.userId}");
+    final response = await _services.get(
+      "https://mahtco.net/app/api/get_unread_cartt?user_id=${_appState!.currentUser!.userId}",
+    );
     String messages = '';
     if (response['response'] == '1') {
       messages = response['Number'];
       setState(() {
-        zzz1=response['Number'];
-
+        zzz1 = response['Number'];
       });
     }
     return messages;
   }
-
 
   Future<Null> _checkIsLogin() async {
     var userData = await SharedPreferencesHelper.read("user");
 
     if (userData != null) {
       _appState!.setCurrentUser(User.fromJson(userData));
-
     }
   }
 
@@ -146,34 +140,31 @@ class _BottomNavigationState extends State<BottomNavigation> {
   //                   }
   // }
 
-
-
-
   Future<void> _getCurrentUserLocation() async {
-
     _locData = await gg.Location().getLocation();
     print(_locData!.latitude);
     print(_locData!.longitude);
-      _locationState!.setLocationLatitude(_locData!.latitude!);
-      _locationState!.setLocationlongitude(_locData!.longitude!);
-      List<Placemark> placemark = await placemarkFromCoordinates(
-          _locationState!.locationLatitude, _locationState!
-          .locationlongitude);
-      _locationState!.setCurrentAddress(placemark[0].name! + '  ' + placemark[0].administrativeArea !+ ' '
-          + placemark[0].country!);
-      //  final coordinates = new Coordinates(_locationState.locationLatitude, _locationState
-      //  .locationlongitude);
-      // var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-      // var first = addresses.first;
+    _locationState!.setLocationLatitude(_locData!.latitude!);
+    _locationState!.setLocationlongitude(_locData!.longitude!);
+    List<Placemark> placemark = await placemarkFromCoordinates(
+      _locationState!.locationLatitude,
+      _locationState!.locationlongitude,
+    );
+    _locationState!.setCurrentAddress(
+      placemark[0].name! +
+          '  ' +
+          placemark[0].administrativeArea! +
+          ' ' +
+          placemark[0].country!,
+    );
+    //  final coordinates = new Coordinates(_locationState.locationLatitude, _locationState
+    //  .locationlongitude);
+    // var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    // var first = addresses.first;
 
-      // _locationState.setCurrentAddress(first.addressLine);
+    // _locationState.setCurrentAddress(first.addressLine);
 
-
-      // print("${first.featureName} : ${first.addressLine}");
-
-
-
-
+    // print("${first.featureName} : ${first.addressLine}");
   }
 
   @override
@@ -184,13 +175,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
       _appState = Provider.of<AppState>(context);
       _locationState = Provider.of<LocationState>(context);
       _termsContent = _getTermsContent();
-       getUnreadNotify();
-       getUnreadCartt();
+      getUnreadNotify();
+      getUnreadCartt();
       _checkIsLogin();
       _getCurrentUserLocation();
-
-
-
     }
   }
 
@@ -204,116 +192,92 @@ class _BottomNavigationState extends State<BottomNavigation> {
     _navigationState = Provider.of<NavigationState>(context);
     _appState = Provider.of<AppState>(context);
     return NetworkIndicator(
-        child: Scaffold(
-          key: _scaffoldKey, //
+      child: Scaffold(
+        key: _scaffoldKey, //
 
-          drawer: MainDrawer(),
-      body: _navigationState!.selectedContent,
+        drawer: MainDrawer(),
+        body: _navigationState!.selectedContent,
 
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon:      new Icon(Icons.home_filled),
-            label: "الرئيسية",
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home_filled),
+              label: "الرئيسية",
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.wallet),
+              label: "طلباتي",
+            ),
 
-          ),
-           BottomNavigationBarItem(
-             icon:      new Icon(Icons.wallet),
-            label: "طلباتي",
-          ),
-
-
-
-
-
-          BottomNavigationBarItem(
-            icon: new Stack(
-              children: <Widget>[
-                new Icon(Icons.shopping_cart_sharp),
-                new Positioned(
-                  right: 0,
-                  child: new Container(
-                    padding: EdgeInsets.all(1),
-                    decoration: new BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: new Text(
-                      zzz1.toString()=="null"?"0":zzz1.toString(),
-                      style: new TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
+            BottomNavigationBarItem(
+              icon: new Stack(
+                children: <Widget>[
+                  new Icon(Icons.shopping_cart_sharp),
+                  new Positioned(
+                    right: 0,
+                    child: new Container(
+                      padding: EdgeInsets.all(1),
+                      decoration: new BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      textAlign: TextAlign.center,
+                      constraints: BoxConstraints(minWidth: 12, minHeight: 12),
+                      child: new Text(
+                        zzz1.toString() == "null" ? "0" : zzz1.toString(),
+                        style: new TextStyle(color: Colors.white, fontSize: 8),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                )
-              ],
+                ],
+              ),
+              label: "سلتي",
             ),
-            label: "سلتي",
-          ),
 
-          BottomNavigationBarItem(
-            icon:
-            new Stack(
-              children: <Widget>[
-                new Icon(Icons.notifications),
-                new Positioned(
-                  right: 0,
-                  child: new Container(
-                    padding: EdgeInsets.all(1),
-                    decoration: new BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: new Text(
-                      zzz.toString()=="null"?"0":zzz.toString(),
-                      style: new TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
+            BottomNavigationBarItem(
+              icon: new Stack(
+                children: <Widget>[
+                  new Icon(Icons.notifications),
+                  new Positioned(
+                    right: 0,
+                    child: new Container(
+                      padding: EdgeInsets.all(1),
+                      decoration: new BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      textAlign: TextAlign.center,
+                      constraints: BoxConstraints(minWidth: 12, minHeight: 12),
+                      child: new Text(
+                        zzz.toString() == "null" ? "0" : zzz.toString(),
+                        style: new TextStyle(color: Colors.white, fontSize: 8),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                )
-              ],
+                ],
+              ),
+              label: "الاشعارات",
             ),
-            label: "الاشعارات",
 
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.account_box),
 
+              label: _appState!.currentLang == "ar" ? "حسابي" : "My account",
+            ),
+          ],
+          currentIndex: _navigationState!.navigationIndex,
+          selectedItemColor: cPrimaryColor,
+          unselectedItemColor: Color(0xFFC4C4C4),
+          onTap: (int index) {
+            _navigationState!.upadateNavigationIndex(index);
 
-          ),
-
-          BottomNavigationBarItem(
-            icon:      new Icon(Icons.account_box),
-
-
-            label:_appState!.currentLang=="ar"?"حسابي":"My account",
-          ),
-
-
-
-        ],
-        currentIndex: _navigationState!.navigationIndex,
-        selectedItemColor: cPrimaryColor,
-        unselectedItemColor: Color(0xFFC4C4C4),
-        onTap: (int index) {
-          _navigationState!.upadateNavigationIndex(index);
-
-          print(index);
-        },
-        elevation: 4,
-        backgroundColor: cWhite,
-        type: BottomNavigationBarType.fixed,
+            print(index);
+          },
+          elevation: 4,
+          backgroundColor: cWhite,
+          type: BottomNavigationBarType.fixed,
+        ),
       ),
-    ));
+    );
   }
 }

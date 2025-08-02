@@ -1,4 +1,3 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -35,8 +34,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  double _height=0;
-  double _width=0;
+  double _height = 0;
+  double _width = 0;
   final _formKey = GlobalKey<FormState>();
   String? _userPhone, _userPassword;
   Services _services = Services();
@@ -52,176 +51,177 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
-              height: _height * 0.09,
-            ),
+            SizedBox(height: _height * 0.09),
             Center(
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: _width * 0.08),
                 alignment: Alignment.center,
-                child: Text("أهلا ومرحبا  ",
+                child: Text(
+                  "أهلا ومرحبا  ",
                   maxLines: 1,
-                  style: TextStyle(fontSize: 17,color: cWhite,fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: cWhite,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-            SizedBox(
-              height: _width*.08,
-            ),
+            SizedBox(height: _width * .08),
             Container(
-
               margin: EdgeInsets.symmetric(horizontal: _width * 0.03),
-              child: Center(
-                child: Image.asset('assets/images/box.png'),
-              ),
+              child: Center(child: Image.asset('assets/images/box.png')),
             ),
-            SizedBox(
-              height: _width*.06,
-            ),
+            SizedBox(height: _width * .06),
             Center(
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: _width * 0.09),
                 alignment: Alignment.center,
-                child: Text("تسجيل دخول ",
+                child: Text(
+                  "تسجيل دخول ",
                   maxLines: 1,
-                  style: TextStyle(fontSize: 17,color: cWhite,fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: cWhite,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-            SizedBox(
-              height: _width*.4,
-            ),
+            SizedBox(height: _width * .4),
 
             Container(
+              child: CustomTextFormField(
+                iconIsImage: true,
+                imagePath: 'assets/images/user.png',
+                hintTxt: AppLocalizations.of(context)!.phoneNo,
+                suffixIcon: Image.asset("assets/images/sa.png"),
+                validationFunc: (value) {
+                  if (value!.trim().length == 0) {
+                    return AppLocalizations.of(context)!.phonoNoValidation;
+                  }
 
-
-                child: CustomTextFormField(
-              iconIsImage: true,
-              imagePath: 'assets/images/user.png',
-              hintTxt: AppLocalizations.of(context)!.phoneNo,
-              suffixIcon:  Image.asset("assets/images/sa.png"),
-              validationFunc: (value) {
-               if (value!.trim().length == 0) {
-                      return AppLocalizations.of(context)!.phonoNoValidation;
-                    }
-
-
-               if (value!.trim().length != 9) {
-                 return "يجب ان يكون  رقم الهاتف مكون من 9 ارقايم ويبدء ب 5 ";
-               }
-                return null;
-              },
-              inputData: TextInputType.number,
-              onChangedFunc: (String text) {
-                _userPhone = text.toString();
-              },
-            )),
-
-            SizedBox(
-              height: _width*.02,
+                  if (value!.trim().length != 9) {
+                    return "يجب ان يكون  رقم الهاتف مكون من 9 ارقايم ويبدء ب 5 ";
+                  }
+                  return null;
+                },
+                inputData: TextInputType.number,
+                onChangedFunc: (String text) {
+                  _userPhone = text.toString();
+                },
+              ),
             ),
 
+            SizedBox(height: _width * .02),
 
             Container(
+              child: CustomTextFormField(
+                isPassword: true,
+                iconIsImage: true,
+                imagePath: 'assets/images/password.png',
+                hintTxt: AppLocalizations.of(context)!.password,
+                validationFunc: (value) {
+                  if (value!.trim().length == 0) {
+                    return AppLocalizations.of(context)!.password;
+                  }
+                  return null;
+                },
 
-
-                child: CustomTextFormField(
-                  isPassword: true,
-                  iconIsImage: true,
-                  imagePath: 'assets/images/password.png',
-                  hintTxt: AppLocalizations.of(context)!.password,
-                  validationFunc: (value) {
-                    if (value!.trim().length == 0) {
-                      return AppLocalizations.of(context)!.password;
-                    }
-                    return null;
-                  },
-
-                  onChangedFunc: (String text) {
-                    _userPassword = text.toString();
-                  },
-                )),
-            SizedBox(
-              height: _width*.01,
+                onChangedFunc: (String text) {
+                  _userPassword = text.toString();
+                },
+              ),
             ),
+            SizedBox(height: _width * .01),
             Container(
               alignment: Alignment.centerLeft,
-              margin: EdgeInsets.symmetric(horizontal: _width * 0.07,vertical: _height * 0.02),
+              margin: EdgeInsets.symmetric(
+                horizontal: _width * 0.07,
+                vertical: _height * 0.02,
+              ),
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   showModalBottomSheet(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      context: context,
-                      builder: (builder) {
-                        return SingleChildScrollView(
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  bottom:
-                                  MediaQuery.of(context).viewInsets.bottom),
-                              child: PasswordRecoveryBottomSheet(),
-                            ));
-                      });
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    context: context,
+                    builder: (builder) {
+                      return SingleChildScrollView(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom,
+                          ),
+                          child: PasswordRecoveryBottomSheet(),
+                        ),
+                      );
+                    },
+                  );
                 },
                 child: RichText(
                   text: TextSpan(
-                    style: TextStyle(
-                        color:Colors.black , fontSize: 14),
-                    children: <TextSpan>[
-                      TextSpan(text:  "نسيت كلمة المرور ؟"),
-
-                    ],
+                    style: TextStyle(color: Colors.black, fontSize: 14),
+                    children: <TextSpan>[TextSpan(text: "نسيت كلمة المرور ؟")],
                   ),
                 ),
               ),
             ),
 
-            SizedBox(
-              height: _width*.2,
+            SizedBox(height: _width * .2),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 60,
+                child: CustomButton(
+                  btnColor: cLightLemon,
+                  btnLbl: 'تسجيل دخول',
+                  onPressedFunction: () async {
+                    if (_formKey.currentState!.validate()) {
+                      _firebaseMessaging.getToken().then((token) async {
+                        //       print('mobile token $token');
+                        _progressIndicatorState!.setIsLoading(true);
+                        var results = await _services.get(
+                          '${Utils.LOGIN_URL}?user_phone=$_userPhone&user_pass=$_userPassword&token=$token&lang=${_appState!.currentLang}&key=$cKey',
+                        );
+                        _progressIndicatorState!.setIsLoading(false);
+                        if (results['response'] == '1') {
+                          _appState!.setCurrentPhoneSend(_userPhone!);
+                          _appState!.setCurrentTokenSend(token!);
+                          showToast(context, message: results['message']);
+                          _appState!.setCurrentUser(
+                            User.fromJson(results["user_details"]),
+                          );
+                          SharedPreferencesHelper.save(
+                            "user",
+                            _appState!.currentUser,
+                          );
+                          _navigationState!.upadateNavigationIndex(0);
+                          Navigator.pushReplacementNamed(
+                            context,
+                            '/navigation',
+                          );
+                        } else {
+                          showErrorDialog(results['message'], context);
+                        }
+                      });
+                    }
+                  },
+                ),
+              ),
             ),
-           Align(
-             alignment: Alignment.bottomCenter,
-             child:  Container(
-               height: 60,
-               child: CustomButton(
-                 btnColor: cLightLemon,
-                 btnLbl: 'تسجيل دخول',
-                 onPressedFunction: () async {
-                   if (_formKey.currentState!.validate()) {
-                     _firebaseMessaging.getToken().then((token) async {
-                       //       print('mobile token $token');
-                       _progressIndicatorState!.setIsLoading(true);
-                       var results = await _services.get(
-                         '${Utils.LOGIN_URL}?user_phone=$_userPhone&user_pass=$_userPassword&token=$token&lang=${_appState!.currentLang}&key=$cKey',
-                       );
-                       _progressIndicatorState!.setIsLoading(false);
-                       if (results['response'] == '1') {
-                         _appState!.setCurrentPhoneSend(_userPhone!);
-                         _appState!.setCurrentTokenSend(token!);
-                         showToast(context,message: results['message']);
-                         _appState!.setCurrentUser(User.fromJson(results["user_details"]));
-                         SharedPreferencesHelper.save("user", _appState!.currentUser);
-                         _navigationState!.upadateNavigationIndex(0);
-                         Navigator.pushReplacementNamed(context, '/navigation');
-                       } else {
-                         showErrorDialog(results['message'], context);
-                       }
-                     });
-                   }
-                 },
-               ),
-             ),
-           ),
 
             Padding(padding: EdgeInsets.all(5)),
 
             Container(
-              margin: EdgeInsets.only(right: _width*.05,left: _width*.05),
+              margin: EdgeInsets.only(right: _width * .05, left: _width * .05),
               alignment: Alignment.centerLeft,
               child: GestureDetector(
-                child: Text(" تخطي كزائر",style: TextStyle(color: cOmarColor,fontSize: 14),),
-                onTap: (){
+                child: Text(
+                  " تخطي كزائر",
+                  style: TextStyle(color: cOmarColor, fontSize: 14),
+                ),
+                onTap: () {
                   _navigationState!.upadateNavigationIndex(0);
                   Navigator.pushReplacementNamed(context, '/navigation');
                 },
@@ -229,38 +229,44 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(vertical: _height *0.02),
-              child:
-              Column(
+              margin: EdgeInsets.symmetric(vertical: _height * 0.02),
+              child: Column(
                 children: <Widget>[
-                  Text("لو لم يكن لديك حساب",style: TextStyle(color: cOmarColor,fontSize: 14),),
+                  Text(
+                    "لو لم يكن لديك حساب",
+                    style: TextStyle(color: cOmarColor, fontSize: 14),
+                  ),
                   Padding(padding: EdgeInsets.all(3)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("يمكنك التسجيل",style: TextStyle(color: cOmarColor,fontSize: 14),),
+                      Text(
+                        "يمكنك التسجيل",
+                        style: TextStyle(color: cOmarColor, fontSize: 14),
+                      ),
                       Padding(padding: EdgeInsets.all(2)),
                       GestureDetector(
-                        child: Text("من هنا",style: TextStyle(color: cLightLemon,fontSize: 14,fontWeight: FontWeight.bold),),
-                        onTap: (){
+                        child: Text(
+                          "من هنا",
+                          style: TextStyle(
+                            color: cLightLemon,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () {
                           Navigator.pushNamed(context, '/register_screen');
                         },
-                      )
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
-
-
-
-
-
           ],
         ),
       ),
-    )
-    ;
+    );
   }
 
   @override
@@ -273,10 +279,9 @@ class _LoginScreenState extends State<LoginScreen> {
     _navigationState = Provider.of<NavigationState>(context);
     print('lang : ${_appState!.currentLang}');
     return NetworkIndicator(
-        child: PageContainer(
-
-      child: Scaffold(
-backgroundColor: Color(0xffF5F6F8),
+      child: PageContainer(
+        child: Scaffold(
+          backgroundColor: Color(0xffF5F6F8),
 
           body: Container(
             decoration: BoxDecoration(
@@ -288,17 +293,16 @@ backgroundColor: Color(0xffF5F6F8),
             child: SingleChildScrollView(
               reverse: true,
               child: Stack(
-
                 children: <Widget>[
                   _buildBodyItem(),
 
-                  Center(
-                    child: ProgressIndicatorComponent(),
-                  )
+                  Center(child: ProgressIndicatorComponent()),
                 ],
               ),
             ),
-          )),
-    ));
+          ),
+        ),
+      ),
+    );
   }
 }

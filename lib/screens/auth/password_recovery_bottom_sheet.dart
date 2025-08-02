@@ -21,97 +21,95 @@ class _PasswordRecoveryBottomSheetState
   String _userPhone = '';
   ProgressIndicatorState? _progressIndicatorState;
   Services _services = Services();
-  
+
   @override
   Widget build(BuildContext context) {
-      _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
+    _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final appState = Provider.of<AppState>(context);
-    return
-     Stack(
+    return Stack(
       children: <Widget>[
         Column(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(top: height *0.02),
-            child: Image.asset('assets/images/mail.png'),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: width *0.02,
-                vertical: height *0.02),
-            child: Text(
-              AppLocalizations.of(context)!.sendMessageToMobile,
-              style: TextStyle(
-                color: cBlack,
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-              ),
-              textAlign: TextAlign.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: height * 0.02),
+              child: Image.asset('assets/images/mail.png'),
             ),
-          ),
-          Container(
-              margin: EdgeInsets.only(
-                top: height *0.02,
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: width * 0.02,
+                vertical: height * 0.02,
               ),
-              child:  CustomTextFormField(
-              iconIsImage: true,
-              imagePath: 'assets/images/call.png', 
-              hintTxt: AppLocalizations.of(context)!.phoneNo,
+              child: Text(
+                AppLocalizations.of(context)!.sendMessageToMobile,
+                style: TextStyle(
+                  color: cBlack,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: height * 0.02),
+              child: CustomTextFormField(
+                iconIsImage: true,
+                imagePath: 'assets/images/call.png',
+                hintTxt: AppLocalizations.of(context)!.phoneNo,
 
-                suffixIcon:  Image.asset("assets/images/sa.png"),
+                suffixIcon: Image.asset("assets/images/sa.png"),
                 validationFunc: (value) {
                   if (value!.trim().length == 0) {
                     return AppLocalizations.of(context)!.phonoNoValidation;
                   }
-
 
                   if (value!.trim().length != 9) {
                     return "يجب ان يكون  رقم الهاتف مكون من 9 ارقايم ويبدء ب 5 ";
                   }
                   return null;
                 },
-              inputData: TextInputType.text,
-              onChangedFunc: (String text) {
-                _userPhone = text.toString();
-              },
-            )),
-          Container(
+                inputData: TextInputType.text,
+                onChangedFunc: (String text) {
+                  _userPhone = text.toString();
+                },
+              ),
+            ),
+            Container(
               height: 60,
               child: CustomButton(
                 btnLbl: AppLocalizations.of(context)!.send,
                 btnColor: cLightLemon,
                 onPressedFunction: () async {
-                   _progressIndicatorState!.setIsLoading(true);
-                    
-                    var results = await _services.get(
-                      Utils.PASSWORD_RECOVERY_URL + '?user_phone=$_userPhone&lang=${appState.currentLang}' 
-                    );
-                    _progressIndicatorState!.setIsLoading(false);
-                    if (results['response'] == '1') {
-                   showToast(context,message: results['message']);
-                   Navigator.pop(context);
-        
-                    } else {
-                      showErrorDialog(results['message'], context);
-                    }
+                  _progressIndicatorState!.setIsLoading(true);
+
+                  var results = await _services.get(
+                    Utils.PASSWORD_RECOVERY_URL +
+                        '?user_phone=$_userPhone&lang=${appState.currentLang}',
+                  );
+                  _progressIndicatorState!.setIsLoading(false);
+                  if (results['response'] == '1') {
+                    showToast(context, message: results['message']);
+                    Navigator.pop(context);
+                  } else {
+                    showErrorDialog(results['message'], context);
+                  }
                 },
-              ))
-        ],
-      ),
-      Positioned(
-        left: 5,
-        top: 5,
-        child: IconButton(
-          icon: Image.asset('assets/images/cancel.png'),
-          onPressed: (){
-            Navigator.pop(context);
-          },
+              ),
+            ),
+          ],
         ),
-      )
+        Positioned(
+          left: 5,
+          top: 5,
+          child: IconButton(
+            icon: Image.asset('assets/images/cancel.png'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
       ],
     );
-   
   }
 }

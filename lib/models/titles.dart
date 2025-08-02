@@ -3,11 +3,7 @@ class Titles {
   String? titlesName;
   String? titlesPhoto;
 
-  Titles({
-    this.titlesId,
-    this.titlesName,
-    this.titlesPhoto,
-  });
+  Titles({this.titlesId, this.titlesName, this.titlesPhoto});
 
   factory Titles.fromJson(Map<String, dynamic> json) => Titles(
     titlesId: json["titles_id"],

@@ -32,14 +32,14 @@ class AddReqScreen extends StatefulWidget {
 
 class _AddReqScreenState extends State<AddReqScreen> {
   bool _initialRun = true;
-  double _height=0;
-  double _width=0;
+  double _height = 0;
+  double _width = 0;
   final _formKey = GlobalKey<FormState>();
   String? _reqValue;
   Services _services = Services();
   AppState? _appState;
   ProgressIndicatorState? _progressIndicatorState;
-  String _userCredit='';
+  String _userCredit = '';
 
   FocusNode? _focusNode;
 
@@ -51,21 +51,17 @@ class _AddReqScreenState extends State<AddReqScreen> {
     }
   }
 
-
   Future<Null> _getUserCredit() async {
-    final response =
-    await _services.get("https://mahtco.net/app/api/get_user_credit?user_id=${_appState!.currentUser!.userId}");
+    final response = await _services.get(
+      "https://mahtco.net/app/api/get_user_credit?user_id=${_appState!.currentUser!.userId}",
+    );
 
     if (response['response'] == '1') {
-
       setState(() {
-        _userCredit=response['user_credit'];
+        _userCredit = response['user_credit'];
       });
     }
-
   }
-
-
 
   @override
   void didChangeDependencies() {
@@ -81,7 +77,6 @@ class _AddReqScreenState extends State<AddReqScreen> {
   void initState() {
     super.initState();
     _focusNode = FocusNode();
-
   }
 
   @override
@@ -97,27 +92,28 @@ class _AddReqScreenState extends State<AddReqScreen> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: _height * 0.16,
-            ),
+            SizedBox(height: _height * 0.16),
 
-            Text("الرصيد الحالي : "+_userCredit+" SR ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: cPrimaryColor),),
-            SizedBox(
-              height: _height * 0.04,
+            Text(
+              "الرصيد الحالي : " + _userCredit + " SR ",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: cPrimaryColor,
+              ),
             ),
+            SizedBox(height: _height * 0.04),
             Container(
               margin: EdgeInsets.only(
-                  top: _height * 0.02,
-                  left: _width * 0.025,
+                top: _height * 0.02,
+                left: _width * 0.025,
                 bottom: _width * 0.04,
-                  right: _width * 0.025),
+                right: _width * 0.025,
+              ),
               child: CustomTextFormField(
                 prefixIcon: Container(
                   margin: EdgeInsets.only(bottom: 5),
-                  child: Icon(
-                    Icons.person,
-                    size: 24,
-                  ),
+                  child: Icon(Icons.person, size: 24),
                 ),
                 hintTxt: "المبلغ المطلوب",
                 validationFunc: (value) {
@@ -132,14 +128,6 @@ class _AddReqScreenState extends State<AddReqScreen> {
                 },
               ),
             ),
-
-
-
-
-
-
-
-
 
             Container(
               margin: EdgeInsets.symmetric(vertical: _height * 0.02),
@@ -156,11 +144,11 @@ class _AddReqScreenState extends State<AddReqScreen> {
                     );
                     _progressIndicatorState!.setIsLoading(false);
                     if (results['response'] == '1') {
-                      showToast(context,message: results['message']);
+                      showToast(context, message: results['message']);
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ReqScreen()));
+                        context,
+                        MaterialPageRoute(builder: (context) => ReqScreen()),
+                      );
                     } else {
                       showErrorDialog(results['message'], context);
                     }
@@ -168,8 +156,6 @@ class _AddReqScreenState extends State<AddReqScreen> {
                 },
               ),
             ),
-
-
           ],
         ),
       ),
@@ -184,8 +170,8 @@ class _AddReqScreenState extends State<AddReqScreen> {
     _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
     _appState = Provider.of<AppState>(context);
     return NetworkIndicator(
-        child: PageContainer(
-      child: Scaffold(
+      child: PageContainer(
+        child: Scaffold(
           backgroundColor: Color(0xffF5F6F8),
           body: SingleChildScrollView(
             reverse: true,
@@ -200,31 +186,31 @@ class _AddReqScreenState extends State<AddReqScreen> {
                     appBarTitle: "طلب تحويل رصيد",
                     leading: _appState!.currentLang == 'ar'
                         ? IconButton(
-                      icon: Image.asset('assets/images/back.png',color: cPrimaryColor,),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
+                            icon: Image.asset(
+                              'assets/images/back.png',
+                              color: cPrimaryColor,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
                         : Container(),
                     trailing: _appState!.currentLang == 'en'
                         ? IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: cWhite,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
+                            icon: Icon(Icons.arrow_back_ios, color: cWhite),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
                         : Container(),
                   ),
                 ),
-                Center(
-                  child: ProgressIndicatorComponent(),
-                )
+                Center(child: ProgressIndicatorComponent()),
               ],
             ),
-          )),
-    ));
+          ),
+        ),
+      ),
+    );
   }
 }

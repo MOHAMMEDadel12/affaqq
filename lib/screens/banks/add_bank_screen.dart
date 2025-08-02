@@ -30,14 +30,13 @@ class AddBankScreen extends StatefulWidget {
 }
 
 class _AddBankScreenState extends State<AddBankScreen> {
-  double _height=0;
-  double _width=0;
+  double _height = 0;
+  double _width = 0;
   final _formKey = GlobalKey<FormState>();
   String? _bankTitle, _bankName, _bankAcount, _bankIban;
   Services _services = Services();
   AppState? _appState;
   ProgressIndicatorState? _progressIndicatorState;
-
 
   FocusNode? _focusNode;
 
@@ -49,14 +48,10 @@ class _AddBankScreenState extends State<AddBankScreen> {
     }
   }
 
-
-
-
   @override
   void initState() {
     super.initState();
     _focusNode = FocusNode();
-
   }
 
   @override
@@ -72,23 +67,19 @@ class _AddBankScreenState extends State<AddBankScreen> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: _height * 0.1,
-            ),
+            SizedBox(height: _height * 0.1),
 
             Container(
               margin: EdgeInsets.only(
-                  top: _height * 0.02,
-                  left: _width * 0.025,
+                top: _height * 0.02,
+                left: _width * 0.025,
                 bottom: _width * 0.04,
-                  right: _width * 0.025),
+                right: _width * 0.025,
+              ),
               child: CustomTextFormField(
                 prefixIcon: Container(
                   margin: EdgeInsets.only(bottom: 5),
-                  child: Icon(
-                    Icons.person,
-                    size: 24,
-                  ),
+                  child: Icon(Icons.person, size: 24),
                 ),
                 hintTxt: "اسم البنك",
                 validationFunc: (value) {
@@ -104,20 +95,17 @@ class _AddBankScreenState extends State<AddBankScreen> {
               ),
             ),
 
-
             Container(
               margin: EdgeInsets.only(
-                  top: _height * 0.02,
-                  left: _width * 0.025,
-                  bottom: _width * 0.04,
-                  right: _width * 0.025),
+                top: _height * 0.02,
+                left: _width * 0.025,
+                bottom: _width * 0.04,
+                right: _width * 0.025,
+              ),
               child: CustomTextFormField(
                 prefixIcon: Container(
                   margin: EdgeInsets.only(bottom: 5),
-                  child: Icon(
-                    Icons.person,
-                    size: 24,
-                  ),
+                  child: Icon(Icons.person, size: 24),
                 ),
                 hintTxt: "اسم صاحب الجساب",
                 validationFunc: (value) {
@@ -133,22 +121,17 @@ class _AddBankScreenState extends State<AddBankScreen> {
               ),
             ),
 
-
-
-
             Container(
               margin: EdgeInsets.only(
-                  top: _height * 0.02,
-                  left: _width * 0.025,
-                  bottom: _width * 0.04,
-                  right: _width * 0.025),
+                top: _height * 0.02,
+                left: _width * 0.025,
+                bottom: _width * 0.04,
+                right: _width * 0.025,
+              ),
               child: CustomTextFormField(
                 prefixIcon: Container(
                   margin: EdgeInsets.only(bottom: 5),
-                  child: Icon(
-                    Icons.person,
-                    size: 24,
-                  ),
+                  child: Icon(Icons.person, size: 24),
                 ),
                 hintTxt: "رقم الحساب",
                 validationFunc: (value) {
@@ -164,21 +147,17 @@ class _AddBankScreenState extends State<AddBankScreen> {
               ),
             ),
 
-
-
             Container(
               margin: EdgeInsets.only(
-                  top: _height * 0.02,
-                  left: _width * 0.025,
-                  bottom: _width * 0.04,
-                  right: _width * 0.025),
+                top: _height * 0.02,
+                left: _width * 0.025,
+                bottom: _width * 0.04,
+                right: _width * 0.025,
+              ),
               child: CustomTextFormField(
                 prefixIcon: Container(
                   margin: EdgeInsets.only(bottom: 5),
-                  child: Icon(
-                    Icons.person,
-                    size: 24,
-                  ),
+                  child: Icon(Icons.person, size: 24),
                 ),
                 hintTxt: "رقم الايبان",
                 validationFunc: (value) {
@@ -193,8 +172,6 @@ class _AddBankScreenState extends State<AddBankScreen> {
                 },
               ),
             ),
-
-
 
             Container(
               margin: EdgeInsets.symmetric(vertical: _height * 0.02),
@@ -211,11 +188,11 @@ class _AddBankScreenState extends State<AddBankScreen> {
                     );
                     _progressIndicatorState!.setIsLoading(false);
                     if (results['response'] == '1') {
-                      showToast(context,message: results['message']);
+                      showToast(context, message: results['message']);
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BanksScreen()));
+                        context,
+                        MaterialPageRoute(builder: (context) => BanksScreen()),
+                      );
                     } else {
                       showErrorDialog(results['message'], context);
                     }
@@ -223,8 +200,6 @@ class _AddBankScreenState extends State<AddBankScreen> {
                 },
               ),
             ),
-
-
           ],
         ),
       ),
@@ -239,8 +214,8 @@ class _AddBankScreenState extends State<AddBankScreen> {
     _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
     _appState = Provider.of<AppState>(context);
     return NetworkIndicator(
-        child: PageContainer(
-      child: Scaffold(
+      child: PageContainer(
+        child: Scaffold(
           backgroundColor: Color(0xffF5F6F8),
           body: SingleChildScrollView(
             reverse: true,
@@ -255,31 +230,31 @@ class _AddBankScreenState extends State<AddBankScreen> {
                     appBarTitle: "اضافة حساب بنكي",
                     leading: _appState!.currentLang == 'ar'
                         ? IconButton(
-                      icon: Image.asset('assets/images/back.png',color: cPrimaryColor,),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
+                            icon: Image.asset(
+                              'assets/images/back.png',
+                              color: cPrimaryColor,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
                         : Container(),
                     trailing: _appState!.currentLang == 'en'
                         ? IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: cWhite,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
+                            icon: Icon(Icons.arrow_back_ios, color: cWhite),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
                         : Container(),
                   ),
                 ),
-                Center(
-                  child: ProgressIndicatorComponent(),
-                )
+                Center(child: ProgressIndicatorComponent()),
               ],
             ),
-          )),
-    ));
+          ),
+        ),
+      ),
+    );
   }
 }

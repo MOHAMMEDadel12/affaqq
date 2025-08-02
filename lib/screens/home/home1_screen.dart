@@ -116,9 +116,10 @@ class _Home1ScreenState extends State<Home1Screen> {
   Future<List<Category>> _getSubCategories() async {
     String language = await SharedPreferencesHelper.getUserLang();
     Map<dynamic, dynamic> results = await _services.get(
-        Utils.SUBCATEGORIES_URL +
-            language +
-            "&cat_id=${_appState!.selectedCat.mtgerCatId}");
+      Utils.SUBCATEGORIES_URL +
+          language +
+          "&cat_id=${_appState!.selectedCat.mtgerCatId}",
+    );
     List categoryList = <Category>[];
     if (results['response'] == '1') {
       Iterable iterable = results['cats'];
@@ -132,8 +133,9 @@ class _Home1ScreenState extends State<Home1Screen> {
 
   Future<List<Category>> _getCategories() async {
     String language = await SharedPreferencesHelper.getUserLang();
-    Map<dynamic, dynamic> results =
-        await _services.get(Utils.CATEGORIES_URL + language);
+    Map<dynamic, dynamic> results = await _services.get(
+      Utils.CATEGORIES_URL + language,
+    );
     List categoryList = <Category>[];
     if (results['response'] == '1') {
       Iterable iterable = results['cats'];
@@ -154,7 +156,8 @@ class _Home1ScreenState extends State<Home1Screen> {
 
   Future<List<Product>> _getProducts(String? categoryId) async {
     Map<dynamic, dynamic> results = await _services.get(
-        'https://mahtco.net/app/api/show_mtgerr?lang=${_appState!.currentLang!}&page=1&cat_id=${_appState!.selectedCat.mtgerCatId}');
+      'https://mahtco.net/app/api/show_mtgerr?lang=${_appState!.currentLang!}&page=1&cat_id=${_appState!.selectedCat.mtgerCatId}',
+    );
     List<Product> productList = <Product>[];
     if (results['response'] == '1') {
       Iterable iterable = results['results'];
@@ -167,7 +170,8 @@ class _Home1ScreenState extends State<Home1Screen> {
 
   Future<List<Product>> _getProductsLimit(String? categoryId) async {
     Map<dynamic, dynamic> results = await _services.get(
-        'https://mahtco.net/app/api/show_mtgerr_limit?lang=${_appState!.currentLang!}&page=1&cat_id=${_appState!.selectedCat.mtgerCatId}');
+      'https://mahtco.net/app/api/show_mtgerr_limit?lang=${_appState!.currentLang!}&page=1&cat_id=${_appState!.selectedCat.mtgerCatId}',
+    );
     List<Product> productList = <Product>[];
     if (results['response'] == '1') {
       Iterable iterable = results['results'];
@@ -179,9 +183,12 @@ class _Home1ScreenState extends State<Home1Screen> {
   }
 
   Future<List<Product>> _getProductsWithSub(
-      String? categoryId, String? subId) async {
+    String? categoryId,
+    String? subId,
+  ) async {
     Map<dynamic, dynamic> results = await _services.get(
-        'https://mahtco.net/app/api/show_mtgerr?lang=${_appState!.currentLang!}&page=1&cat_id=${_appState!.selectedCat.mtgerCatId}&sub_id=${_appState!.selectedSub!.mtgerCatId!}');
+      'https://mahtco.net/app/api/show_mtgerr?lang=${_appState!.currentLang!}&page=1&cat_id=${_appState!.selectedCat.mtgerCatId}&sub_id=${_appState!.selectedSub!.mtgerCatId!}',
+    );
     List<Product> productList = <Product>[];
     if (results['response'] == '1') {
       Iterable iterable = results['results'];
@@ -199,12 +206,15 @@ class _Home1ScreenState extends State<Home1Screen> {
       Iterable iterable = results['results'];
       storeList = iterable.map((model) => Store.fromJson(model)).toList();
       if (_appState!.currentUser != null) {
-// app favourite list on consume on it
+        // app favourite list on consume on it
         for (int i = 0; i < storeList.length; i++) {
           print(
-              'id: ${storeList[i].mtgerId} : favourite ${storeList[i].isAddToFav}');
-          _storeState!
-              .setIsFavourite(storeList[i].mtgerId!, storeList[i].isAddToFav!);
+            'id: ${storeList[i].mtgerId} : favourite ${storeList[i].isAddToFav}',
+          );
+          _storeState!.setIsFavourite(
+            storeList[i].mtgerId!,
+            storeList[i].isAddToFav!,
+          );
         }
       }
     } else {
@@ -214,40 +224,49 @@ class _Home1ScreenState extends State<Home1Screen> {
   }
 
   Widget _buildCategoriesList() {
-    return LayoutBuilder(builder: (context, constraints) {
-      return FutureBuilder<List<Category>>(
-        future: _categoriesList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Consumer<AppState>(builder: (context, appState, child) {
-              return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FutureBuilder<List<Category>>(
+          future: _categoriesList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Consumer<AppState>(
+                builder: (context, appState, child) {
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
                         onTap: () {
                           setState(() {
                             _initialRun = true;
                             _appState!.setSelectedCat(snapshot.data![index]);
                             _appState!.setSelectedCatName(
-                                snapshot.data![index].mtgerCatName!);
-                            _productList =
-                                _getProducts(_appState!.selectedCat.mtgerCatId);
+                              snapshot.data![index].mtgerCatName!,
+                            );
+                            _productList = _getProducts(
+                              _appState!.selectedCat.mtgerCatId,
+                            );
                             _subcategoriesList = _getSubCategories();
                             _appState!.setSelectedSub(
-                                Category(mtgerCatId: "100000000"));
+                              Category(mtgerCatId: "100000000"),
+                            );
                             _initialRun = false;
                           });
                         },
                         child: Container(
-                          margin:
-                              EdgeInsets.symmetric(vertical: 10, horizontal: 7),
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 7,
+                          ),
                           decoration: BoxDecoration(
-                            color: snapshot.data![index].mtgerCatId ==
+                            color:
+                                snapshot.data![index].mtgerCatId ==
                                     _appState!.selectedCat.mtgerCatId
                                 ? Colors.white
                                 : null,
-                            borderRadius: snapshot.data![index].mtgerCatId ==
+                            borderRadius:
+                                snapshot.data![index].mtgerCatId ==
                                     _appState!.selectedCat.mtgerCatId
                                 ? BorderRadius.circular(15.0)
                                 : BorderRadius.circular(0),
@@ -255,67 +274,80 @@ class _Home1ScreenState extends State<Home1Screen> {
                           child: Row(
                             children: <Widget>[
                               Container(
-                                  margin: EdgeInsets.only(left: 5, right: 5),
-                                  child: Text(
-                                    snapshot.data![index].mtgerCatName!,
-                                    style: TextStyle(
-                                        color:
-                                            snapshot.data![index].mtgerCatId ==
-                                                    _appState!
-                                                        .selectedCat.mtgerCatId
-                                                ? cLightRed
-                                                : cBlack,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15),
-                                  ))
+                                margin: EdgeInsets.only(left: 5, right: 5),
+                                child: Text(
+                                  snapshot.data![index].mtgerCatName!,
+                                  style: TextStyle(
+                                    color:
+                                        snapshot.data![index].mtgerCatId ==
+                                            _appState!.selectedCat.mtgerCatId
+                                        ? cLightRed
+                                        : cBlack,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                        ));
-                  });
-            });
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
 
-          return Center(
-              child: SpinKitSquareCircle(color: cPrimaryColor, size: 25));
-        },
-      );
-    });
+            return Center(
+              child: SpinKitSquareCircle(color: cPrimaryColor, size: 25),
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _buildSubCategoriesList() {
-    return LayoutBuilder(builder: (context, constraints) {
-      return FutureBuilder<List<Category>>(
-        future: _subcategoriesList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Consumer<AppState>(builder: (context, appState, child) {
-              return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FutureBuilder<List<Category>>(
+          future: _subcategoriesList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Consumer<AppState>(
+                builder: (context, appState, child) {
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
                         onTap: () {
                           setState(() {
                             _initialRun = true;
                             _appState!.setSelectedSub(snapshot.data![index]);
                             _productList = _getProductsWithSub(
-                                _appState!.selectedCat.mtgerCatId,
-                                _appState!.selectedSub!.mtgerCatId);
+                              _appState!.selectedCat.mtgerCatId,
+                              _appState!.selectedSub!.mtgerCatId,
+                            );
                             _initialRun = false;
                           });
                         },
                         child: Container(
                           padding: EdgeInsets.all(5),
-                          margin:
-                              EdgeInsets.symmetric(vertical: 10, horizontal: 7),
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 7,
+                          ),
                           decoration: BoxDecoration(
-                            color: snapshot.data![index].mtgerCatId ==
+                            color:
+                                snapshot.data![index].mtgerCatId ==
                                     _appState!.selectedSub!.mtgerCatId
                                 ? cLightRed
                                 : null,
-                            borderRadius: snapshot.data![index].mtgerCatId ==
+                            borderRadius:
+                                snapshot.data![index].mtgerCatId ==
                                     _appState!.selectedSub!.mtgerCatId
                                 ? BorderRadius.circular(15.0)
                                 : BorderRadius.circular(0),
@@ -323,232 +355,224 @@ class _Home1ScreenState extends State<Home1Screen> {
                           child: Row(
                             children: <Widget>[
                               Container(
-                                  margin: EdgeInsets.only(left: 5, right: 5),
-                                  child: Text(
-                                    snapshot.data![index].mtgerCatName!,
-                                    style: TextStyle(
-                                        color:
-                                            snapshot.data![index].mtgerCatId ==
-                                                    _appState!
-                                                        .selectedSub!.mtgerCatId
-                                                ? cWhite
-                                                : cBlack,
-                                        fontSize: 15),
-                                  ))
+                                margin: EdgeInsets.only(left: 5, right: 5),
+                                child: Text(
+                                  snapshot.data![index].mtgerCatName!,
+                                  style: TextStyle(
+                                    color:
+                                        snapshot.data![index].mtgerCatId ==
+                                            _appState!.selectedSub!.mtgerCatId
+                                        ? cWhite
+                                        : cBlack,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                        ));
-                  });
-            });
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
 
-          return Center(
-              child: SpinKitSquareCircle(color: cPrimaryColor, size: 25));
-        },
-      );
-    });
+            return Center(
+              child: SpinKitSquareCircle(color: cPrimaryColor, size: 25),
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _buildProducts() {
-    return LayoutBuilder(builder: (context, constraints) {
-      return FutureBuilder<List<Product>>(
-        future: _productList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data!.length > 0) {
-              return GridView.builder(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FutureBuilder<List<Product>>(
+          future: _productList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data!.length > 0) {
+                return GridView.builder(
                   primary: true,
                   padding: const EdgeInsets.all(0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 1,
-                      mainAxisSpacing: 1,
-                      childAspectRatio: 3.2 / 5),
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 1,
+                    mainAxisSpacing: 1,
+                    childAspectRatio: 3.2 / 5,
+                  ),
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () async {
-                          //  _productState!.setCurrentProduct(snapshot.data![index]);
+                      onTap: () async {
+                        //  _productState!.setCurrentProduct(snapshot.data![index]);
 
-                          showModalBottomSheet<dynamic>(
-                              isScrollControlled: true,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20))),
-                              context: context,
-                              builder: (builder) {
-                                return Container(
-                                  height: _height * .95,
-                                  child: LayoutBuilder(
-                                      builder: (context, constraints) {
-                                    return Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                .viewInsets
-                                                .bottom),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            GestureDetector(
-                                              child: Container(
-                                                alignment: Alignment.centerLeft,
-                                                margin: EdgeInsets.only(
-                                                    left: _width * .04,
-                                                    top: _width * .04),
-                                                child: Image.asset(
-                                                  'assets/images/close.png',
-                                                  color: cLightRed,
-                                                ),
-                                              ),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                              },
+                        showModalBottomSheet<dynamic>(
+                          isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          context: context,
+                          builder: (builder) {
+                            return Container(
+                              height: _height * .95,
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(
+                                        context,
+                                      ).viewInsets.bottom,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          child: Container(
+                                            alignment: Alignment.centerLeft,
+                                            margin: EdgeInsets.only(
+                                              left: _width * .04,
+                                              top: _width * .04,
                                             ),
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.only(right: 20),
-                                              child: Image.network(
-                                                snapshot.data![index]
-                                                    .adsMtgerPhoto!,
-                                                width: _width,
-                                                height: _height * .25,
-                                              ),
+                                            child: Image.asset(
+                                              'assets/images/close.png',
+                                              color: cLightRed,
                                             ),
-                                            Padding(padding: EdgeInsets.all(8)),
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  right: _width * .06,
-                                                  left: _width * .06),
-                                              child: Text(
-                                                snapshot.data![index]
-                                                        .adsMtgerName! +
-                                                    " / " +
-                                                    snapshot.data![index]
-                                                        .adsMtgerColor!,
-                                                style: TextStyle(
-                                                    color: cText,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                          ),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(right: 20),
+                                          child: Image.network(
+                                            snapshot
+                                                .data![index]
+                                                .adsMtgerPhoto!,
+                                            width: _width,
+                                            height: _height * .25,
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(8)),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: _width * .06,
+                                            left: _width * .06,
+                                          ),
+                                          child: Text(
+                                            snapshot
+                                                    .data![index]
+                                                    .adsMtgerName! +
+                                                " / " +
+                                                snapshot
+                                                    .data![index]
+                                                    .adsMtgerColor!,
+                                            style: TextStyle(
+                                              color: cText,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                            Padding(padding: EdgeInsets.all(3)),
-                                            Container(
-                                                padding: EdgeInsets.only(
-                                                    right: _width * .06,
-                                                    left: _width * .06),
-                                                child: Text(
-                                                  snapshot.data![index]
-                                                      .adsMtgerDetails!,
-                                                  style: TextStyle(
-                                                    color: cDarkGrey,
-                                                    fontSize: 15,
-                                                  ),
-                                                )),
-                                            Padding(
-                                                padding: EdgeInsets.all(10)),
-                                            snapshot.data![index]
-                                                            .ads_mtger_price_after_discount !=
-                                                        "0" &&
-                                                    snapshot.data![index]
-                                                            .ads_mtger_price_after_discount !=
-                                                        null
-                                                ? Container(
-                                                    padding: EdgeInsets.only(
-                                                        right: _width * .06,
-                                                        left: _width * .06),
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          snapshot.data![index]
-                                                              .adsMtgerPrice!,
-                                                          style: TextStyle(
-                                                              color: cLightRed,
-                                                              fontSize: 28,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .lineThrough),
-                                                        ),
-                                                        Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    2)),
-                                                        Text(
-                                                          "ريال",
-                                                          style: TextStyle(
-                                                              color: cText,
-                                                              fontSize: 25,
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .lineThrough),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                : Container(
-                                                    padding: EdgeInsets.only(
-                                                        right: _width * .06,
-                                                        left: _width * .06),
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          snapshot.data![index]
-                                                              .adsMtgerPrice!,
-                                                          style: TextStyle(
-                                                              color: cLightRed,
-                                                              fontSize: 28,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                        Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    2)),
-                                                        Text(
-                                                          "ريال",
-                                                          style: TextStyle(
-                                                            color: cText,
-                                                            fontSize: 25,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                            if (snapshot.data![index]
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(3)),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: _width * .06,
+                                            left: _width * .06,
+                                          ),
+                                          child: Text(
+                                            snapshot
+                                                .data![index]
+                                                .adsMtgerDetails!,
+                                            style: TextStyle(
+                                              color: cDarkGrey,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(10)),
+                                        snapshot
+                                                        .data![index]
                                                         .ads_mtger_price_after_discount !=
                                                     "0" &&
-                                                snapshot.data![index]
+                                                snapshot
+                                                        .data![index]
                                                         .ads_mtger_price_after_discount !=
-                                                    null)
-                                              Container(
+                                                    null
+                                            ? Container(
                                                 padding: EdgeInsets.only(
-                                                    right: _width * .06,
-                                                    left: _width * .06),
+                                                  right: _width * .06,
+                                                  left: _width * .06,
+                                                ),
                                                 child: Row(
                                                   children: [
                                                     Text(
-                                                      snapshot.data![index]
-                                                          .ads_mtger_price_after_discount,
+                                                      snapshot
+                                                          .data![index]
+                                                          .adsMtgerPrice!,
                                                       style: TextStyle(
-                                                          color: cLightRed,
-                                                          fontSize: 28,
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                        color: cLightRed,
+                                                        fontSize: 28,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough,
+                                                      ),
                                                     ),
                                                     Padding(
-                                                        padding:
-                                                            EdgeInsets.all(2)),
+                                                      padding: EdgeInsets.all(
+                                                        2,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "ريال",
+                                                      style: TextStyle(
+                                                        color: cText,
+                                                        fontSize: 25,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : Container(
+                                                padding: EdgeInsets.only(
+                                                  right: _width * .06,
+                                                  left: _width * .06,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      snapshot
+                                                          .data![index]
+                                                          .adsMtgerPrice!,
+                                                      style: TextStyle(
+                                                        color: cLightRed,
+                                                        fontSize: 28,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                        2,
+                                                      ),
+                                                    ),
                                                     Text(
                                                       "ريال",
                                                       style: TextStyle(
@@ -559,778 +583,863 @@ class _Home1ScreenState extends State<Home1Screen> {
                                                   ],
                                                 ),
                                               ),
-                                            Padding(
-                                                padding: EdgeInsets.all(
-                                                    _width * .02)),
-                                            snapshot.data![index]
-                                                        .adsMtgerState ==
-                                                    "1"
-                                                ? CustomButton1(
-                                                    btnLbl: "اضافة للسلة",
-                                                    onPressedFunction:
-                                                        () async {
-                                                      if (_appState!
-                                                              .currentUser !=
-                                                          null) {
-                                                        _progressIndicatorState!
-                                                            .setIsLoading(true);
-                                                        var results =
-                                                            await _services.get(
-                                                          'https://mahtco.net/app/api/add_cart?user_id=${_appState!.currentUser!.userId}&ads_id=${snapshot.data![index].adsMtgerId}&amountt=1&lang=${_appState!.currentLang}&cart_price=${snapshot.data![index].adsMtgerPriceAfterDiscount =="1"?snapshot.data![index].ads_mtger_price_after_discount :snapshot.data![index].adsMtgerPrice}',
+                                        if (snapshot
+                                                    .data![index]
+                                                    .ads_mtger_price_after_discount !=
+                                                "0" &&
+                                            snapshot
+                                                    .data![index]
+                                                    .ads_mtger_price_after_discount !=
+                                                null)
+                                          Container(
+                                            padding: EdgeInsets.only(
+                                              right: _width * .06,
+                                              left: _width * .06,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  snapshot
+                                                      .data![index]
+                                                      .ads_mtger_price_after_discount,
+                                                  style: TextStyle(
+                                                    color: cLightRed,
+                                                    fontSize: 28,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.all(2),
+                                                ),
+                                                Text(
+                                                  "ريال",
+                                                  style: TextStyle(
+                                                    color: cText,
+                                                    fontSize: 25,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        Padding(
+                                          padding: EdgeInsets.all(_width * .02),
+                                        ),
+                                        snapshot.data![index].adsMtgerState ==
+                                                "1"
+                                            ? CustomButton1(
+                                                btnLbl: "اضافة للسلة",
+                                                onPressedFunction: () async {
+                                                  if (_appState!.currentUser !=
+                                                      null) {
+                                                    _progressIndicatorState!
+                                                        .setIsLoading(true);
+                                                    var results =
+                                                        await _services.get(
+                                                          'https://mahtco.net/app/api/add_cart?user_id=${_appState!.currentUser!.userId}&ads_id=${snapshot.data![index].adsMtgerId}&amountt=1&lang=${_appState!.currentLang}&cart_price=${snapshot.data![index].adsMtgerPriceAfterDiscount == "1" ? snapshot.data![index].ads_mtger_price_after_discount : snapshot.data![index].adsMtgerPrice}',
                                                         );
 
-                                                        //https://mahtco.net/app/api/add_cart?user_id=${_appState!.currentUser!.userId}&ads_id=${snapshot.data![index].adsMtgerId}&amountt=1&lang=${_appState!.currentLang}&cart_price=${snapshot.data![index].adsMtgerPriceAfterDiscount =="1"?snapshot.data![index].ads_mtger_price_after_discount :snapshot.data![index].adsMtgerPrice}
-                                                        _progressIndicatorState!
-                                                            .setIsLoading(
-                                                                false);
-                                                        if (results[
-                                                                'response'] ==
-                                                            '1') {
-                                                          _storeState!
-                                                              .setCurrentIsAddToCart(
-                                                                  1);
-                                                          // Navigator.pushNamed(context, '/store_screen');
-                                                          showToast(context,
-                                                              message: results[
-                                                                  'message']);
-                                                          Navigator.pop(
-                                                              context);
-                                                        } else {
-                                                          showErrorDialog(
-                                                              results[
-                                                                  'message'],
-                                                              context);
-                                                        }
-                                                      } else {
-                                                        Navigator.pushNamed(
-                                                            context,
-                                                            '/login_screen');
-                                                      }
-                                                    },
-                                                  )
-                                                : Container(
-                                                    margin: EdgeInsets.only(
-                                                      right: _width * .06,
-                                                      left: _width * .06,
-                                                    ),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.cancel_outlined,
-                                                          color: Colors.red,
-                                                          size: 22,
-                                                        ),
-                                                        Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    2)),
-                                                        Text(
-                                                          "نفذت الكمية",
-                                                          style: TextStyle(
-                                                              color: Colors.red,
-                                                              fontSize: 22),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                            Container(
-                                              margin: EdgeInsets.only(
+                                                    //https://mahtco.net/app/api/add_cart?user_id=${_appState!.currentUser!.userId}&ads_id=${snapshot.data![index].adsMtgerId}&amountt=1&lang=${_appState!.currentLang}&cart_price=${snapshot.data![index].adsMtgerPriceAfterDiscount =="1"?snapshot.data![index].ads_mtger_price_after_discount :snapshot.data![index].adsMtgerPrice}
+                                                    _progressIndicatorState!
+                                                        .setIsLoading(false);
+                                                    if (results['response'] ==
+                                                        '1') {
+                                                      _storeState!
+                                                          .setCurrentIsAddToCart(
+                                                            1,
+                                                          );
+                                                      // Navigator.pushNamed(context, '/store_screen');
+                                                      showToast(
+                                                        context,
+                                                        message:
+                                                            results['message'],
+                                                      );
+                                                      Navigator.pop(context);
+                                                    } else {
+                                                      showErrorDialog(
+                                                        results['message'],
+                                                        context,
+                                                      );
+                                                    }
+                                                  } else {
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      '/login_screen',
+                                                    );
+                                                  }
+                                                },
+                                              )
+                                            : Container(
+                                                margin: EdgeInsets.only(
                                                   right: _width * .06,
-                                                  left: _width * .06),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Padding(
+                                                  left: _width * .06,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.cancel_outlined,
+                                                      color: Colors.red,
+                                                      size: 22,
+                                                    ),
+                                                    Padding(
                                                       padding: EdgeInsets.all(
-                                                          _width * .02)),
-                                                  DottedLine(
-                                                    direction: Axis.horizontal,
-                                                    alignment:
-                                                        WrapAlignment.center,
-                                                    lineLength: double.infinity,
-                                                    lineThickness: 1.0,
-                                                    dashLength: 4.0,
-                                                    dashColor: Colors.black,
-                                                    dashRadius: 4.0,
-                                                    dashGapLength: 4.0,
-                                                    dashGapColor:
-                                                        Colors.transparent,
-                                                    dashGapRadius: 0.0,
-                                                  ),
-                                                  Padding(
-                                                      padding: EdgeInsets.all(
-                                                          _width * .02)),
-                                                  Text(
-                                                    "أقوي توفير",
-                                                    style: TextStyle(
-                                                        color: cText,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  Padding(
-                                                      padding: EdgeInsets.all(
-                                                          _width * .02)),
-                                                ],
+                                                        2,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "نفذت الكمية",
+                                                      style: TextStyle(
+                                                        color: Colors.red,
+                                                        fontSize: 22,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            Container(
-                                                padding: EdgeInsets.only(
-                                                    right: _width * .04,
-                                                    left: _width * .04),
-                                                height: _height * .3,
-                                                child: _buildProductsLimit()),
-                                          ],
-                                        ));
-                                  }),
-                                );
-                              });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          margin: EdgeInsets.only(
-                              top: 2, left: 2, right: 2, bottom: 0),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 1.0, color: Color(0xffEBEBEB)),
-                              color: cWhite,
-                              borderRadius: BorderRadius.circular(
-                                10.0,
-                              )),
-                          child: Column(
-                            children: <Widget>[
-                              // Text(_sValue.toString()),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  snapshot.data![index].adsMtgerState == "1"
-                                      ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Image.asset(
-                                                "assets/images/plus1.png")
-                                          ],
-                                        )
-                                      : Container(
-                                          alignment: Alignment.center,
-                                          height: 28,
-                                          child: Text(
-                                            "نفذت الكمية",
-                                            style: TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 14),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                            right: _width * .06,
+                                            left: _width * .06,
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.all(
+                                                  _width * .02,
+                                                ),
+                                              ),
+                                              DottedLine(
+                                                direction: Axis.horizontal,
+                                                alignment: WrapAlignment.center,
+                                                lineLength: double.infinity,
+                                                lineThickness: 1.0,
+                                                dashLength: 4.0,
+                                                dashColor: Colors.black,
+                                                dashRadius: 4.0,
+                                                dashGapLength: 4.0,
+                                                dashGapColor:
+                                                    Colors.transparent,
+                                                dashGapRadius: 0.0,
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.all(
+                                                  _width * .02,
+                                                ),
+                                              ),
+                                              Text(
+                                                "أقوي توفير",
+                                                style: TextStyle(
+                                                  color: cText,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.all(
+                                                  _width * .02,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                  Container(
-                                    child: Image.network(
-                                      snapshot.data![index].adsMtgerPhoto!,
-                                      width: _width * .3,
-                                      height: _height * .07,
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.only(
-                                        bottom: 5, right: 0, left: 0, top: 3),
-                                    child: Text(
-                                      snapshot.data![index].adsMtgerName!,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          color: cText),
-                                    ),
-                                  ),
-                                  snapshot.data![index]
-                                                  .ads_mtger_price_after_discount !=
-                                              "0" &&
-                                          snapshot.data![index]
-                                                  .ads_mtger_price_after_discount !=
-                                              null
-                                      ? Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Container(
-                                                child: Text(
-                                              snapshot
-                                                  .data![index].adsMtgerPrice!,
-                                              style: TextStyle(
-                                                  color: cLightRed,
-                                                  fontSize: 15,
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
-                                            )),
-                                            Padding(padding: EdgeInsets.all(2)),
-                                            Container(
-                                              child: Text(
-                                                "ريال",
-                                                style: TextStyle(
-                                                    color: cText,
-                                                    fontSize: 15,
-                                                    decoration: TextDecoration
-                                                        .lineThrough,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Container(
-                                                child: Text(
-                                              snapshot
-                                                  .data![index].adsMtgerPrice!,
-                                              style: TextStyle(
-                                                color: cLightRed,
-                                                fontSize: 15,
-                                              ),
-                                            )),
-                                            Padding(padding: EdgeInsets.all(2)),
-                                            Container(
-                                              child: Text(
-                                                "ريال",
-                                                style: TextStyle(
-                                                    color: cText,
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                            ),
-                                          ],
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: _width * .04,
+                                            left: _width * .04,
+                                          ),
+                                          height: _height * .3,
+                                          child: _buildProductsLimit(),
                                         ),
-                                  if (snapshot.data![index]
-                                              .ads_mtger_price_after_discount !=
-                                          "0" &&
-                                      snapshot.data![index]
-                                              .ads_mtger_price_after_discount !=
-                                          null)
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          right: _width * .06,
-                                          left: _width * .06),
-                                      child: Row(
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        margin: EdgeInsets.only(
+                          top: 2,
+                          left: 2,
+                          right: 2,
+                          bottom: 0,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1.0,
+                            color: Color(0xffEBEBEB),
+                          ),
+                          color: cWhite,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            // Text(_sValue.toString()),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                snapshot.data![index].adsMtgerState == "1"
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
-                                          Text(
-                                            snapshot.data![index]
-                                                .ads_mtger_price_after_discount,
-                                            style: TextStyle(
+                                          Image.asset(
+                                            "assets/images/plus1.png",
+                                          ),
+                                        ],
+                                      )
+                                    : Container(
+                                        alignment: Alignment.center,
+                                        height: 28,
+                                        child: Text(
+                                          "نفذت الكمية",
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                Container(
+                                  child: Image.network(
+                                    snapshot.data![index].adsMtgerPhoto!,
+                                    width: _width * .3,
+                                    height: _height * .07,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.only(
+                                    bottom: 5,
+                                    right: 0,
+                                    left: 0,
+                                    top: 3,
+                                  ),
+                                  child: Text(
+                                    snapshot.data![index].adsMtgerName!,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: cText,
+                                    ),
+                                  ),
+                                ),
+                                snapshot
+                                                .data![index]
+                                                .ads_mtger_price_after_discount !=
+                                            "0" &&
+                                        snapshot
+                                                .data![index]
+                                                .ads_mtger_price_after_discount !=
+                                            null
+                                    ? Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              snapshot
+                                                  .data![index]
+                                                  .adsMtgerPrice!,
+                                              style: TextStyle(
                                                 color: cLightRed,
                                                 fontSize: 15,
-                                                fontWeight: FontWeight.bold),
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                              ),
+                                            ),
                                           ),
                                           Padding(padding: EdgeInsets.all(2)),
-                                          Text(
-                                            "ريال",
+                                          Container(
+                                            child: Text(
+                                              "ريال",
+                                              style: TextStyle(
+                                                color: cText,
+                                                fontSize: 15,
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              snapshot
+                                                  .data![index]
+                                                  .adsMtgerPrice!,
+                                              style: TextStyle(
+                                                color: cLightRed,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(padding: EdgeInsets.all(2)),
+                                          Container(
+                                            child: Text(
+                                              "ريال",
+                                              style: TextStyle(
+                                                color: cText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                if (snapshot
+                                            .data![index]
+                                            .ads_mtger_price_after_discount !=
+                                        "0" &&
+                                    snapshot
+                                            .data![index]
+                                            .ads_mtger_price_after_discount !=
+                                        null)
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      right: _width * .06,
+                                      left: _width * .06,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          snapshot
+                                              .data![index]
+                                              .ads_mtger_price_after_discount,
+                                          style: TextStyle(
+                                            color: cLightRed,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(2)),
+                                        Text(
+                                          "ريال",
+                                          style: TextStyle(
+                                            color: cText,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return NoData(message: "لا يوجد نتائج");
+              }
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+
+            return Center(
+              child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildProductsLimit() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FutureBuilder<List<Product>>(
+          future: _productListLimit,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data!.length > 0) {
+                return GridView.builder(
+                  primary: true,
+                  padding: const EdgeInsets.all(0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 1,
+                    mainAxisSpacing: 1,
+                    childAspectRatio: 3 / 5,
+                  ),
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () async {
+                        //  _productState!.setCurrentProduct(snapshot.data![index]);
+
+                        showModalBottomSheet<dynamic>(
+                          isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          context: context,
+                          builder: (builder) {
+                            return Container(
+                              height: _height * .70,
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(
+                                        context,
+                                      ).viewInsets.bottom,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          height: 30,
+                                          child: Image.asset(
+                                            'assets/images/bottomTop.png',
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(right: 20),
+                                          child: Image.network(
+                                            snapshot
+                                                .data![index]
+                                                .adsMtgerPhoto!,
+                                            width: _width,
+                                            height: _height * .3,
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(8)),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: _width * .06,
+                                            left: _width * .06,
+                                          ),
+                                          child: Text(
+                                            snapshot
+                                                    .data![index]
+                                                    .adsMtgerName! +
+                                                " / " +
+                                                snapshot
+                                                    .data![index]
+                                                    .adsMtgerColor!,
+                                            style: TextStyle(
+                                              color: cText,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: _width * .06,
+                                            left: _width * .06,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                snapshot
+                                                    .data![index]
+                                                    .adsMtgerPrice!,
+                                                style: TextStyle(
+                                                  color: cLightRed,
+                                                  fontSize: 35,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.all(2),
+                                              ),
+                                              Text(
+                                                "ريال",
+                                                style: TextStyle(
+                                                  color: cText,
+                                                  fontSize: 25,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(6)),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: _width * .06,
+                                            left: _width * .06,
+                                          ),
+                                          child: Text(
+                                            snapshot.data![index].adsMtgerName!,
                                             style: TextStyle(
                                               color: cText,
                                               fontSize: 15,
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ));
-                  });
-            } else {
-              return NoData(message: "لا يوجد نتائج");
-            }
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-
-          return Center(
-              child: SpinKitThreeBounce(
-            color: cPrimaryColor,
-            size: 40,
-          ));
-        },
-      );
-    });
-  }
-
-  Widget _buildProductsLimit() {
-    return LayoutBuilder(builder: (context, constraints) {
-      return FutureBuilder<List<Product>>(
-        future: _productListLimit,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data!.length > 0) {
-              return GridView.builder(
-                  primary: true,
-                  padding: const EdgeInsets.all(0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 1,
-                      mainAxisSpacing: 1,
-                      childAspectRatio: 3 / 5),
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () async {
-                          //  _productState!.setCurrentProduct(snapshot.data![index]);
-
-                          showModalBottomSheet<dynamic>(
-                              isScrollControlled: true,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20))),
-                              context: context,
-                              builder: (builder) {
-                                return Container(
-                                  height: _height * .70,
-                                  child: LayoutBuilder(
-                                      builder: (context, constraints) {
-                                    return Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                .viewInsets
-                                                .bottom),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: Image.asset(
-                                                  'assets/images/bottomTop.png'),
-                                            ),
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.only(right: 20),
-                                              child: Image.network(
-                                                snapshot.data![index]
-                                                    .adsMtgerPhoto!,
-                                                width: _width,
-                                                height: _height * .3,
-                                              ),
-                                            ),
-                                            Padding(padding: EdgeInsets.all(8)),
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  right: _width * .06,
-                                                  left: _width * .06),
-                                              child: Text(
-                                                snapshot.data![index]
-                                                        .adsMtgerName! +
-                                                    " / " +
-                                                    snapshot.data![index]
-                                                        .adsMtgerColor!,
-                                                style: TextStyle(
-                                                    color: cText,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.all(15)),
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  right: _width * .06,
-                                                  left: _width * .06),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    snapshot.data![index]
-                                                        .adsMtgerPrice!,
-                                                    style: TextStyle(
-                                                        color: cLightRed,
-                                                        fontSize: 35,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  Padding(
-                                                      padding:
-                                                          EdgeInsets.all(2)),
-                                                  Text(
-                                                    "ريال",
-                                                    style: TextStyle(
-                                                      color: cText,
-                                                      fontSize: 25,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(padding: EdgeInsets.all(6)),
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  right: _width * .06,
-                                                  left: _width * .06),
-                                              child: Text(
-                                                snapshot
-                                                    .data![index].adsMtgerName!,
-                                                style: TextStyle(
-                                                    color: cText, fontSize: 15),
-                                              ),
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.all(
-                                                    _width * .04)),
-                                            snapshot.data![index]
-                                                        .adsMtgerState ==
-                                                    "1"
-                                                ? CustomButton1(
-                                                    btnLbl: "اضافة للسلة",
-                                                    onPressedFunction:
-                                                        () async {
-                                                      if (_appState!
-                                                              .currentUser !=
-                                                          null) {
-                                                        _progressIndicatorState!
-                                                            .setIsLoading(true);
-                                                        var results =
-                                                            await _services.get(
-                                                          'https://mahtco.net/app/api/add_cart?user_id=${_appState!.currentUser!.userId}&ads_id=${snapshot.data![index].adsMtgerId}&amountt=1&lang=${_appState!.currentLang}&cart_price=${snapshot.data![index].adsMtgerPriceAfterDiscount =="1"?snapshot.data![index].ads_mtger_price_after_discount :snapshot.data![index].adsMtgerPrice}',
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(_width * .04),
+                                        ),
+                                        snapshot.data![index].adsMtgerState ==
+                                                "1"
+                                            ? CustomButton1(
+                                                btnLbl: "اضافة للسلة",
+                                                onPressedFunction: () async {
+                                                  if (_appState!.currentUser !=
+                                                      null) {
+                                                    _progressIndicatorState!
+                                                        .setIsLoading(true);
+                                                    var results =
+                                                        await _services.get(
+                                                          'https://mahtco.net/app/api/add_cart?user_id=${_appState!.currentUser!.userId}&ads_id=${snapshot.data![index].adsMtgerId}&amountt=1&lang=${_appState!.currentLang}&cart_price=${snapshot.data![index].adsMtgerPriceAfterDiscount == "1" ? snapshot.data![index].ads_mtger_price_after_discount : snapshot.data![index].adsMtgerPrice}',
                                                         );
-                                                        _progressIndicatorState!
-                                                            .setIsLoading(
-                                                                false);
-                                                        if (results[
-                                                                'response'] ==
-                                                            '1') {
-                                                          _storeState!
-                                                              .setCurrentIsAddToCart(
-                                                                  1);
-                                                          // Navigator.pushNamed(context, '/store_screen');
-                                                          showToast(context,
-                                                              message: results[
-                                                                  'message']);
-                                                          Navigator.pop(
-                                                              context);
-                                                        } else {
-                                                          showErrorDialog(
-                                                              results[
-                                                                  'message'],
-                                                              context);
-                                                        }
-                                                      } else {
-                                                        Navigator.pushNamed(
-                                                            context,
-                                                            '/login_screen');
-                                                      }
-                                                    },
-                                                  )
-                                                : Container(
-                                                    margin: EdgeInsets.only(
-                                                      right: _width * .06,
-                                                      left: _width * .06,
+                                                    _progressIndicatorState!
+                                                        .setIsLoading(false);
+                                                    if (results['response'] ==
+                                                        '1') {
+                                                      _storeState!
+                                                          .setCurrentIsAddToCart(
+                                                            1,
+                                                          );
+                                                      // Navigator.pushNamed(context, '/store_screen');
+                                                      showToast(
+                                                        context,
+                                                        message:
+                                                            results['message'],
+                                                      );
+                                                      Navigator.pop(context);
+                                                    } else {
+                                                      showErrorDialog(
+                                                        results['message'],
+                                                        context,
+                                                      );
+                                                    }
+                                                  } else {
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      '/login_screen',
+                                                    );
+                                                  }
+                                                },
+                                              )
+                                            : Container(
+                                                margin: EdgeInsets.only(
+                                                  right: _width * .06,
+                                                  left: _width * .06,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.cancel_outlined,
+                                                      color: Colors.red,
+                                                      size: 22,
                                                     ),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.cancel_outlined,
-                                                          color: Colors.red,
-                                                          size: 22,
-                                                        ),
-                                                        Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    2)),
-                                                        Text(
-                                                          "نفذت الكمية",
-                                                          style: TextStyle(
-                                                              color: Colors.red,
-                                                              fontSize: 22),
-                                                        ),
-                                                      ],
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                        2,
+                                                      ),
                                                     ),
-                                                  ),
-                                          ],
-                                        ));
-                                  }),
-                                );
-                              });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.only(
-                              top: 0, left: 5, right: 5, bottom: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 1.0, color: Color(0xffEBEBEB)),
-                              color: cWhite,
-                              borderRadius: BorderRadius.circular(
-                                10.0,
-                              )),
-                          child: Column(
-                            children: <Widget>[
-                              // Text(_sValue.toString()),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Image.asset("assets/images/plus1.png")
-                                    ],
+                                                    Text(
+                                                      "نفذت الكمية",
+                                                      style: TextStyle(
+                                                        color: Colors.red,
+                                                        fontSize: 22,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        margin: EdgeInsets.only(
+                          top: 0,
+                          left: 5,
+                          right: 5,
+                          bottom: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1.0,
+                            color: Color(0xffEBEBEB),
+                          ),
+                          color: cWhite,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            // Text(_sValue.toString()),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Image.asset("assets/images/plus1.png"),
+                                  ],
+                                ),
+                                Container(
+                                  child: Image.network(
+                                    snapshot.data![index].adsMtgerPhoto!,
+                                    width: _width * .3,
+                                    height: _height * .10,
                                   ),
-                                  Container(
-                                    child: Image.network(
-                                      snapshot.data![index].adsMtgerPhoto!,
-                                      width: _width * .3,
-                                      height: _height * .10,
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.only(
+                                    bottom: 5,
+                                    right: 0,
+                                    left: 0,
+                                  ),
+                                  child: Text(
+                                    snapshot.data![index].adsMtgerName!,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: cText,
                                     ),
                                   ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.only(
-                                        bottom: 5, right: 0, left: 0),
-                                    child: Text(
-                                      snapshot.data![index].adsMtgerName!,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          color: cText),
-                                    ),
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                          child: Text(
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      child: Text(
                                         snapshot.data![index].adsMtgerPrice!,
                                         style: TextStyle(
                                           color: cLightRed,
                                           fontSize: 15,
                                         ),
-                                      )),
-                                      Padding(padding: EdgeInsets.all(2)),
-                                      Container(
-                                        child: Text(
-                                          "ريال",
-                                          style: TextStyle(
-                                              color: cText,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                    Padding(padding: EdgeInsets.all(2)),
+                                    Container(
+                                      child: Text(
+                                        "ريال",
+                                        style: TextStyle(
+                                          color: cText,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ));
-                  });
-            } else {
-              return NoData(message: "لا يوجد نتائج");
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return NoData(message: "لا يوجد نتائج");
+              }
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
             }
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
 
-          return Center(
-              child: SpinKitThreeBounce(
-            color: cPrimaryColor,
-            size: 40,
-          ));
-        },
-      );
-    });
+            return Center(
+              child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _buildBodyItem() {
     return ListView(
       children: <Widget>[
-        SizedBox(
-          height: _height * .01,
-        ),
+        SizedBox(height: _height * .01),
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [
-                  const Color(0xFFF1F2F8),
-                  const Color(0xFFF9F9F9),
-                ],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 0.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp),
+              colors: [const Color(0xFFF1F2F8), const Color(0xFFF9F9F9)],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 0.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp,
+            ),
           ),
           height: _height * .12,
           child: Stack(
             children: [
-              Container(
-                color: cPrimaryColor,
-                height: _height * .08,
-              ),
+              Container(color: cPrimaryColor, height: _height * .08),
               Positioned(
-                  top: 35,
-                  right: _width * .1,
+                top: 35,
+                right: _width * .1,
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 60,
+                  width: _width * .8,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    boxShadow: [],
+                  ),
                   child: Container(
-                      alignment: Alignment.center,
-                      height: 60,
-                      width: _width * .8,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent, boxShadow: []),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 5),
-                        decoration: BoxDecoration(
-                            color: cWhite,
-                            borderRadius: BorderRadius.circular(23.0)),
-                        child: TextFormField(
-                            cursorColor: Color(0xffC5C5C5),
-                            maxLines: 1,
-                            onChanged: (text) {
-                              setState(() {
-                                _sValue = text;
-                              });
-                            },
-                            style: TextStyle(
-                                color: cBlack,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(23.0),
-                                borderSide: BorderSide(color: cWhite),
-                              ),
-                              focusColor: Color(0xffC5C5C5),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: cWhite),
-                                borderRadius: BorderRadius.circular(25.7),
-                              ),
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 12.0),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  Icons.search,
-                                  color: cLightRed,
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      color: cWhite,
+                      borderRadius: BorderRadius.circular(23.0),
+                    ),
+                    child: TextFormField(
+                      cursorColor: Color(0xffC5C5C5),
+                      maxLines: 1,
+                      onChanged: (text) {
+                        setState(() {
+                          _sValue = text;
+                        });
+                      },
+                      style: TextStyle(
+                        color: cBlack,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(23.0),
+                          borderSide: BorderSide(color: cWhite),
+                        ),
+                        focusColor: Color(0xffC5C5C5),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: cWhite),
+                          borderRadius: BorderRadius.circular(25.7),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.search, color: cLightRed),
+                          onPressed: () {
+                            if (_sValue != null) {
+                              _appState!.setSearchValue(_sValue);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchScreen(),
                                 ),
-                                onPressed: () {
-                                  if (_sValue != null) {
-                                    _appState!.setSearchValue(_sValue);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SearchScreen()));
-                                  } else {
-                                    showToast(context,
-                                        message: "يجب ادخال كلمة للبحث");
-                                  }
-                                },
-                              ),
-                              hintText: AppLocalizations.of(context)!.search,
-                              errorStyle: TextStyle(fontSize: 12.0),
-                              hintStyle: TextStyle(
-                                  color: Color(0xffC5C5C5),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            )),
-                      ))),
+                              );
+                            } else {
+                              showToast(
+                                context,
+                                message: "يجب ادخال كلمة للبحث",
+                              );
+                            }
+                          },
+                        ),
+                        hintText: AppLocalizations.of(context)!.search,
+                        errorStyle: TextStyle(fontSize: 12.0),
+                        hintStyle: TextStyle(
+                          color: Color(0xffC5C5C5),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
         Container(
-            padding: EdgeInsets.only(right: 10, left: 10),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFFF1F2F8),
-                    const Color(0xFFF9F9F9),
-                  ],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(1.0, 0.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
+          padding: EdgeInsets.only(right: 10, left: 10),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [const Color(0xFFF1F2F8), const Color(0xFFF9F9F9)],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 0.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp,
             ),
-            width: _width,
-            height: _height * .09,
-            child: _buildCategoriesList()),
+          ),
+          width: _width,
+          height: _height * .09,
+          child: _buildCategoriesList(),
+        ),
         Container(
-            color: cWhite,
-            width: _width,
-            height: _height * .065,
-            child: _buildSubCategoriesList()),
+          color: cWhite,
+          width: _width,
+          height: _height * .065,
+          child: _buildSubCategoriesList(),
+        ),
         Container(
-            padding: EdgeInsets.only(right: 10, left: 10),
-            height: _height * .64,
-            child: _buildProducts()),
+          padding: EdgeInsets.only(right: 10, left: 10),
+          height: _height * .64,
+          child: _buildProducts(),
+        ),
         Container(
           padding: EdgeInsets.all(15),
           margin: EdgeInsets.only(right: _width * .04, left: _width * .04),
           decoration: BoxDecoration(
             border: Border.all(width: 1.0, color: Color(0xffEBEBEB)),
             color: cWhite,
-            borderRadius: BorderRadius.circular(
-              25.0,
-            ),
+            borderRadius: BorderRadius.circular(25.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.shade300,
                 blurRadius: 12.0, // has the effect of softening the shadow
                 spreadRadius: 5.0, // has the effect of extending the shadow
-              )
+              ),
             ],
           ),
           child: Row(
             children: [
               Image.asset("assets/images/circle.png"),
               Padding(padding: EdgeInsets.all(3)),
-              Text(
-                " الحد الأدني للطلب  :  ",
-                style: TextStyle(fontSize: 13),
-              ),
+              Text(" الحد الأدني للطلب  :  ", style: TextStyle(fontSize: 13)),
               FutureBuilder<String>(
                 future: _RequestMin,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Text(
                       snapshot.data.toString(),
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: cText,
-                      ),
+                      style: TextStyle(fontSize: 13, color: cText),
                     );
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
 
                   return Center(
-                      child: SpinKitThreeBounce(
-                    color: cPrimaryColor,
-                    size: 40,
-                  ));
+                    child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+                  );
                 },
               ),
-              Text(
-                " ريال ",
-                style: TextStyle(fontSize: 13),
-              ),
+              Text(" ريال ", style: TextStyle(fontSize: 13)),
               Spacer(),
               Image.asset("assets/images/tawsil.png"),
               Padding(padding: EdgeInsets.all(3)),
-              Text(
-                "التوصيل : ",
-                style: TextStyle(fontSize: 13),
-              ),
+              Text("التوصيل : ", style: TextStyle(fontSize: 13)),
               FutureBuilder<String>(
                 future: _Tawsilfees,
                 builder: (context, snapshot) {
@@ -1338,29 +1447,21 @@ class _Home1ScreenState extends State<Home1Screen> {
                     _appState!.setCurrentTawsil(int.parse(snapshot.data!));
                     return Text(
                       snapshot.data.toString(),
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: cText,
-                      ),
+                      style: TextStyle(fontSize: 13, color: cText),
                     );
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
 
                   return Center(
-                      child: SpinKitThreeBounce(
-                    color: cPrimaryColor,
-                    size: 40,
-                  ));
+                    child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+                  );
                 },
               ),
-              Text(
-                " ريال ",
-                style: TextStyle(fontSize: 13),
-              ),
+              Text(" ريال ", style: TextStyle(fontSize: 13)),
             ],
           ),
-        )
+        ),
       ],
     );
   }
@@ -1376,8 +1477,10 @@ class _Home1ScreenState extends State<Home1Screen> {
       _locationState = Provider.of<LocationState>(context);
       _appState!.setSelectedSub(Category(mtgerCatId: "100000000"));
       if (_appState!.selectedSub!.mtgerCatId != "100000000") {
-        _productList = _getProductsWithSub(_appState!.selectedCat.mtgerCatId,
-            _appState!.selectedSub!.mtgerCatId);
+        _productList = _getProductsWithSub(
+          _appState!.selectedCat.mtgerCatId,
+          _appState!.selectedSub!.mtgerCatId,
+        );
       } else {
         _productList = _getProducts(_appState!.selectedCat.mtgerCatId);
       }
@@ -1405,8 +1508,8 @@ class _Home1ScreenState extends State<Home1Screen> {
     _locationState = Provider.of<LocationState>(context);
     _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
     return NetworkIndicator(
-        child: PageContainer(
-      child: Scaffold(
+      child: PageContainer(
+        child: Scaffold(
           backgroundColor: Colors.white,
           body: Stack(
             children: <Widget>[
@@ -1416,71 +1519,77 @@ class _Home1ScreenState extends State<Home1Screen> {
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       height: 50,
                       decoration: BoxDecoration(
-                          color: Color(0xffF9F9F9), boxShadow: []),
+                        color: Color(0xffF9F9F9),
+                        boxShadow: [],
+                      ),
                       child: Container(
                         margin: EdgeInsets.symmetric(vertical: 5),
                         decoration: BoxDecoration(
-                            color: Color(0xffF9F9F9),
-                            borderRadius: BorderRadius.circular(23.0)),
+                          color: Color(0xffF9F9F9),
+                          borderRadius: BorderRadius.circular(23.0),
+                        ),
                         child: TextFormField(
-                            cursorColor: Color(0xffC5C5C5),
-                            maxLines: 1,
-                            onChanged: (text) {
-                              setState(() {
-                                _sValue = text;
-                                print(_sValue);
-                              });
-                            },
-                            style: TextStyle(
-                                color: cBlack,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(23.0),
-                                borderSide:
-                                    BorderSide(color: Color(0xffF9F9F9)),
-                              ),
-                              focusColor: Color(0xffC5C5C5),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xffC5C5C5)),
-                                borderRadius: BorderRadius.circular(25.7),
-                              ),
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 12.0),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  Icons.close,
-                                  color: cPrimaryColor,
-                                ),
-                                onPressed: () {
-                                  if (_sValue != null) {
-                                    _appState!.setSearchValue(_sValue);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SearchScreen()));
-                                  } else {
-                                    showToast(context,
-                                        message: "يجب ادخال كلمة للبحث");
-                                  }
-                                },
-                              ),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                size: 24,
-                                color: cPrimaryColor,
-                              ),
-                              hintText: AppLocalizations.of(context)!.search,
-                              errorStyle: TextStyle(fontSize: 12.0),
-                              hintStyle: TextStyle(
-                                  color: Color(0xffC5C5C5),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            )),
-                      ))
+                          cursorColor: Color(0xffC5C5C5),
+                          maxLines: 1,
+                          onChanged: (text) {
+                            setState(() {
+                              _sValue = text;
+                              print(_sValue);
+                            });
+                          },
+                          style: TextStyle(
+                            color: cBlack,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(23.0),
+                              borderSide: BorderSide(color: Color(0xffF9F9F9)),
+                            ),
+                            focusColor: Color(0xffC5C5C5),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xffC5C5C5)),
+                              borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12.0,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.close, color: cPrimaryColor),
+                              onPressed: () {
+                                if (_sValue != null) {
+                                  _appState!.setSearchValue(_sValue);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SearchScreen(),
+                                    ),
+                                  );
+                                } else {
+                                  showToast(
+                                    context,
+                                    message: "يجب ادخال كلمة للبحث",
+                                  );
+                                }
+                              },
+                            ),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              size: 24,
+                              color: cPrimaryColor,
+                            ),
+                            hintText: AppLocalizations.of(context)!.search,
+                            errorStyle: TextStyle(fontSize: 12.0),
+                            hintStyle: TextStyle(
+                              color: Color(0xffC5C5C5),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   : Positioned(
                       top: 0,
                       left: 0,
@@ -1495,9 +1604,11 @@ class _Home1ScreenState extends State<Home1Screen> {
                           onPressed: () {
                             _appState!.setCurrentFilter(1);
                             _appState!.setSelectedSub(
-                                Category(mtgerCatId: "100000000"));
+                              Category(mtgerCatId: "100000000"),
+                            );
                             _appState!.setSelectedCat(
-                                Category(mtgerCatId: "100000000"));
+                              Category(mtgerCatId: "100000000"),
+                            );
                             _navigationState!.upadateNavigationIndex(0);
                             Navigator.pushNamed(context, '/navigation');
                           },
@@ -1505,7 +1616,9 @@ class _Home1ScreenState extends State<Home1Screen> {
                       ),
                     ),
             ],
-          )),
-    ));
+          ),
+        ),
+      ),
+    );
   }
 }

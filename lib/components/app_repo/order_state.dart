@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:afaq/models/order.dart';
 
-
 class OrderState extends ChangeNotifier {
-
-
   //   Order _currentOrder;
 
   // void setCurrentOrder(Order order) {
@@ -23,9 +20,7 @@ class OrderState extends ChangeNotifier {
 
   String get carttId => _carttId!;
 
-
-
-   String? _carttFatora;
+  String? _carttFatora;
 
   void setCarttFatora(String carttFatora) {
     _carttFatora = carttFatora;
@@ -34,8 +29,7 @@ class OrderState extends ChangeNotifier {
 
   String get carttFatora => _carttFatora!;
 
-
-   String? _carttSeller;
+  String? _carttSeller;
 
   void setCarttSeller(String carttSeller) {
     _carttSeller = carttSeller;
@@ -44,11 +38,9 @@ class OrderState extends ChangeNotifier {
 
   String get carttSeller => _carttSeller!;
 
-
-
   bool _waitingOrder = false;
 
-  void setIsWaitingOrder(bool  value) {
+  void setIsWaitingOrder(bool value) {
     _waitingOrder = value;
     notifyListeners();
   }
@@ -64,5 +56,4 @@ class OrderState extends ChangeNotifier {
   //   _currentOrder.carttDetails[index].carttAmount--;
   //   notifyListeners();
   // }
-
 }

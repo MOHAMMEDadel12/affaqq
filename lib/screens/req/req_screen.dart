@@ -51,7 +51,7 @@ class ReqScreen extends StatefulWidget {
 }
 
 class _ReqScreenState extends State<ReqScreen> {
-  double _height=0, _width=0;
+  double _height = 0, _width = 0;
   Future<List<Req>>? _reqList;
   Services _services = Services();
   StoreState? _storeState;
@@ -61,7 +61,8 @@ class _ReqScreenState extends State<ReqScreen> {
   ProgressIndicatorState? _progressIndicatorState;
   Future<List<Req>> _getReqList() async {
     Map<dynamic, dynamic> results = await _services.get(
-        'https://mahtco.net/app/api/getreq?page=1&lang=${_appState!.currentLang}&req_user=${_appState!.currentUser!.userId}');
+      'https://mahtco.net/app/api/getreq?page=1&lang=${_appState!.currentLang}&req_user=${_appState!.currentUser!.userId}',
+    );
     List<Req> reqList = <Req>[];
     if (results['response'] == '1') {
       Iterable iterable = results['req'];
@@ -73,34 +74,33 @@ class _ReqScreenState extends State<ReqScreen> {
   }
 
   Widget _buildStores() {
-    return LayoutBuilder(builder: (context, constraints) {
-      return   FutureBuilder<List<Req>>(
-        future: _reqList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data!.length > 0) {
-              return ListView.builder(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FutureBuilder<List<Req>>(
+          future: _reqList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data!.length > 0) {
+                return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       width: _width,
                       padding: EdgeInsets.all(15),
 
-                      margin:
-                      EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+                      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 12),
                       decoration: BoxDecoration(
-                        color:   Colors.white,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(
-                          color: Color(0xffF9F9F9),
-                        ),
+                        border: Border.all(color: Color(0xffF9F9F9)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.shade300,
-                            blurRadius: 7.0, // has the effect of softening the shadow
-                            spreadRadius: 3.0, // has the effect of extending the shadow
-
-                          )
+                            blurRadius:
+                                7.0, // has the effect of softening the shadow
+                            spreadRadius:
+                                3.0, // has the effect of extending the shadow
+                          ),
                         ],
                       ),
                       child: Stack(
@@ -108,101 +108,119 @@ class _ReqScreenState extends State<ReqScreen> {
                           Column(
                             children: <Widget>[
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("تاريخ الطلب :"),
-                                  Text(snapshot.data![index].reqDate!)
+                                  Text(snapshot.data![index].reqDate!),
                                 ],
                               ),
 
                               Divider(),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("المبلغ :"),
-                                  Text(snapshot.data![index].reqValue!+" SR ")
+                                  Text(
+                                    snapshot.data![index].reqValue! + " SR ",
+                                  ),
                                 ],
                               ),
                               Divider(),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("حالة الطلب :"),
-                                  Text(snapshot.data![index].reqDone=="0"?"لم يتم التاكيد":"تم التاكيد")
+                                  Text(
+                                    snapshot.data![index].reqDone == "0"
+                                        ? "لم يتم التاكيد"
+                                        : "تم التاكيد",
+                                  ),
                                 ],
                               ),
 
-
-                             SizedBox(height: 20,),
-                              snapshot.data![index].reqDone=="0"?CustomButton(
-                               btnColor: cLightLemon,
-                               btnLbl: "حذف الطلب",
-                               onPressedFunction: () async{
-                                 _progressIndicatorState!.setIsLoading(true);
-                                 var results = await _services.get(
-                                     'https://mahtco.net/app/api/do_delete_req?id=${snapshot.data![index].reqId}&lang=${_appState!.currentLang}');
-                                 _progressIndicatorState!.setIsLoading(false);
-                                 if (results['response'] == '1') {
-                                   showToast(context,message: results['message']);
-                                   _reqList = _getReqList();
-
-                                 } else {
-                                   showErrorDialog(results['message'], context);
-
-                                 }
-
-
-                               },
-                             ):Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text("صورة التحويل :"),
-                                  Image.network(snapshot.data![index].reqPhoto!,width: _width*.55,)
-                                ],
-                              )
+                              SizedBox(height: 20),
+                              snapshot.data![index].reqDone == "0"
+                                  ? CustomButton(
+                                      btnColor: cLightLemon,
+                                      btnLbl: "حذف الطلب",
+                                      onPressedFunction: () async {
+                                        _progressIndicatorState!.setIsLoading(
+                                          true,
+                                        );
+                                        var results = await _services.get(
+                                          'https://mahtco.net/app/api/do_delete_req?id=${snapshot.data![index].reqId}&lang=${_appState!.currentLang}',
+                                        );
+                                        _progressIndicatorState!.setIsLoading(
+                                          false,
+                                        );
+                                        if (results['response'] == '1') {
+                                          showToast(
+                                            context,
+                                            message: results['message'],
+                                          );
+                                          _reqList = _getReqList();
+                                        } else {
+                                          showErrorDialog(
+                                            results['message'],
+                                            context,
+                                          );
+                                        }
+                                      },
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text("صورة التحويل :"),
+                                        Image.network(
+                                          snapshot.data![index].reqPhoto!,
+                                          width: _width * .55,
+                                        ),
+                                      ],
+                                    ),
                             ],
                           ),
-
-
-
                         ],
                       ),
                     );
-                  });
-            } else {
-              return NoData(
-                message:  AppLocalizations.of(context)!.noResults,
-              );
+                  },
+                );
+              } else {
+                return NoData(message: AppLocalizations.of(context)!.noResults);
+              }
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
             }
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
 
-          return Center(
-              child: SpinKitThreeBounce(
-            color: cPrimaryColor,
-            size: 40,
-          ));
-        },
-      ); 
-    });
+            return Center(
+              child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _buildBodyItem() {
-    return  Consumer<AppState>(builder: (context, appState, child) {
-       return  appState.currentUser != null
+    return Consumer<AppState>(
+      builder: (context, appState, child) {
+        return appState.currentUser != null
             ? ListView(
-      children: <Widget>[
-        SizedBox(
-          height: 50,
-        ),
-        Container(
-            // margin: EdgeInsets.only(top: 7, bottom: 20),
-            height: _height - 100,
-            child: _buildStores())
-      ],
-    ) : NotRegistered();
-    });
+                children: <Widget>[
+                  SizedBox(height: 50),
+                  Container(
+                    // margin: EdgeInsets.only(top: 7, bottom: 20),
+                    height: _height - 100,
+                    child: _buildStores(),
+                  ),
+                ],
+              )
+            : NotRegistered();
+      },
+    );
   }
 
   @override
@@ -225,8 +243,9 @@ class _ReqScreenState extends State<ReqScreen> {
     _storeState = Provider.of<StoreState>(context);
     _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
     _navigationState = Provider.of<NavigationState>(context);
-    return  NetworkIndicator( child:PageContainer(
-      child: Scaffold(
+    return NetworkIndicator(
+      child: PageContainer(
+        child: Scaffold(
           backgroundColor: Color(0xffF5F2F2),
           body: Stack(
             children: <Widget>[
@@ -239,35 +258,28 @@ class _ReqScreenState extends State<ReqScreen> {
                   appBarTitle: "طلبات التحويل",
 
                   leading: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: cBlack,
-                    ),
+                    icon: Icon(Icons.arrow_back_ios, color: cBlack),
                     onPressed: () {
                       _navigationState!.upadateNavigationIndex(3);
                       Navigator.pushReplacementNamed(context, '/navigation');
                     },
                   ),
                   trailing: IconButton(
-                    icon: Icon(
-                      Icons.add,
-                      color: cPrimaryColor,
-                      size: 30,
-                    ),
+                    icon: Icon(Icons.add, color: cPrimaryColor, size: 30),
                     onPressed: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddReqScreen()));
+                        context,
+                        MaterialPageRoute(builder: (context) => AddReqScreen()),
+                      );
                     },
                   ),
                 ),
               ),
-              Center(
-                child: ProgressIndicatorComponent(),
-              )
+              Center(child: ProgressIndicatorComponent()),
             ],
-          )),
-    ));
+          ),
+        ),
+      ),
+    );
   }
 }

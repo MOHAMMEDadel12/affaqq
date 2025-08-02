@@ -26,10 +26,11 @@ class _OpinionDialogState extends State<OpinionDialog> {
   bool _checkValidation(BuildContext context, {required String opinion}) {
     if (opinion.trim().length == 0) {
       showToast(
-          context,
-          message: AppLocalizations.of(context)!.messageDescription,
+        context,
+        message: AppLocalizations.of(context)!.messageDescription,
 
-          color: Colors.red);
+        color: Colors.red,
+      );
       return false;
     }
 
@@ -41,38 +42,37 @@ class _OpinionDialogState extends State<OpinionDialog> {
     final progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
     final appState = Provider.of<AppState>(context);
 
-    return LayoutBuilder(builder: (context, constraints) {
-      return AlertDialog(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return AlertDialog(
           contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+          ),
           content: GestureDetector(
             onTap: () {
               FocusScope.of(context).requestFocus(new FocusNode());
             },
             child: SingleChildScrollView(
-                child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 20,
-                ),
-                Image.asset(
-                  'assets/images/poprate.png',
-                  height: 70,
-                  width: 70,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "قم بإضافة تقييمك",
-                  style: TextStyle(
-                      color: cBlack, fontWeight: FontWeight.w700, fontSize: 14),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                SmoothStarRating(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 20),
+                  Image.asset(
+                    'assets/images/poprate.png',
+                    height: 70,
+                    width: 70,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "قم بإضافة تقييمك",
+                    style: TextStyle(
+                      color: cBlack,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  SmoothStarRating(
                     allowHalfRating: true,
                     onRatingChanged: (v) {
                       _rating = v;
@@ -83,13 +83,10 @@ class _OpinionDialogState extends State<OpinionDialog> {
                     size: 30.0,
                     color: Color(0xffFFCE42),
                     borderColor: Color(0xffA5A1A1),
-                    spacing: 0.0),
-                Container(
-                    margin: EdgeInsets.only(
-                      top: 7,
-                      left: 10,
-                      right: 10,
-                    ),
+                    spacing: 0.0,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 7, left: 10, right: 10),
                     height: 80,
                     child: CustomTextFormField(
                       prefixIcon: Image.asset(
@@ -103,11 +100,16 @@ class _OpinionDialogState extends State<OpinionDialog> {
                         _userOpinion = text;
                       },
                       hintTxt: "اضافة خبرتك",
-                    )),
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 10, bottom: 20, right: 10, left: 10),
-                  child: CustomButton(
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10,
+                      bottom: 20,
+                      right: 10,
+                      left: 10,
+                    ),
+                    child: CustomButton(
                       height: 35,
                       // buttonOnDialog: true,
                       btnLbl: "اضافة",
@@ -127,11 +129,15 @@ class _OpinionDialogState extends State<OpinionDialog> {
                           //   showErrorDialog(results['message'], context);
                           // }
                         }
-                      }),
-                )
-              ],
-            )),
-          ));
-    });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

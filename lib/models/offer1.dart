@@ -11,8 +11,6 @@ class Offer1 {
   String? offerState;
   String? offerDate;
 
-
-
   Offer1({
     this.offerId,
     this.offerDriver,
@@ -24,7 +22,7 @@ class Offer1 {
     this.offerCartt,
     this.offerPrice,
     this.offerState,
-    this.offerDate
+    this.offerDate,
   });
 
   factory Offer1.fromJson(Map<String, dynamic> json) => Offer1(
@@ -38,7 +36,7 @@ class Offer1 {
     offerCartt: json["offer_cartt"],
     offerPrice: json["offer_price"],
     offerState: json["offer_state"],
-    offerDate: json["offer_date"]
+    offerDate: json["offer_date"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -56,5 +54,3 @@ class Offer1 {
     "offer_date": offerDate,
   };
 }
-
-

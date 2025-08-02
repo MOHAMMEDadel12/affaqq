@@ -12,7 +12,7 @@ class LocaleHelper extends ChangeNotifier {
     return _helper!;
   }
 
-LocaleHelper._internal();
+  LocaleHelper._internal();
 }
 
 LocaleHelper helper = new LocaleHelper();

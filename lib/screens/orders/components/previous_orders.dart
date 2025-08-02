@@ -18,14 +18,15 @@ class PreviousOrders extends StatefulWidget {
 }
 
 class _PreviousOrdersState extends State<PreviousOrders> {
-   bool _initialRun = true;
+  bool _initialRun = true;
   AppState? _appState;
   Services _services = Services();
   Future<List<Order>>? _orderList;
 
-    Future<List<Order>> _getOrderList() async {
+  Future<List<Order>> _getOrderList() async {
     Map<dynamic, dynamic> results = await _services.get(
-        '${Utils.ORDERS_URL}lang=${_appState!.currentLang}&user_id=${_appState!.currentUser!.userId}&page=1&done=0');
+      '${Utils.ORDERS_URL}lang=${_appState!.currentLang}&user_id=${_appState!.currentUser!.userId}&page=1&done=0',
+    );
     List orderList = <Order>[];
     if (results['response'] == '1') {
       Iterable iterable = results['result'];
@@ -36,7 +37,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
     return orderList as FutureOr<List<Order>>;
   }
 
-    @override
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_initialRun) {
@@ -46,7 +47,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
     }
   }
 
-   @override
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -55,39 +56,30 @@ class _PreviousOrdersState extends State<PreviousOrders> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.length > 0) {
-                  return
-
-                      Container(
-                       height: height - 40 ,
-                        width: width,
-                        child: ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return OrderItem(
-
-                                order: snapshot.data![index],
-                                currentOrder: false,
-                              );
-
-                            }),
-                      );
-
-
-          } else {
-            return NoData(
-              message: "لا يوجد نتائج",
+            return Container(
+              height: height - 40,
+              width: width,
+              child: ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return OrderItem(
+                    order: snapshot.data![index],
+                    currentOrder: false,
+                  );
+                },
+              ),
             );
+          } else {
+            return NoData(message: "لا يوجد نتائج");
           }
         } else if (snapshot.hasError) {
           return Center(child: Text("${snapshot.error}"));
         }
 
         return Center(
-            child: SpinKitThreeBounce(
-          color: cPrimaryColor,
-          size: 40,
-        ));
+          child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+        );
       },
     );
   }
-  }
+}

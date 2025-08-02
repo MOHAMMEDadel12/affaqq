@@ -35,7 +35,6 @@ import 'package:afaq/utils/app_colors.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-
 class LocationScreen extends StatefulWidget {
   LocationScreen({Key? key}) : super(key: key);
 
@@ -44,14 +43,13 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  double _height=0;
-  double _width=0;
+  double _height = 0;
+  double _width = 0;
   final _formKey = GlobalKey<FormState>();
   String? _bankTitle, _bankName, _bankAcount, _bankIban;
   Services _services = Services();
   AppState? _appState;
   ProgressIndicatorState? _progressIndicatorState;
-
 
   Completer<GoogleMapController> _mapController = Completer();
   Set<Marker> _markers = Set();
@@ -68,14 +66,10 @@ class _LocationScreenState extends State<LocationScreen> {
     }
   }
 
-
-
-
   @override
   void initState() {
     super.initState();
     _focusNode = FocusNode();
-
   }
 
   @override
@@ -87,63 +81,76 @@ class _LocationScreenState extends State<LocationScreen> {
 
   Widget _buildBodyItem() {
     return SingleChildScrollView(
-        child:  Column(
-
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-
-            Container(
-              decoration: BoxDecoration(
-                  color: cPrimaryColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft:  Radius.circular(15.00),
-                    topRight:  Radius.circular(15.00),
-                  ),
-                  border: Border.all(color: cHintColor)),
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width,
-              height: 30,
-
-              child: Text("اختيار اللوكيشن",style: TextStyle(
-                  color: cWhite,fontSize: 16,
-                  fontWeight: FontWeight.w700
-              ),),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: cPrimaryColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.00),
+                topRight: Radius.circular(15.00),
+              ),
+              border: Border.all(color: cHintColor),
             ),
-            Container(
-              height: MediaQuery.of(context).size.width*.95,
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            height: 30,
 
-              child:  GoogleMap(
-                markers: _markers,
-                mapType: MapType.normal,
-                // myLocationEnabled: true,
-                initialCameraPosition: CameraPosition(
-                    target: LatLng(_locationState!.locationLatitude,
-                        _locationState!.locationlongitude),
-                    zoom: 12),
-                onMapCreated: (GoogleMapController controller) {
-                  _mapController.complete(controller);
-                },
-                onCameraMove: ((_position) => _updatePosition(_position)),
+            child: Text(
+              "اختيار اللوكيشن",
+              style: TextStyle(
+                color: cWhite,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-              child: Text(_locationState!.address,style: TextStyle(
-                  height: 1.5,
-                  color: cPrimaryColor,fontSize: 13,fontWeight: FontWeight.w400
-              )),
-            ),
-            Container(
-                margin: EdgeInsets.only( bottom: 20, right: 15, left: 15),
-                child: CustomButton(
-                    btnColor: cLightLemon,
-                    btnLbl:"تاكيد",
-                    onPressedFunction: () async {
-                      Navigator.pop(context);
-                    }))
+          ),
+          Container(
+            height: MediaQuery.of(context).size.width * .95,
 
-          ],
-        ));
+            child: GoogleMap(
+              markers: _markers,
+              mapType: MapType.normal,
+              // myLocationEnabled: true,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(
+                  _locationState!.locationLatitude,
+                  _locationState!.locationlongitude,
+                ),
+                zoom: 12,
+              ),
+              onMapCreated: (GoogleMapController controller) {
+                _mapController.complete(controller);
+              },
+              onCameraMove: ((_position) => _updatePosition(_position)),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            child: Text(
+              _locationState!.address,
+              style: TextStyle(
+                height: 1.5,
+                color: cPrimaryColor,
+                fontSize: 13,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 20, right: 15, left: 15),
+            child: CustomButton(
+              btnColor: cLightLemon,
+              btnLbl: "تاكيد",
+              onPressedFunction: () async {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -154,55 +161,54 @@ class _LocationScreenState extends State<LocationScreen> {
     _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
     _appState = Provider.of<AppState>(context);
     return NetworkIndicator(
-        child: PageContainer(
-          child: Scaffold(
-              backgroundColor: Color(0xffF5F6F8),
-              body: SingleChildScrollView(
-                reverse: true,
-                child: Stack(
-                  children: <Widget>[
-                    _buildBodyItem(),
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: GradientAppBar(
-                        appBarTitle: "اختيار اللوكيشن",
-                        leading: _appState!.currentLang == 'ar'
-                            ? IconButton(
-                          icon: Image.asset('assets/images/back.png',color: cPrimaryColor,),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                            : Container(),
-                        trailing: _appState!.currentLang == 'en'
-                            ? IconButton(
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            color: cWhite,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                            : Container(),
-                      ),
-                    ),
-                    Center(
-                      child: ProgressIndicatorComponent(),
-                    )
-                  ],
+      child: PageContainer(
+        child: Scaffold(
+          backgroundColor: Color(0xffF5F6F8),
+          body: SingleChildScrollView(
+            reverse: true,
+            child: Stack(
+              children: <Widget>[
+                _buildBodyItem(),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: GradientAppBar(
+                    appBarTitle: "اختيار اللوكيشن",
+                    leading: _appState!.currentLang == 'ar'
+                        ? IconButton(
+                            icon: Image.asset(
+                              'assets/images/back.png',
+                              color: cPrimaryColor,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        : Container(),
+                    trailing: _appState!.currentLang == 'en'
+                        ? IconButton(
+                            icon: Icon(Icons.arrow_back_ios, color: cWhite),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        : Container(),
+                  ),
                 ),
-              )),
-        ));
+                Center(child: ProgressIndicatorComponent()),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
-
-
 
   Future<void> _updatePosition(CameraPosition _position) async {
     print(
-        'inside updatePosition ${_position.target.latitude} ${_position.target.longitude}');
+      'inside updatePosition ${_position.target.latitude} ${_position.target.longitude}',
+    );
     // Marker marker = _markers.firstWhere(
     //     (p) => p.markerId == MarkerId('marker_2'),
     //     orElse: () => null);
@@ -213,8 +219,6 @@ class _LocationScreenState extends State<LocationScreen> {
         markerId: MarkerId('marker_2'),
         position: LatLng(_position.target.latitude, _position.target.longitude),
         draggable: true,
-
-
       ),
     );
     print(_position.target.latitude);
@@ -222,10 +226,16 @@ class _LocationScreenState extends State<LocationScreen> {
     _locationState!.setLocationLatitude(_position.target.latitude);
     _locationState!.setLocationlongitude(_position.target.longitude);
     List<Placemark> placemark = await placemarkFromCoordinates(
-        _locationState!.locationLatitude, _locationState!
-        .locationlongitude);
-    _locationState!.setCurrentAddress(placemark[0].name! + '  ' + placemark[0].administrativeArea! + ' '
-        + placemark[0].country!);
+      _locationState!.locationLatitude,
+      _locationState!.locationlongitude,
+    );
+    _locationState!.setCurrentAddress(
+      placemark[0].name! +
+          '  ' +
+          placemark[0].administrativeArea! +
+          ' ' +
+          placemark[0].country!,
+    );
     //              final coordinates = new Coordinates(
     //                _locationState.locationLatitude, _locationState
     //  .locationlongitude);
@@ -237,6 +247,4 @@ class _LocationScreenState extends State<LocationScreen> {
     if (!mounted) return;
     setState(() {});
   }
-
-
 }

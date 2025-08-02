@@ -42,9 +42,11 @@ class BadgeTabBar extends StatelessWidget {
                     width: 8,
                     height: 8,
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: HexColor("#FF6969")),
+                      shape: BoxShape.circle,
+                      color: HexColor("#FF6969"),
+                    ),
                   ),
-                )
+                ),
         ],
       ),
     );

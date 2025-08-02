@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Animation<Offset>? _offsetAnimation;
   Future<void> _getCurrentUserLocation() async {
     _locData = await Location().getLocation();
-    if(_locData != null){
+    if (_locData != null) {
       print('lat' + _locData!.latitude!.toString());
       print('longitude' + _locData!.longitude!.toString());
 
@@ -50,10 +50,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future _checkIsFirstTime() async {
-   // var _firstTime = await SharedPreferencesHelper.getFirstTime() ??;
+    // var _firstTime = await SharedPreferencesHelper.getFirstTime() ??;
     if (true) {
       SharedPreferencesHelper.saveFirstTime(false);
-   Navigator.pushReplacementNamed(context, '/navigation');
+      Navigator.pushReplacementNamed(context, '/navigation');
     } else {
       Navigator.pushReplacementNamed(context, '/navigation');
     }
@@ -75,16 +75,12 @@ class _SplashScreenState extends State<SplashScreen> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return PageContainer(
-        child: Scaffold(
-          backgroundColor:  Color(0xffF5F6F8),
-      body: Center(
-        child: Image.asset(
-          'assets/images/logo.png',
-
-          height: 150,
-          width: 150,
+      child: Scaffold(
+        backgroundColor: Color(0xffF5F6F8),
+        body: Center(
+          child: Image.asset('assets/images/logo.png', height: 150, width: 150),
         ),
       ),
-    ));
+    );
   }
 }

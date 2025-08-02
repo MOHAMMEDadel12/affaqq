@@ -29,8 +29,8 @@ class ContactWithUsScreen extends StatefulWidget {
 }
 
 class _ContactWithUsScreenState extends State<ContactWithUsScreen> {
-  double _height=0;
-  double _width=0;
+  double _height = 0;
+  double _width = 0;
   final _formKey = GlobalKey<FormState>();
   String? _userEmail, _messageTitle, _userName, _messageContent;
   Services _services = Services();
@@ -80,30 +80,24 @@ class _ContactWithUsScreenState extends State<ContactWithUsScreen> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: _height * 0.1,
-            ),
+            SizedBox(height: _height * 0.1),
             Container(
               height: _height * 0.15,
               margin: EdgeInsets.symmetric(horizontal: _width * 0.03),
-              child: Center(
-                child: Image.asset('assets/images/logo.png'),
-              ),
+              child: Center(child: Image.asset('assets/images/logo.png')),
             ),
 
             Container(
               margin: EdgeInsets.only(
-                  top: _height * 0.02,
-                  left: _width * 0.025,
+                top: _height * 0.02,
+                left: _width * 0.025,
                 bottom: _width * 0.04,
-                  right: _width * 0.025),
+                right: _width * 0.025,
+              ),
               child: CustomTextFormField(
                 prefixIcon: Container(
                   margin: EdgeInsets.only(bottom: 5),
-                  child: Icon(
-                    Icons.person,
-                    size: 24,
-                  ),
+                  child: Icon(Icons.person, size: 24),
                 ),
                 hintTxt: AppLocalizations.of(context)!.name,
                 validationFunc: (value) {
@@ -119,78 +113,81 @@ class _ContactWithUsScreenState extends State<ContactWithUsScreen> {
               ),
             ),
             Container(
-                margin: EdgeInsets.only(
-                    left: _width * 0.025, right: _width * 0.025, bottom: _width * 0.04),
-                child: CustomTextFormField(
-                  prefixIcon: Container(
-                    margin: EdgeInsets.only(bottom: 5),
-                    child: Icon(
-                      Icons.mail,
-                      size: 24,
-                    ),
-                  ),
-                  hintTxt: AppLocalizations.of(context)!.email,
-                  validationFunc: (value) {
-                    if (!isEmail(value!)) {
-                      return AppLocalizations.of(context)!.emailValidation;
-                    }
-                    return null;
-                  },
-                  inputData: TextInputType.text,
-                  onChangedFunc: (String text) {
-                    _userEmail = text.toString();
-                  },
-                )),
+              margin: EdgeInsets.only(
+                left: _width * 0.025,
+                right: _width * 0.025,
+                bottom: _width * 0.04,
+              ),
+              child: CustomTextFormField(
+                prefixIcon: Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: Icon(Icons.mail, size: 24),
+                ),
+                hintTxt: AppLocalizations.of(context)!.email,
+                validationFunc: (value) {
+                  if (!isEmail(value!)) {
+                    return AppLocalizations.of(context)!.emailValidation;
+                  }
+                  return null;
+                },
+                inputData: TextInputType.text,
+                onChangedFunc: (String text) {
+                  _userEmail = text.toString();
+                },
+              ),
+            ),
             Container(
-                margin: EdgeInsets.only(
-                    left: _width * 0.025, right: _width * 0.025, bottom: _width * 0.04),
-                child: CustomTextFormField(
-                    prefixIcon: Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: Icon(
-                          Icons.edit,
-                          size: 24,
-                        )),
-                    hintTxt: AppLocalizations.of(context)!.messageTitle,
-                    inputData: TextInputType.text,
-                    maxLines: 15,
-                    onChangedFunc: (String text) {
-                      _messageTitle = text.toString();
-                    },
-                    validationFunc: (value) {
-                      if (value!.trim().length == 0) {
-                        return AppLocalizations.of(context)!.textValidation;
-                      }
-                      return null;
-                    })),
-
-
+              margin: EdgeInsets.only(
+                left: _width * 0.025,
+                right: _width * 0.025,
+                bottom: _width * 0.04,
+              ),
+              child: CustomTextFormField(
+                prefixIcon: Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: Icon(Icons.edit, size: 24),
+                ),
+                hintTxt: AppLocalizations.of(context)!.messageTitle,
+                inputData: TextInputType.text,
+                maxLines: 15,
+                onChangedFunc: (String text) {
+                  _messageTitle = text.toString();
+                },
+                validationFunc: (value) {
+                  if (value!.trim().length == 0) {
+                    return AppLocalizations.of(context)!.textValidation;
+                  }
+                  return null;
+                },
+              ),
+            ),
 
             Container(
               height: 100,
-                margin: EdgeInsets.only(
-                    left: _width * 0.025, right: _width * 0.025, bottom: _width * 0.04),
-                child: CustomTextFormField(
-                    prefixIcon: Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: Icon(
-                          Icons.edit,
-                          size: 24,
-                        )),
-                    hintTxt: AppLocalizations.of(context)!.messageDescription,
-                    inputData: TextInputType.text,
-                    maxLines: 15,
-                    onChangedFunc: (String text) {
-                      _messageContent = text.toString();
-                    },
-                    validationFunc: (value) {
-                      if (value!.trim().length == 0) {
-                        return AppLocalizations.of(context)!.textValidation;
-                      }
-                      return null;
-                    })),
-
-
+              margin: EdgeInsets.only(
+                left: _width * 0.025,
+                right: _width * 0.025,
+                bottom: _width * 0.04,
+              ),
+              child: CustomTextFormField(
+                prefixIcon: Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: Icon(Icons.edit, size: 24),
+                ),
+                hintTxt: AppLocalizations.of(context)!.messageDescription,
+                inputData: TextInputType.text,
+                maxLines: 15,
+                onChangedFunc: (String text) {
+                  _messageContent = text.toString();
+                },
+                validationFunc: (value) {
+                  if (value!.trim().length == 0) {
+                    return AppLocalizations.of(context)!.textValidation;
+                  }
+                  return null;
+                },
+              ),
+            ),
 
             Container(
               margin: EdgeInsets.symmetric(vertical: _height * 0.02),
@@ -207,7 +204,7 @@ class _ContactWithUsScreenState extends State<ContactWithUsScreen> {
                     );
                     _progressIndicatorState!.setIsLoading(false);
                     if (results['response'] == '1') {
-                      showToast(context,message: results['message']);
+                      showToast(context, message: results['message']);
                       Navigator.pop(context);
                     } else {
                       showErrorDialog(results['message'], context);
@@ -217,81 +214,82 @@ class _ContactWithUsScreenState extends State<ContactWithUsScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(
-                top: _height * 0.02,
-              ),
+              margin: EdgeInsets.only(top: _height * 0.02),
               child: Row(
                 children: <Widget>[
                   Expanded(
-                      child: Container(
-                    margin: EdgeInsets.only(
-                        right: _width * 0.07, left: _width * 0.02),
-                    child: Divider(
-                      color: Colors.grey[400],
-                      height: 2,
-                      thickness: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        right: _width * 0.07,
+                        left: _width * 0.02,
+                      ),
+                      child: Divider(
+                        color: Colors.grey[400],
+                        height: 2,
+                        thickness: 1,
+                      ),
                     ),
-                  )),
+                  ),
                   Center(
                     child: Text(
-                    AppLocalizations.of(context)!.or,
+                      AppLocalizations.of(context)!.or,
                       style: TextStyle(
-                          color: cBlack,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15),
+                        color: cBlack,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                   Expanded(
-                      child: Container(
-                    margin: EdgeInsets.only(
-                        left: _width * 0.07, right: _width * 0.02),
-                    child: Divider(
-                      color: Colors.grey[400],
-                      height: 2,
-                      thickness: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        left: _width * 0.07,
+                        right: _width * 0.02,
+                      ),
+                      child: Divider(
+                        color: Colors.grey[400],
+                        height: 2,
+                        thickness: 1,
+                      ),
                     ),
-                  ))
+                  ),
                 ],
               ),
             ),
             Container(
               margin: EdgeInsets.symmetric(
-                  horizontal: _width * 0.1, vertical: _height * 0.02),
+                horizontal: _width * 0.1,
+                vertical: _height * 0.02,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   GestureDetector(
-                      onTap: () {
-                        _launchURL(_twitterUrl);
-                      },
-                      child: Image.asset(
-                        'assets/images/twitter.png',
-      
-                      )),
+                    onTap: () {
+                      _launchURL(_twitterUrl);
+                    },
+                    child: Image.asset('assets/images/twitter.png'),
+                  ),
                   GestureDetector(
-                      onTap: () {
-                        _launchURL(_linkedinUrl);
-                      },
-                      child: Image.asset(
-                        'assets/images/linkedin.png',
-
-                      )),
+                    onTap: () {
+                      _launchURL(_linkedinUrl);
+                    },
+                    child: Image.asset('assets/images/linkedin.png'),
+                  ),
                   GestureDetector(
-                      onTap: () {
-                        _launchURL(_instragramUrl);
-                      },
-                      child: Image.asset(
-                        'assets/images/instagram.png',
-
-                      )),
+                    onTap: () {
+                      _launchURL(_instragramUrl);
+                    },
+                    child: Image.asset('assets/images/instagram.png'),
+                  ),
                   GestureDetector(
-                      onTap: () {
-                        _launchURL("https://api.whatsapp.com/send?phone="+_facebookUrl);
-                      },
-                      child: Image.asset(
-                        'assets/images/facebook.png',
-
-                      )),
+                    onTap: () {
+                      _launchURL(
+                        "https://api.whatsapp.com/send?phone=" + _facebookUrl,
+                      );
+                    },
+                    child: Image.asset('assets/images/facebook.png'),
+                  ),
                 ],
               ),
             ),
@@ -309,8 +307,8 @@ class _ContactWithUsScreenState extends State<ContactWithUsScreen> {
     _progressIndicatorState = Provider.of<ProgressIndicatorState>(context);
     _appState = Provider.of<AppState>(context);
     return NetworkIndicator(
-        child: PageContainer(
-      child: Scaffold(
+      child: PageContainer(
+        child: Scaffold(
           backgroundColor: Color(0xffF5F6F8),
           body: SingleChildScrollView(
             reverse: true,
@@ -325,31 +323,31 @@ class _ContactWithUsScreenState extends State<ContactWithUsScreen> {
                     appBarTitle: AppLocalizations.of(context)!.contactUs,
                     leading: _appState!.currentLang == 'ar'
                         ? IconButton(
-                      icon: Image.asset('assets/images/back.png',color: cWhite,),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
+                            icon: Image.asset(
+                              'assets/images/back.png',
+                              color: cWhite,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
                         : Container(),
                     trailing: _appState!.currentLang == 'en'
                         ? IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: cWhite,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
+                            icon: Icon(Icons.arrow_back_ios, color: cWhite),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
                         : Container(),
                   ),
                 ),
-                Center(
-                  child: ProgressIndicatorComponent(),
-                )
+                Center(child: ProgressIndicatorComponent()),
               ],
             ),
-          )),
-    ));
+          ),
+        ),
+      ),
+    );
   }
 }

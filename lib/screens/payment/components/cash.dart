@@ -30,9 +30,6 @@ class Cash extends StatefulWidget {
 }
 
 class _CashState extends State<Cash> {
-
-
-
   double _height = 0, _width = 0;
   ProgressIndicatorState? _progressIndicatorState;
   LocationState? _locationState;
@@ -45,12 +42,10 @@ class _CashState extends State<Cash> {
   AppState? _appState;
   PaymentState? _paymentState;
   final _imagePicker = ImagePicker();
-  String _bankName = '' , _bankAcount = '', _bankIban = '';
-
+  String _bankName = '', _bankAcount = '', _bankIban = '';
 
   final _formKey = GlobalKey<FormState>();
-  String _accountOwner = '', _accountNo = '', _iban = '' , _imgIsDetected = '';
-
+  String _accountOwner = '', _accountNo = '', _iban = '', _imgIsDetected = '';
 
   @override
   void didChangeDependencies() {
@@ -63,10 +58,6 @@ class _CashState extends State<Cash> {
       _initialRun = false;
     }
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,67 +72,68 @@ class _CashState extends State<Cash> {
         child: Form(
           key: _formKey,
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(padding: EdgeInsets.all(15)),
 
-                Padding(padding: EdgeInsets.all(15)),
-
-                // Container(
-                //   width: _width,
-                //   margin: EdgeInsets.only(top: 20),
-                //   child: CustomTextFormField(
-                //       hintTxt: AppLocalizations.of(context).iban,
-                //       inputData: TextInputType.number,
-                //       onChangedFunc: (String text) {
-                //         _iban = text;
-                //       },
-                //       validationFunc: (value) {
-                //         if (_iban.trim().length == 0) {
-                //           return AppLocalizations.of(context).ibanValidation;
-                //         }
-                //         else if()
-                //         return null;
-                //       }),
-                // ),
-
-
-                Container(
-                  margin: EdgeInsets.only(
-                      left: _width * 0.05, right: _width * 0.05),
-                  child: Text("ييييي",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: 'HelveticaNeueW23forSKY',
-                        color: cBlack),
+              // Container(
+              //   width: _width,
+              //   margin: EdgeInsets.only(top: 20),
+              //   child: CustomTextFormField(
+              //       hintTxt: AppLocalizations.of(context).iban,
+              //       inputData: TextInputType.number,
+              //       onChangedFunc: (String text) {
+              //         _iban = text;
+              //       },
+              //       validationFunc: (value) {
+              //         if (_iban.trim().length == 0) {
+              //           return AppLocalizations.of(context).ibanValidation;
+              //         }
+              //         else if()
+              //         return null;
+              //       }),
+              // ),
+              Container(
+                margin: EdgeInsets.only(
+                  left: _width * 0.05,
+                  right: _width * 0.05,
+                ),
+                child: Text(
+                  "ييييي",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'HelveticaNeueW23forSKY',
+                    color: cBlack,
                   ),
                 ),
-                Container(
-                    margin: EdgeInsets.only(
-                        top: 20,
-                        left: _width * 0.07,
-                        right: _width * 0.07,
-                        bottom: 10),
-                    child: CustomButton(
-                        btnLbl: "تاكيد الطلب",
-                        onPressedFunction: () async {
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  top: 20,
+                  left: _width * 0.07,
+                  right: _width * 0.07,
+                  bottom: 10,
+                ),
+                child: CustomButton(
+                  btnLbl: "تاكيد الطلب",
+                  onPressedFunction: () async {
+                    var results = await _services.get(
+                      '${Utils.MAKE_ORDER_URL}user_id=${_appState!.currentUser!.userId}&cartt_phone=${_paymentState!.userPhone}&cartt_adress=${_locationState!.address}&cartt_mapx=${_locationState!.locationLatitude}&cartt_mapy=${_locationState!.locationlongitude}&cartt_tawsil=${_appState!.checkedValue}&cartt_tawsil_value=${_appState!.currentTawsil}&lang=${_appState!.currentLang}',
+                    );
 
-
-                          var results = await _services.get(
-                            '${Utils.MAKE_ORDER_URL}user_id=${_appState!.currentUser!.userId}&cartt_phone=${_paymentState!.userPhone}&cartt_adress=${_locationState!.address}&cartt_mapx=${_locationState!.locationLatitude}&cartt_mapy=${_locationState!.locationlongitude}&cartt_tawsil=${_appState!.checkedValue}&cartt_tawsil_value=${_appState!.currentTawsil}&lang=${_appState!.currentLang}',
-                          );
-
-
-                          if (results['response'] == '1') {
-                            showToast(context, message: results['message']);
-                            Navigator.pop(context);
-                            Navigator.pushReplacementNamed(context,  '/navigation');
-                          } else {
-                            showErrorDialog(results['message'], context);
-
-                          }
-                        }))
-              ]),
+                    if (results['response'] == '1') {
+                      showToast(context, message: results['message']);
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, '/navigation');
+                    } else {
+                      showErrorDialog(results['message'], context);
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

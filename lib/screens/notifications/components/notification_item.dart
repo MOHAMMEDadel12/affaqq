@@ -10,12 +10,12 @@
 //               return Row(
 //                   crossAxisAlignment: CrossAxisAlignment.start,
 //       children: <Widget>[
-        
+
 //          Container(
 //            margin: EdgeInsets.symmetric(horizontal: constraints.maxWidth *0.02 ,
 //               vertical: constraints.maxHeight *0.15
 //            ),
-        
+
 //                   width: 30,
 //                   height: 30,
 //                   child: IconItem(
@@ -39,7 +39,7 @@
 //                       ),
 //                       ),),
 //                        Row(
-                    
+
 //                         children: <Widget>[
 //                           Image.asset('assets/images/wall_clock.png'),
 //                           Text('منذ 5 دقائق' ,style: TextStyle(
@@ -48,17 +48,17 @@
 //                         ],
 //                       ),
 //                                Divider(
-        
+
 //           ),
-               
+
 //                     ],
 //                   ),
 //                 ),
-                
+
 //       ],
 //               );
 //             }
 //     );
-      
+
 //   }
 // }

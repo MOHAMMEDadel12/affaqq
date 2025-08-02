@@ -20,31 +20,26 @@ class DriverOrdersScreen extends StatefulWidget {
 }
 
 class _DriverOrdersScreenState extends State<DriverOrdersScreen> {
-  double _height=0, _width=0;
-
- 
+  double _height = 0, _width = 0;
 
   Widget _buildBodyItem() {
-    return Consumer<AppState>(builder: (context, appState, child) {
-      return appState.currentUser != null
-          ? ListView(
-              children: <Widget>[
-                SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  height: _height - 170,
-                  child: TabBarView(
-                    children: [
-                     DriverCurrentOrders(),
-                     DriverPreviousOrders()
-                     ],
+    return Consumer<AppState>(
+      builder: (context, appState, child) {
+        return appState.currentUser != null
+            ? ListView(
+                children: <Widget>[
+                  SizedBox(height: 40),
+                  Container(
+                    height: _height - 170,
+                    child: TabBarView(
+                      children: [DriverCurrentOrders(), DriverPreviousOrders()],
+                    ),
                   ),
-                )
-              ],
-            )
-          : NotRegistered();
-    });
+                ],
+              )
+            : NotRegistered();
+      },
+    );
   }
 
   @override
@@ -52,56 +47,59 @@ class _DriverOrdersScreenState extends State<DriverOrdersScreen> {
     final appBar = AppBar(
       backgroundColor: cPrimaryColor,
       centerTitle: true,
-      title: Text(AppLocalizations.of(context)!.orders,
-          style: Theme.of(context).textTheme.displaySmall),
+      title: Text(
+        AppLocalizations.of(context)!.orders,
+        style: Theme.of(context).textTheme.displaySmall,
+      ),
     );
     _height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     _width = MediaQuery.of(context).size.width;
     final tabState = Provider.of<TabState>(context);
-   
 
     return NetworkIndicator(
-        child: PageContainer(
-      child: DefaultTabController(
+      child: PageContainer(
+        child: DefaultTabController(
           initialIndex: tabState.initialIndex,
           length: 2,
           child: Scaffold(
-              appBar: appBar,
-              body: Stack(
-                children: <Widget>[
-                  _buildBodyItem(),
-                  Positioned(
-                    top: 0,
-                    child: Container(
-                        width: _width,
-                        height: 40,
-                        color: cWhite,
-                        child: TabBar(
-                          labelStyle: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                              fontFamily: 'HelveticaNeueW23forSKY'),
-                          unselectedLabelColor: cBlack,
-                          unselectedLabelStyle: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'HelveticaNeueW23forSKY'),
-                          labelColor: cPrimaryColor,
-                          indicatorColor: cPrimaryColor,
-                          tabs: [
-                            Text("الحالية"),
-                            Text(AppLocalizations.of(context)!.previous),
-                          ],
-                        )),
-                  )
-               
-               , 
-               Center(
-                 child: ProgressIndicatorComponent(),
-               )
-                ],
-              ))),
-    ));
+            appBar: appBar,
+            body: Stack(
+              children: <Widget>[
+                _buildBodyItem(),
+                Positioned(
+                  top: 0,
+                  child: Container(
+                    width: _width,
+                    height: 40,
+                    color: cWhite,
+                    child: TabBar(
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        fontFamily: 'HelveticaNeueW23forSKY',
+                      ),
+                      unselectedLabelColor: cBlack,
+                      unselectedLabelStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'HelveticaNeueW23forSKY',
+                      ),
+                      labelColor: cPrimaryColor,
+                      indicatorColor: cPrimaryColor,
+                      tabs: [
+                        Text("الحالية"),
+                        Text(AppLocalizations.of(context)!.previous),
+                      ],
+                    ),
+                  ),
+                ),
+                Center(child: ProgressIndicatorComponent()),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

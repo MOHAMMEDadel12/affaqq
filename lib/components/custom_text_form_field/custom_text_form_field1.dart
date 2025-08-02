@@ -18,20 +18,21 @@ class CustomTextFormField1 extends StatefulWidget {
   final bool? iconIsImage;
 
   final String? imagePath;
-  CustomTextFormField1(
-      {this.hintTxt,
-      this.inputData,
-      this.isPassword= false,
-      this.validationFunc,
-      this.onChangedFunc,
-      this.initialValue,
-      this.suffixIcon,
-      this.maxLength,
-      this.controller,
-      this.iconIsImage =false,
-      this.imagePath,
-      this.maxLines =1,
-      this.prefixIcon});
+  CustomTextFormField1({
+    this.hintTxt,
+    this.inputData,
+    this.isPassword = false,
+    this.validationFunc,
+    this.onChangedFunc,
+    this.initialValue,
+    this.suffixIcon,
+    this.maxLength,
+    this.controller,
+    this.iconIsImage = false,
+    this.imagePath,
+    this.maxLines = 1,
+    this.prefixIcon,
+  });
 
   @override
   _CustomTextFormField1State createState() => _CustomTextFormField1State();
@@ -56,66 +57,62 @@ class _CustomTextFormField1State extends State<CustomTextFormField1> {
 
   Widget _buildTextFormField() {
     return TextFormField(
-
-
       controller: widget.controller,
       maxLines: widget.maxLines,
       focusNode: focusNode,
       maxLength: widget.maxLength,
       initialValue: widget.initialValue,
 
-      style:
-          TextStyle(color: cBlack, fontSize: 15, fontWeight: FontWeight.w400),
+      style: TextStyle(
+        color: cBlack,
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+      ),
       decoration: InputDecoration(
-
-
-          border: InputBorder.none,
+        border: InputBorder.none,
         fillColor: Colors.white,
 
-          focusColor: cPrimaryColor,
-          contentPadding: EdgeInsets.symmetric(horizontal: 12.0,vertical:12.0),
+        focusColor: cPrimaryColor,
+        contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
 
+        suffixIcon: widget.suffixIcon,
+        prefixIcon: !widget.iconIsImage!
+            ? widget.prefixIcon
+            : focusNode!.hasFocus
+            ? Image.asset(widget.imagePath!, color: cPrimaryColor)
+            : Image.asset(widget.imagePath!, color: cPrimaryColor),
+        hintText: widget.hintTxt,
 
-          suffixIcon: widget.suffixIcon,
-          prefixIcon: !widget.iconIsImage!
-              ? widget.prefixIcon
-              : focusNode!.hasFocus
-                  ? Image.asset(
-                      widget.imagePath!,
-                      color: cPrimaryColor,
-                    )
-                  : Image.asset(
-                      widget.imagePath!,
-                      color: cPrimaryColor,
-                    ) ,
-          hintText: widget.hintTxt,
-
-          errorStyle: TextStyle(fontSize: 12.0),
-          hintStyle: TextStyle(
-              color: focusNode!.hasFocus ? cPrimaryColor : cHintColor,
-              fontSize: 14,
-              fontWeight: FontWeight.w400),
-          suffix: widget.isPassword!
-              ? GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _obsecureText = !_obsecureText;
-                    });
-                  },
-                  child: Icon(
-                    _obsecureText ? Icons.remove_red_eye : Icons.visibility_off,
-                    color: focusNode!.hasFocus ? cPrimaryColor : cHintColor,
-                    size: 24,
-                  ),
-                )
-              : null),
+        errorStyle: TextStyle(fontSize: 12.0),
+        hintStyle: TextStyle(
+          color: focusNode!.hasFocus ? cPrimaryColor : cHintColor,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+        ),
+        suffix: widget.isPassword!
+            ? GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _obsecureText = !_obsecureText;
+                  });
+                },
+                child: Icon(
+                  _obsecureText ? Icons.remove_red_eye : Icons.visibility_off,
+                  color: focusNode!.hasFocus ? cPrimaryColor : cHintColor,
+                  size: 24,
+                ),
+              )
+            : null,
+      ),
       keyboardType: widget.inputData,
       obscureText: widget.isPassword! ? _obsecureText : false,
       validator: widget.validationFunc,
       onChanged: widget.onChangedFunc as void Function(String)?,
-      inputFormatters: widget.inputData=="TextInputType.number"?<TextInputFormatter>[
-        FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-      ]:null,
+      inputFormatters: widget.inputData == "TextInputType.number"
+          ? <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+            ]
+          : null,
     );
   }
 
@@ -123,29 +120,28 @@ class _CustomTextFormField1State extends State<CustomTextFormField1> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 5),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: Color(0xffF9F9F9),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Color(0xffF9F9F9)),
+        borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 25.0, // has the effect of softening the shadow
+            spreadRadius: 5.0, // has the effect of extending the shadow
+            offset: Offset(
+              10.0, // horizontal, move right 10
+              10.0, // vertical, move down 10
+            ),
           ),
-          borderRadius: BorderRadius.circular(10.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade300,
-              blurRadius: 25.0, // has the effect of softening the shadow
-              spreadRadius: 5.0, // has the effect of extending the shadow
-              offset: Offset(
-                10.0, // horizontal, move right 10
-                10.0, // vertical, move down 10
-              ),
-            )
-          ],
-        ),
+        ],
+      ),
 
-        height: 59,
-        margin: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.03
-        ),
-        child: _buildTextFormField());
+      height: 59,
+      margin: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.03,
+      ),
+      child: _buildTextFormField(),
+    );
   }
 }

@@ -18,14 +18,15 @@ class CurrentOrders extends StatefulWidget {
 }
 
 class _CurrentOrdersState extends State<CurrentOrders> {
-   bool _initialRun = true;
+  bool _initialRun = true;
   AppState? _appState;
   Services _services = Services();
   Future<List<Order>>? _orderList;
 
-    Future<List<Order>> _getOrderList() async {
+  Future<List<Order>> _getOrderList() async {
     Map<dynamic, dynamic> results = await _services.get(
-        '${Utils.ORDERS_URL}lang=${_appState!.currentLang}&user_id=${_appState!.currentUser!.userId}&page=1&done=1');
+      '${Utils.ORDERS_URL}lang=${_appState!.currentLang}&user_id=${_appState!.currentUser!.userId}&page=1&done=1',
+    );
     List orderList = <Order>[];
     if (results['response'] == '1') {
       Iterable iterable = results['result'];
@@ -36,7 +37,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
     return orderList as FutureOr<List<Order>>;
   }
 
-    @override
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_initialRun) {
@@ -46,41 +47,30 @@ class _CurrentOrdersState extends State<CurrentOrders> {
     }
   }
 
-   @override
+  @override
   Widget build(BuildContext context) {
-
     return FutureBuilder<List<Order>>(
       future: _orderList,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.length > 0) {
-                  return
-                   
-                       ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return OrderItem(
-                                order: snapshot.data![index],
-                              );
-                            })
-                      ;
-                  
-               
-          } else {
-            return NoData(
-              message: "لا يوجد نتائج",
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return OrderItem(order: snapshot.data![index]);
+              },
             );
+          } else {
+            return NoData(message: "لا يوجد نتائج");
           }
         } else if (snapshot.hasError) {
           return Center(child: Text("${snapshot.error}"));
         }
 
         return Center(
-            child: SpinKitThreeBounce(
-          color: cPrimaryColor,
-          size: 40,
-        ));
+          child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+        );
       },
     );
   }
-  }
+}

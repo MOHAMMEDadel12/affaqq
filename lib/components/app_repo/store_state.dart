@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:afaq/models/store.dart';
 
 class StoreState extends ChangeNotifier {
-
-// to show details
+  // to show details
   Store? _currentStore;
 
   void setCurrentStore(Store store) {
@@ -13,27 +12,25 @@ class StoreState extends ChangeNotifier {
 
   Store get currentStore => _currentStore!;
 
-
   Map<String, int> _isFavouriteList = Map<String, int>();
 
   setIsFavourite(String id, int value) {
-      _isFavouriteList[id] = value;
-      notifyListeners();
+    _isFavouriteList[id] = value;
+    notifyListeners();
   }
 
   void updateChangesOnFavouriteList(String id) {
-   if(isFavouriteList[id] == 1){
-     isFavouriteList[id] = 0;
-   }else{
-       isFavouriteList[id] = 1;
-   }
+    if (isFavouriteList[id] == 1) {
+      isFavouriteList[id] = 0;
+    } else {
+      isFavouriteList[id] = 1;
+    }
     notifyListeners();
   }
 
   Map<String, int> get isFavouriteList => _isFavouriteList;
 
-
- String? _currentStoreId;
+  String? _currentStoreId;
 
   void setCurrentStoreId(String id) {
     _currentStoreId = id;
@@ -41,9 +38,8 @@ class StoreState extends ChangeNotifier {
   }
 
   String get currentStoreId => _currentStoreId!;
-  
 
-   String? _currentStoreTitle;
+  String? _currentStoreTitle;
 
   void setCurrentStoreTitle(String title) {
     _currentStoreTitle = title;
@@ -52,13 +48,12 @@ class StoreState extends ChangeNotifier {
 
   String get currentStoreTitle => _currentStoreTitle!;
 
-
   // is_add_to_cart provider
   int? _isAddToCart;
   void setCurrentIsAddToCart(int isAddToCart) {
-    _isAddToCart= isAddToCart;
+    _isAddToCart = isAddToCart;
     notifyListeners();
   }
-  int get isAddToCart => _isAddToCart!;
 
+  int get isAddToCart => _isAddToCart!;
 }

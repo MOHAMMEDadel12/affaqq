@@ -5,15 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:afaq/l10n/messages_all.dart';
 import 'package:afaq/models/product_details.dart';
 
-
 class AppLocalizations {
   static AppLocalizations? of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
   static Future<AppLocalizations> load(Locale locale) {
-    final String name =
-        locale.countryCode == null ? locale.languageCode : locale.toString();
+    final String name = locale.countryCode == null
+        ? locale.languageCode
+        : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
     return initializeMessages(localeName).then((bool _) {
@@ -26,66 +26,61 @@ class AppLocalizations {
     return Intl.message('Language Symbol');
   }
 
-  String get ourVision{
-    return  Intl.message('Our Vision');
+  String get ourVision {
+    return Intl.message('Our Vision');
   }
 
- String get next{
-    return  Intl.message('Next');
+  String get next {
+    return Intl.message('Next');
   }
 
- String get previous{
-    return  Intl.message('Previous');
+  String get previous {
+    return Intl.message('Previous');
   }
 
- String get finish{
-    return  Intl.message('Finish');
+  String get finish {
+    return Intl.message('Finish');
   }
 
-
-String get login{
-    return  Intl.message('Login');
+  String get login {
+    return Intl.message('Login');
   }
 
-
-String get email{
-    return  Intl.message('Email');
+  String get email {
+    return Intl.message('Email');
   }
 
+  String get password {
+    return Intl.message('Password');
+  }
 
-String get password{
-    return  Intl.message('Password');
-}
+  String get forgetPassword {
+    return Intl.message('Forget Password');
+  }
 
-String get forgetPassword{
-   return  Intl.message('Forget Password');
-}
+  String get clickHere {
+    return Intl.message('Click Here');
+  }
 
- String get clickHere{
-   return Intl.message('Click Here');
- }
+  String get hasAccount {
+    return Intl.message('Has Account');
+  }
 
- String get hasAccount{
-   return Intl.message('Has Account');
- }
+  String get register {
+    return Intl.message('Register');
+  }
 
- String get register{
-   return Intl.message('Register');
- }
-
- String get skip{
-   return Intl.message('Skip');
- }
-
+  String get skip {
+    return Intl.message('Skip');
+  }
 
   String get phonoNoValidation {
     return Intl.message('Phone No Validation');
   }
-  
-   String get emailValidation {
+
+  String get emailValidation {
     return Intl.message('Email Validation');
   }
-
 
   String get passwordValidation {
     return Intl.message('Password Validation');
@@ -111,375 +106,333 @@ String get forgetPassword{
     return Intl.message('Password Not Identical');
   }
 
-   String get phoneNo {
+  String get phoneNo {
     return Intl.message('Phone No');
   }
 
-  String get iAccept{
-   return Intl.message('I Accept');
+  String get iAccept {
+    return Intl.message('I Accept');
   }
 
-
- String get terms{
-   return Intl.message('Terms');
+  String get terms {
+    return Intl.message('Terms');
   }
 
-
- String get sendMessageToMobile{
-   return Intl.message('Send Message To Mobile');
+  String get sendMessageToMobile {
+    return Intl.message('Send Message To Mobile');
   }
 
-  
-   String get save{
-   return Intl.message('Save');
+  String get save {
+    return Intl.message('Save');
   }
 
-   String get send{
-   return Intl.message('Send');
-  }
-  
-
-  String get acceptTerms{
-    return  Intl.message('Accept Terms');
+  String get send {
+    return Intl.message('Send');
   }
 
-  String get codeToRestorePassword{
-  return  Intl.message('Code To Restore Password');
+  String get acceptTerms {
+    return Intl.message('Accept Terms');
   }
 
-
- String get enterCodeToRestorePassword{
-  return  Intl.message('Enter Code To Restore Password');
+  String get codeToRestorePassword {
+    return Intl.message('Code To Restore Password');
   }
 
-   String get restorePassword{
-  return  Intl.message('Restore Password');
+  String get enterCodeToRestorePassword {
+    return Intl.message('Enter Code To Restore Password');
   }
 
-  String get confirmNewPassword{
-     return  Intl.message('Confirm New Password');
+  String get restorePassword {
+    return Intl.message('Restore Password');
   }
 
- String  get accountActivationCode{
-     return  Intl.message('Account Activation Code');
- }
-
-
- String get enterCodeToActivateAccount{
-  return  Intl.message('Enter Code To Activate Account');
+  String get confirmNewPassword {
+    return Intl.message('Confirm New Password');
   }
 
-String  get confirmationOfActivation{
-  return Intl.message('Confirmation Of Activation');
-}
+  String get accountActivationCode {
+    return Intl.message('Account Activation Code');
+  }
 
+  String get enterCodeToActivateAccount {
+    return Intl.message('Enter Code To Activate Account');
+  }
 
-String get home{
-  return Intl.message('Home');
-}
+  String get confirmationOfActivation {
+    return Intl.message('Confirmation Of Activation');
+  }
 
+  String get home {
+    return Intl.message('Home');
+  }
 
+  String get orders {
+    return Intl.message('Odrers');
+  }
 
-String get orders{
-  return Intl.message('Odrers');
-}
+  String get favourite {
+    return Intl.message('Favourite');
+  }
 
+  String get cart {
+    return Intl.message('Cart');
+  }
 
-String get favourite{
-  return Intl.message('Favourite');
-}
+  String get account {
+    return Intl.message('Account');
+  }
 
+  String get personalInfo {
+    return Intl.message('Personal Info');
+  }
 
-String get cart{
-  return Intl.message('Cart');
-}
+  String get about {
+    return Intl.message('About');
+  }
 
-String get account{
-  return Intl.message('Account');
-}
+  String get contactUs {
+    return Intl.message('Contact Us');
+  }
 
+  String get language {
+    return Intl.message('Language');
+  }
 
-String get personalInfo{
-  return Intl.message('Personal Info');
-}
+  String get logOut {
+    return Intl.message('Log out');
+  }
 
-String get about{
-  return Intl.message('About');
-}
+  String get enter {
+    return Intl.message('Enter');
+  }
 
+  String get editInfo {
+    return Intl.message('Edit Info');
+  }
 
-String get contactUs{
-  return Intl.message('Contact Us');
-}
+  String get editPassword {
+    return Intl.message('Edit Password');
+  }
 
+  String get oldPassword {
+    return Intl.message('Old Password');
+  }
 
-String get language{
-  return Intl.message('Language');
-}
+  String get newPassword {
+    return Intl.message('New  Password');
+  }
 
-String get logOut{
-  return Intl.message('Log out');
-}
+  String get messageTitle {
+    return Intl.message('Message Title');
+  }
 
-String get enter{
-  return Intl.message('Enter');
-}
+  String get messageDescription {
+    return Intl.message('Message Description');
+  }
 
+  String get textValidation {
+    return Intl.message('Text Validation');
+  }
 
-String get editInfo{
-  return Intl.message('Edit Info');
-}
+  String get or {
+    return Intl.message('Or');
+  }
 
-String get editPassword{
-  return Intl.message('Edit Password');
-}
+  String get arabic {
+    return Intl.message('Arabic');
+  }
 
+  String get english {
+    return Intl.message('English');
+  }
 
-String get oldPassword{
-  return Intl.message('Old Password');
-}
+  String get wantToLogout {
+    return Intl.message('Want to logout ?');
+  }
 
+  String get ok {
+    return Intl.message('Ok');
+  }
 
-String get newPassword{
-  return Intl.message('New  Password');
-}
+  String get cancel {
+    return Intl.message('Cancel');
+  }
 
-
-String get messageTitle{
-  return Intl.message('Message Title');
-}
-
-
-String get messageDescription{
-  return Intl.message('Message Description');
-}
- 
-String get textValidation{
-  return Intl.message('Text Validation');
-} 
-
-String get or{
-  return Intl.message('Or');
-} 
-
-
-String get arabic{
-  return Intl.message('Arabic');
-} 
-
-
-String get english{
-  return Intl.message('English');
-} 
-
-
-
-String get wantToLogout{
-  return Intl.message('Want to logout ?');
-} 
-
-String get ok{
-  return Intl.message('Ok');
-} 
-
-
-String get cancel{
-  return Intl.message('Cancel');
-} 
-
-String get baladiaTuraif{
+  String get baladiaTuraif {
     return Intl.message('Baladia Turaif');
-}
+  }
 
-
-String get aouonTuraif{
+  String get aouonTuraif {
     return Intl.message('Aouon Turaif');
-}
+  }
 
+  String get search {
+    return Intl.message('Search');
+  }
 
-String  get search {
-  return Intl.message('Search');
-}
+  String get noResults {
+    return Intl.message('No Results');
+  }
 
-String  get noResults{
- return Intl.message('No Results');
-}
+  String get noDepartments {
+    return Intl.message('No Departments');
+  }
 
+  String get sr {
+    return Intl.message('SR');
+  }
 
-String  get noDepartments{
- return Intl.message('No Departments');
-}
+  String get addToCart {
+    return Intl.message('Add To Cart');
+  }
 
+  String get productDetails {
+    return Intl.message('Product Details');
+  }
 
-String  get sr{
- return Intl.message('SR');
-}
+  String get allProductDetails {
+    return Intl.message('All Product Details');
+  }
 
+  String get firstLogin {
+    return Intl.message('First Login');
+  }
 
-String get addToCart{
-   return Intl.message('Add To Cart');
-}
+  String get productsNo {
+    return Intl.message('Products No');
+  }
 
+  String get totalPrice {
+    return Intl.message('Total Price');
+  }
 
-String get productDetails{
-   return Intl.message('Product Details');
-}
+  String get applicationValue {
+    return Intl.message('Application Value');
+  }
 
+  String get completePurchase {
+    return Intl.message('Complete Purchase');
+  }
 
-String get allProductDetails{
-   return Intl.message('All Product Details');
-}
+  String get amount {
+    return Intl.message('Amount');
+  }
 
-String get firstLogin{
-   return Intl.message('First Login');
-}
+  String get purchaseRequestHasSentSuccessfully {
+    return Intl.message('Purchase Request Has sent Successfully');
+  }
 
-String get productsNo{
-  return Intl.message('Products No');
-}
-
-String get totalPrice{
-  return Intl.message('Total Price');
-}
-
-
-String get applicationValue{
-  return Intl.message('Application Value');
-}
-
-String get completePurchase{
-  return Intl.message('Complete Purchase');
-}
-
-String get amount{
-  return Intl.message('Amount');
-}
-
-String get purchaseRequestHasSentSuccessfully{
-  return Intl.message('Purchase Request Has sent Successfully');
-}
-
-String get waiting{
+  String get waiting {
     return Intl.message('Waiting');
-}
+  }
 
-
-String get processing{
+  String get processing {
     return Intl.message('Processing');
-}
+  }
 
-String get done{
+  String get done {
     return Intl.message('Done');
-}
+  }
 
-String get canceled{
+  String get canceled {
     return Intl.message('Canceled');
-}
+  }
 
-String get orderDetails{
+  String get orderDetails {
     return Intl.message('Order Details');
-}
+  }
 
-
-String get cancelOrder{
+  String get cancelOrder {
     return Intl.message('Cancel Order');
-}
+  }
 
+  String get wantToCancelOrder {
+    return Intl.message('Want To Cancel Order?');
+  }
 
- String  get wantToCancelOrder{
-   return Intl.message('Want To Cancel Order?');
- }
+  String get orderNo {
+    return Intl.message('Order No');
+  }
 
+  String get store {
+    return Intl.message('Store');
+  }
 
- String  get orderNo{
-   return Intl.message('Order No');
- }
+  String get orderPrice {
+    return Intl.message('Order Price');
+  }
 
+  String get orderDate {
+    return Intl.message('Order Date');
+  }
 
-  String  get store{
-   return Intl.message('Store');
- }
+  String get orderReceiptTime {
+    return Intl.message('Order Receipt Time');
+  }
 
-  String  get orderPrice{
-   return Intl.message('Order Price');
- }
- 
-   String  get orderDate{
-   return Intl.message('Order Date');
- }
- 
+  String get orderStatus {
+    return Intl.message('Order Status');
+  }
 
-  String  get orderReceiptTime{
-   return Intl.message('Order Receipt Time');
- }
- 
+  String get editOrder {
+    return Intl.message('Edit Order');
+  }
 
-  String  get orderStatus
-  {
-   return Intl.message('Order Status');
- }
+  String get saveChanges {
+    return Intl.message('Save Changes');
+  }
 
-  String  get editOrder{
-   return Intl.message('Edit Order');
- }
+  String get addNewProduct {
+    return Intl.message('Add New Product');
+  }
 
-  String  get saveChanges{
-   return Intl.message('Save Changes');
- }
+  String get addToOrder {
+    return Intl.message('AddToOrder');
+  }
 
-   String  get addNewProduct{
-   return Intl.message('Add New Product');
- }
- 
- String get addToOrder{
-   return Intl.message('AddToOrder');
- }
+  String get noResultIntoCart {
+    return Intl.message('No Result Into Cart');
+  }
 
- String get noResultIntoCart{
-   return Intl.message('No Result Into Cart');
- }
+  String get sorry {
+    return Intl.message('Sorry');
+  }
 
- String get sorry{
-   return Intl.message('Sorry');
- }
+  String get updateScreen {
+    return Intl.message('update screen');
+  }
 
-String get updateScreen{
-   return Intl.message('update screen');
-}
-String get reconnectInternet{
-   return Intl.message('reconnect Internet');
-}
-String get scanRouter{
-  return Intl.message('scan Router');
-}
+  String get reconnectInternet {
+    return Intl.message('reconnect Internet');
+  }
 
-String get sorryNoInternet{
-  return Intl.message('sorryNoInternet');
-}
+  String get scanRouter {
+    return Intl.message('scan Router');
+  }
 
-String get notifications{
-  return Intl.message('Notifications');
-}
+  String get sorryNoInternet {
+    return Intl.message('sorryNoInternet');
+  }
 
+  String get notifications {
+    return Intl.message('Notifications');
+  }
 
-String get activateCode{
-  return Intl.message('activate Code');
-}
+  String get activateCode {
+    return Intl.message('activate Code');
+  }
 
+  String get activation {
+    return Intl.message('Activation');
+  }
 
-String get activation{
-  return Intl.message('Activation');
-}
-
-String get fromStore{
+  String get fromStore {
     return Intl.message('From Store');
-}
+  }
 
-String  get noNotifications{
- return Intl.message('No Notifications');
-}
-
- 
+  String get noNotifications {
+    return Intl.message('No Notifications');
+  }
 }
 
 class SpecificLocalizationDelegate

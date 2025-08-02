@@ -21,8 +21,8 @@ class SharedPreferencesHelper {
     prefs.remove(key);
   }
 
-// save value "first_time" to show intro of the app or not 
- static Future saveFirstTime(bool value) async {
+  // save value "first_time" to show intro of the app or not
+  static Future saveFirstTime(bool value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setBool("first_time", value);
   }
@@ -32,8 +32,6 @@ class SharedPreferencesHelper {
     return prefs.getBool("first_time") ?? true;
   }
 
-
-  
   static Future setUserLang(String language) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString("lang", language);
@@ -43,17 +41,20 @@ class SharedPreferencesHelper {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("lang") ?? 'ar';
   }
-  
-///-----------------
+
+  ///-----------------
   ///Save boolean values
   ///------------------
   static Future<bool?> getBoolean(String key) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.containsKey(key) ? prefs.getBool(key) : false;
   }
+
   static Future<bool> saveBoolean(
-      String key, bool value, SharedPreferences prefs) {
+    String key,
+    bool value,
+    SharedPreferences prefs,
+  ) {
     return prefs.setBool(key, value);
   }
-
 }

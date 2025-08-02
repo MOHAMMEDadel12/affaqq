@@ -5,28 +5,22 @@ import 'package:afaq/screens/notifications/notifications_screen.dart';
 import 'package:afaq/screens/home/home_screen.dart';
 import 'package:afaq/screens/driver/orders/driver_orders_screen.dart';
 
-
-
 class DriverNavigationState extends ChangeNotifier {
+  int _drivernavigationIndex = 0;
 
-    int _drivernavigationIndex = 0 ;
-
-
-  void upadatedriverNavigationIndex(int value ){
+  void upadatedriverNavigationIndex(int value) {
     _drivernavigationIndex = value;
     notifyListeners();
   }
 
   int get drivernavigationIndex => _drivernavigationIndex;
 
+  List<Widget> _screens = [
+    DriverOrdersScreen(),
+    NotificationsScreen(),
 
-    List<Widget> _screens = [
-      DriverOrdersScreen(),
-      NotificationsScreen(),
-      // DriverProfileScreen()
-  
+    // DriverProfileScreen()
   ];
-  
-  Widget get  selectedContent => _screens[_drivernavigationIndex];
 
+  Widget get selectedContent => _screens[_drivernavigationIndex];
 }

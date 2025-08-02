@@ -10,25 +10,25 @@ import 'package:afaq/locale/localization.dart';
 import 'package:afaq/services/access_api.dart';
 import 'package:afaq/utils/app_colors.dart';
 
-
 class AboutScreen extends StatefulWidget {
   @override
   _AboutScreenState createState() => _AboutScreenState();
 }
 
 class _AboutScreenState extends State<AboutScreen> {
-
-  double? _height ,_width;
-Services _services = Services();
-AppState? _appState;
-bool _initialRun = true;
+  double? _height, _width;
+  Services _services = Services();
+  AppState? _appState;
+  bool _initialRun = true;
 
   Future<String>? _aboutContent;
 
   Future<String> _getAboutContent() async {
-    var results = await _services.get('https://mahtco.net/app/api/site_use?lang=${_appState!.currentLang}');
+    var results = await _services.get(
+      'https://mahtco.net/app/api/site_use?lang=${_appState!.currentLang}',
+    );
     String aboutContent = '';
-   if (results['response'] == '1') {
+    if (results['response'] == '1') {
       aboutContent = results['content'];
     } else {
       print('error');
@@ -36,94 +36,97 @@ bool _initialRun = true;
     return aboutContent;
   }
 
-@override
-void didChangeDependencies() {
-  super.didChangeDependencies();
-   if(_initialRun){
-       _appState = Provider.of<AppState>(context);
-  _aboutContent = _getAboutContent();
-  _initialRun = false;
-   }
-  
-  
-}
-
-  Widget _buildBodyItem(){
-
-  return  Padding(
-        padding: EdgeInsets.all(10.0),
-        child: FutureBuilder<String>(
-          future: _aboutContent,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView(
-                children: <Widget>[
-                    SizedBox(
-              height: _height! * 0.1,
-            ),
-            Container(
-              height: _height! * 0.25,
-              margin: EdgeInsets.symmetric(horizontal: _width! * 0.03),
-              child: Center(
-                child: Image.asset('assets/images/logo.png'),
-              ),
-            ),
-            Divider(),
-                  Container(
-             
-                      padding: EdgeInsets.symmetric(horizontal: _width! * 0.05),
-                      child: Html(
-                        data: snapshot.data,
-                      )),
-                  SizedBox(
-                    height: _height! * 0.35,
-                  ),
-               
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            }
-
-             return Center(child: SpinKitThreeBounce(color: cPrimaryColor ,size: 40,));
-          },
-        ));
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_initialRun) {
+      _appState = Provider.of<AppState>(context);
+      _aboutContent = _getAboutContent();
+      _initialRun = false;
+    }
   }
- 
+
+  Widget _buildBodyItem() {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: FutureBuilder<String>(
+        future: _aboutContent,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView(
+              children: <Widget>[
+                SizedBox(height: _height! * 0.1),
+                Container(
+                  height: _height! * 0.25,
+                  margin: EdgeInsets.symmetric(horizontal: _width! * 0.03),
+                  child: Center(child: Image.asset('assets/images/logo.png')),
+                ),
+                Divider(),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: _width! * 0.05),
+                  child: Html(data: snapshot.data),
+                ),
+                SizedBox(height: _height! * 0.35),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+
+          return Center(
+            child: SpinKitThreeBounce(color: cPrimaryColor, size: 40),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     _width = MediaQuery.of(context).size.width;
- 
-    return  NetworkIndicator( child:PageContainer(
-      child: Scaffold(
+
+    return NetworkIndicator(
+      child: PageContainer(
+        child: Scaffold(
           body: Stack(
-        children: <Widget>[
-          _buildBodyItem(),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: GradientAppBar(
-              appBarTitle: AppLocalizations.of(context)!.about,
-             leading:_appState!.currentLang == 'ar' ? IconButton(
-               icon: Image.asset('assets/images/back.png',color: cWhite,),
-               onPressed: () {
-                 Navigator.pop(context);
-               },
-             ):Container(),
-              trailing: _appState!.currentLang == 'en' ? IconButton(
-                icon: Image.asset('assets/images/back.png',color: cWhite,),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ) :Container(),
-            ),
+            children: <Widget>[
+              _buildBodyItem(),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: GradientAppBar(
+                  appBarTitle: AppLocalizations.of(context)!.about,
+                  leading: _appState!.currentLang == 'ar'
+                      ? IconButton(
+                          icon: Image.asset(
+                            'assets/images/back.png',
+                            color: cWhite,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      : Container(),
+                  trailing: _appState!.currentLang == 'en'
+                      ? IconButton(
+                          icon: Image.asset(
+                            'assets/images/back.png',
+                            color: cWhite,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      : Container(),
+                ),
+              ),
+            ],
           ),
-    
-        ],
-      )),
-    ));
+        ),
+      ),
+    );
   }
 }

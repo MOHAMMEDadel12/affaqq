@@ -28,8 +28,9 @@ class _SliderImagesState extends State<SliderImages> {
     List sliderList = <SliderModel>[];
     if (results['response'] == '1') {
       Iterable iterable = results['slider'];
-      sliderList =
-          iterable.map((model) => SliderModel.fromJson(model)).toList();
+      sliderList = iterable
+          .map((model) => SliderModel.fromJson(model))
+          .toList();
     } else {
       print('error');
     }
@@ -57,73 +58,73 @@ class _SliderImagesState extends State<SliderImages> {
 
   @override
   Widget build(BuildContext context) {
-    return  FutureBuilder<List<SliderModel>>(
-            future: _sliderImages,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-            return    CarouselWithIndicator(
-              imgList:snapshot.data! ,
-            );
-                // return Stack(
-                //   alignment: AlignmentDirectional.bottomCenter,
-                //   children: <Widget>[
-                //     PageView.builder(
-                //       physics: ClampingScrollPhysics(),
-                //       itemCount: snapshot.data.length,
-                //       onPageChanged: (int page) {
-                //         getChangedPageAndMoveBar(page);
-                //       },
-                //       controller: _controller,
-                //       itemBuilder: (context, index) {
-                //         return Column(
-                //           children: <Widget>[
-                //             Container(
-                //               margin: EdgeInsets.symmetric(
-                //                   horizontal:
-                //                       MediaQuery.of(context).size.width * 0.02),
-                //               decoration: BoxDecoration(
-                //                 borderRadius: BorderRadius.all(
-                //                   const Radius.circular(10.00),
-                //                 ),
-                //               ),
-                //               child: Center(
-                //                 child: Image.network(
-                //                   snapshot.data[index].photo,
-                //                   fit: BoxFit.cover,
-                //                 ),
-                //               ),
-                //             ),
-                //             Container(
-                //                 margin: EdgeInsets.only(top: 5),
-                //                 child: DotsIndicator(
-                //                   dotsCount: snapshot.data.length,
-                //                   position: _currentPageValue.toDouble(),
-                //                   decorator: DotsDecorator(
-                //                     size: const Size(24.0, 5.0),
-                //                     shape: RoundedRectangleBorder(
-                //                         borderRadius:
-                //                             BorderRadius.circular(3.0)),
-                //                     activeSize: const Size(24.0, 5.0),
-                //                     activeColor: cAccentColor,
-                //                     color: Color(0xffEEEEEE),
-                //                     activeShape: RoundedRectangleBorder(
-                //                       borderRadius: BorderRadius.circular(3.0),
-                //                     ),
-                //                   ),
-                //                 )),
-                //           ],
-                //         );
-                //       },
-                //     ),
-                //   ],
-                // );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
+    return FutureBuilder<List<SliderModel>>(
+      future: _sliderImages,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return CarouselWithIndicator(imgList: snapshot.data!);
+          // return Stack(
+          //   alignment: AlignmentDirectional.bottomCenter,
+          //   children: <Widget>[
+          //     PageView.builder(
+          //       physics: ClampingScrollPhysics(),
+          //       itemCount: snapshot.data.length,
+          //       onPageChanged: (int page) {
+          //         getChangedPageAndMoveBar(page);
+          //       },
+          //       controller: _controller,
+          //       itemBuilder: (context, index) {
+          //         return Column(
+          //           children: <Widget>[
+          //             Container(
+          //               margin: EdgeInsets.symmetric(
+          //                   horizontal:
+          //                       MediaQuery.of(context).size.width * 0.02),
+          //               decoration: BoxDecoration(
+          //                 borderRadius: BorderRadius.all(
+          //                   const Radius.circular(10.00),
+          //                 ),
+          //               ),
+          //               child: Center(
+          //                 child: Image.network(
+          //                   snapshot.data[index].photo,
+          //                   fit: BoxFit.cover,
+          //                 ),
+          //               ),
+          //             ),
+          //             Container(
+          //                 margin: EdgeInsets.only(top: 5),
+          //                 child: DotsIndicator(
+          //                   dotsCount: snapshot.data.length,
+          //                   position: _currentPageValue.toDouble(),
+          //                   decorator: DotsDecorator(
+          //                     size: const Size(24.0, 5.0),
+          //                     shape: RoundedRectangleBorder(
+          //                         borderRadius:
+          //                             BorderRadius.circular(3.0)),
+          //                     activeSize: const Size(24.0, 5.0),
+          //                     activeColor: cAccentColor,
+          //                     color: Color(0xffEEEEEE),
+          //                     activeShape: RoundedRectangleBorder(
+          //                       borderRadius: BorderRadius.circular(3.0),
+          //                     ),
+          //                   ),
+          //                 )),
+          //           ],
+          //         );
+          //       },
+          //     ),
+          //   ],
+          // );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
 
-              return Center(
-                  child: SpinKitSquareCircle(color: cPrimaryColor, size: 25));
-            });
+        return Center(
+          child: SpinKitSquareCircle(color: cPrimaryColor, size: 25),
+        );
+      },
+    );
   }
 
   // void getChangedPageAndMoveBar(int page) {

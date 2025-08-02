@@ -65,5 +65,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'afaq-739dd.firebasestorage.app',
     iosBundleId: 'com.omar.afaq.afaq',
   );
-
 }
