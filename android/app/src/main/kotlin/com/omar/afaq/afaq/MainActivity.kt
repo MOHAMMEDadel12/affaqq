@@ -1,4 +1,4 @@
-package com.omar.afaq.afaq
+package com.omar.afaq
 
 import io.flutter.embedding.android.FlutterActivity
 

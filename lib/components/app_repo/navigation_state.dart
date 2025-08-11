@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:afaq/screens/notifications/notifications_screen.dart';
 import 'package:afaq/screens/account/account_screen.dart';
 import 'package:afaq/screens/cart/cart_screen.dart';
-import 'package:afaq/screens/favourite/favourite_screen.dart';
 import 'package:afaq/screens/home/home_screen.dart';
 
 import 'package:afaq/screens/orders/orders_screen.dart';

@@ -11,7 +11,6 @@ import 'package:afaq/screens/driver/orders/driver_order_details_screen.dart';
 import 'package:afaq/screens/location/addLocation_screen.dart';
 import 'package:afaq/screens/notifications/notifications_screen.dart';
 
-import 'package:afaq/screens/order_details/order_details.dart';
 import 'package:afaq/screens/orders/order_details_screen.dart';
 
 import 'package:afaq/screens/orders/orders_screen.dart';

@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 
 import 'package:flutter/material.dart';
 import 'package:afaq/models/slider.dart';
@@ -60,7 +59,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
           left: MediaQuery.of(context).size.width * 0.45,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: map<Widget>(widget!.imgList!, (index, url) {
+            children: map<Widget>(widget.imgList!, (index, url) {
               // return   Container(
               //   alignment: Alignment.center,
               //                   margin: EdgeInsets.only(top: 5),

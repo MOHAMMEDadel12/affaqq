@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/app_repo/progress_indicator_state.dart';
-import 'package:afaq/components/app_repo/tab_state.dart';
 import 'package:afaq/components/buttons/custom_button.dart';
 import 'package:afaq/components/custom_text_form_field/custom_text_form_field.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/locale/localization.dart';
 import 'package:afaq/services/access_api.dart';
 import 'package:afaq/utils/app_colors.dart';
-import 'package:afaq/utils/utils.dart';
 import 'package:provider/provider.dart';
-import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 class RestorePasswordDialog extends StatefulWidget {
   @override

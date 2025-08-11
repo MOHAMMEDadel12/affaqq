@@ -1,8 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:afaq/components/app_repo/navigation_state.dart';
+import 'dart:io';
 import 'package:afaq/components/app_repo/navigation_state.dart';
 import 'package:afaq/utils/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -12,19 +10,14 @@ import 'package:afaq/components/app_repo/progress_indicator_state.dart';
 import 'package:afaq/components/buttons/custom_button.dart';
 import 'package:afaq/components/connectivity/network_indicator.dart';
 import 'package:afaq/components/custom_text_form_field/custom_text_form_field.dart';
-import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
-import 'package:afaq/components/horizontal_divider/horizontal_divider.dart';
 import 'package:afaq/components/progress_indicator_component/progress_indicator_component.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
 import 'package:afaq/locale/localization.dart';
 import 'package:afaq/models/user.dart';
 import 'package:afaq/services/access_api.dart';
-import 'package:afaq/utils/app_colors.dart';
 import 'package:afaq/utils/utils.dart';
 import 'package:afaq/screens/auth/password_recovery_bottom_sheet.dart';
-
-import 'package:validators/validators.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -43,6 +36,65 @@ class _LoginScreenState extends State<LoginScreen> {
   AppState? _appState;
   NavigationState? _navigationState;
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  /// Get Firebase token for both Android and iOS platforms
+  Future<String?> _getFirebaseToken() async {
+    try {
+      String? token;
+      
+      if (Platform.isIOS) {
+        // iOS: Get APNS token
+        token = await _firebaseMessaging.getAPNSToken();
+        print('iOS APNS token: $token');
+      } else {
+        // Android: Get FCM token
+        token = await _firebaseMessaging.getToken();
+        print('Android FCM token: $token');
+      }
+      
+      return token;
+    } catch (e) {
+      print('Error getting Firebase token: $e');
+      return null;
+    }
+  }
+
+  /// Setup Firebase messaging for the current platform
+  Future<void> _setupFirebaseMessaging() async {
+    try {
+      // Request notification permissions
+      NotificationSettings settings = await _firebaseMessaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
+      
+      print('User granted permission: ${settings.authorizationStatus}');
+      
+      // Get initial token
+      String? initialToken = await _getFirebaseToken();
+      print('Initial Firebase token: $initialToken');
+      
+      // Listen for token refresh
+      _firebaseMessaging.onTokenRefresh.listen((newToken) {
+        print('Firebase token refreshed: $newToken');
+        // You can send this new token to your server here
+      });
+      
+    } catch (e) {
+      print('Error setting up Firebase messaging: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setupFirebaseMessaging();
+  }
 
   Widget _buildBodyItem() {
     return SingleChildScrollView(
@@ -101,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return AppLocalizations.of(context)!.phonoNoValidation;
                   }
 
-                  if (value!.trim().length != 9) {
+                  if (value.trim().length != 9) {
                     return "يجب ان يكون  رقم الهاتف مكون من 9 ارقايم ويبدء ب 5 ";
                   }
                   return null;
@@ -178,16 +230,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   btnLbl: 'تسجيل دخول',
                   onPressedFunction: () async {
                     if (_formKey.currentState!.validate()) {
-                      _firebaseMessaging.getToken().then((token) async {
-                        //       print('mobile token $token');
+                      try {
+                        // Get Firebase token for both platforms
+                        String? token = await _getFirebaseToken();
+                        
                         _progressIndicatorState!.setIsLoading(true);
                         var results = await _services.get(
                           '${Utils.LOGIN_URL}?user_phone=$_userPhone&user_pass=$_userPassword&token=$token&lang=${_appState!.currentLang}&key=$cKey',
                         );
                         _progressIndicatorState!.setIsLoading(false);
+                        
                         if (results['response'] == '1') {
                           _appState!.setCurrentPhoneSend(_userPhone!);
-                          _appState!.setCurrentTokenSend(token!);
+                          _appState!.setCurrentTokenSend(token ?? "");
                           showToast(context, message: results['message']);
                           _appState!.setCurrentUser(
                             User.fromJson(results["user_details"]),
@@ -204,7 +259,35 @@ class _LoginScreenState extends State<LoginScreen> {
                         } else {
                           showErrorDialog(results['message'], context);
                         }
-                      });
+                      } catch (e) {
+                        print('Error during login: $e');
+                        // Continue with login even if token fails
+                        _progressIndicatorState!.setIsLoading(true);
+                        var results = await _services.get(
+                          '${Utils.LOGIN_URL}?user_phone=$_userPhone&user_pass=$_userPassword&token=&lang=${_appState!.currentLang}&key=$cKey',
+                        );
+                        _progressIndicatorState!.setIsLoading(false);
+                        
+                        if (results['response'] == '1') {
+                          _appState!.setCurrentPhoneSend(_userPhone!);
+                          _appState!.setCurrentTokenSend("");
+                          showToast(context, message: results['message']);
+                          _appState!.setCurrentUser(
+                            User.fromJson(results["user_details"]),
+                          );
+                          SharedPreferencesHelper.save(
+                            "user",
+                            _appState!.currentUser,
+                          );
+                          _navigationState!.upadateNavigationIndex(0);
+                          Navigator.pushReplacementNamed(
+                            context,
+                            '/navigation',
+                          );
+                        } else {
+                          showErrorDialog(results['message'], context);
+                        }
+                      }
                     }
                   },
                 ),

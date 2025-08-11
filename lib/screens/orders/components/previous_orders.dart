@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/no_data/no_data.dart';
-import 'package:afaq/locale/localization.dart';
 import 'package:afaq/models/order.dart';
 import 'package:afaq/screens/orders/components/order_item.dart';
 import 'package:afaq/services/access_api.dart';

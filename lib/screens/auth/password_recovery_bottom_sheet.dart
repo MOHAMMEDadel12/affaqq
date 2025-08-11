@@ -64,7 +64,7 @@ class _PasswordRecoveryBottomSheetState
                     return AppLocalizations.of(context)!.phonoNoValidation;
                   }
 
-                  if (value!.trim().length != 9) {
+                  if (value.trim().length != 9) {
                     return "يجب ان يكون  رقم الهاتف مكون من 9 ارقايم ويبدء ب 5 ";
                   }
                   return null;

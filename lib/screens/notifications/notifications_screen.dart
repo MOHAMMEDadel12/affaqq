@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +14,8 @@ import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
 import 'package:afaq/locale/localization.dart';
 import 'package:afaq/models/notification_item.dart';
-import 'package:afaq/screens/order_details/driver_order_details.dart';
-import 'package:afaq/screens/order_details/mtger_order_details.dart';
-import 'package:afaq/screens/order_details/order_details.dart';
 import 'package:afaq/services/access_api.dart';
 import 'package:afaq/utils/app_colors.dart';
-import 'package:afaq/utils/utils.dart';
 
 class NotificationsScreen extends StatefulWidget {
   @override

@@ -8,7 +8,6 @@ import 'package:afaq/components/connectivity/network_indicator.dart';
 import 'package:afaq/components/not_registered/not_registered.dart';
 import 'package:afaq/components/progress_indicator_component/progress_indicator_component.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
-import 'package:afaq/locale/localization.dart';
 import 'package:afaq/screens/orders/components/current_orders.dart';
 import 'package:afaq/utils/app_colors.dart';
 import 'package:provider/provider.dart';

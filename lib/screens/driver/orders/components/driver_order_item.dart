@@ -1,13 +1,8 @@
-import 'dart:ffi';
-
 import 'package:afaq/components/buttons/custom_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/app_repo/order_state.dart';
 import 'package:afaq/components/app_repo/progress_indicator_state.dart';
-import 'package:afaq/components/buttons/custom_button.dart';
-import 'package:afaq/components/dialogs/log_out_dialog.dart';
-import 'package:afaq/components/dialogs/rate_dialog.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/locale/localization.dart';
 import 'package:afaq/models/order.dart';

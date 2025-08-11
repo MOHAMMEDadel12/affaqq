@@ -1,28 +1,20 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:afaq/components/app_repo/navigation_state.dart';
 import 'package:afaq/components/app_repo/product_state.dart';
 import 'package:afaq/components/app_repo/progress_indicator_state.dart';
-import 'package:afaq/components/buttons/custom_button.dart';
 import 'package:afaq/components/buttons/custom_button1.dart';
-import 'package:afaq/components/buttons/custom_button2.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/models/product.dart';
 import 'package:afaq/screens/home/search_screen.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:afaq/components/app_repo/location_state.dart';
-import 'package:afaq/screens/home/components/slider_images.dart';
-import 'package:afaq/screens/home/components/filter_stores.dart';
 import 'package:provider/provider.dart';
 import 'package:afaq/components/app_data/shared_preferences_helper.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/connectivity/network_indicator.dart';
-import 'package:afaq/components/custom_text_form_field/custom_text_form_field.dart';
 import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
 import 'package:afaq/components/no_data/no_data.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
@@ -33,8 +25,6 @@ import 'package:afaq/models/category.dart';
 import 'package:afaq/models/store.dart';
 import 'package:afaq/utils/utils.dart';
 import 'package:afaq/components/app_repo/store_state.dart';
-import 'package:afaq/components/store_card/store_card_item.dart';
-import 'package:afaq/screens/home/components/slider_images.dart';
 import 'package:dotted_line/dotted_line.dart';
 
 class Home1Screen extends StatefulWidget {

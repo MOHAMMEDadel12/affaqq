@@ -24,7 +24,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
         GestureDetector(
           onTap: () {
             SharedPreferencesHelper.setUserLang('ar');
-            helper!.onLocaleChanged!(new Locale('ar'));
+            helper.onLocaleChanged!(new Locale('ar'));
             _appState!.setCurrentLanguage('ar');
           },
           child: Row(
@@ -44,7 +44,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
         GestureDetector(
           onTap: () {
             SharedPreferencesHelper.setUserLang('en');
-            helper!.onLocaleChanged!(new Locale('en'));
+            helper.onLocaleChanged!(new Locale('en'));
             _appState!.setCurrentLanguage('en');
           },
           child: Row(

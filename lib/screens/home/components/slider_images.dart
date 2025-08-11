@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:afaq/components/carousel_slider/carousel_with_indicator.dart';

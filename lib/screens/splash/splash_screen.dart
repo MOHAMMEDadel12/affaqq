@@ -50,10 +50,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future _checkIsFirstTime() async {
-    // var _firstTime = await SharedPreferencesHelper.getFirstTime() ??;
-    if (true) {
+    var _firstTime = await SharedPreferencesHelper.getFirstTime();
+    if (_firstTime) {
       SharedPreferencesHelper.saveFirstTime(false);
-      Navigator.pushReplacementNamed(context, '/navigation');
+      Navigator.pushReplacementNamed(context, '/login_screen');
     } else {
       Navigator.pushReplacementNamed(context, '/navigation');
     }
@@ -63,8 +63,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _getLanguage();
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/login_screen');
+    Future.delayed(Duration(seconds: 4), () {
+      _checkIsFirstTime();
     });
   }
 

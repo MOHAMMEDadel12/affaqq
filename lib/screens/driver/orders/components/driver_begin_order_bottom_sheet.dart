@@ -1,6 +1,5 @@
 import 'package:afaq/components/buttons/custom_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:afaq/components/buttons/custom_button.dart';
 import 'package:afaq/locale/localization.dart';
 import 'package:afaq/utils/app_colors.dart';
 

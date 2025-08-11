@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:afaq/utils/app_colors.dart';
@@ -6,12 +5,10 @@ import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/buttons/custom_button.dart';
 import 'package:afaq/components/connectivity/network_indicator.dart';
 import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
-import 'package:afaq/components/horizontal_divider/horizontal_divider.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
 import 'package:afaq/locale/localization.dart';
 import 'package:afaq/screens/profile/modify_password_screen.dart';
 import 'package:afaq/screens/profile/modify_personal_info_screen.dart';
-import 'package:afaq/utils/app_colors.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
   @override

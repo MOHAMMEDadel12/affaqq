@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:afaq/components/buttons/custom_button.dart';
 import 'package:afaq/components/custom_text_form_field/custom_text_form_field.dart';
 import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
-import 'package:afaq/components/horizontal_divider/horizontal_divider.dart';
 import 'package:afaq/components/progress_indicator_component/progress_indicator_component.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
 import 'package:afaq/utils/app_colors.dart';
@@ -44,6 +43,8 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
               // _userPassword = text.toString();
             },
             validationFunc: (value) {
+              return null;
+
               // if (value.trim().length < 8) {
               //   return 'من فضلك أدخل كلمة المرور أكبر من  8';
               // }
@@ -64,6 +65,8 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
               // _userPassword = text.toString();
             },
             validationFunc: (value) {
+              return null;
+
               // if (value.trim().length < 8) {
               //   return 'من فضلك أدخل كلمة المرور أكبر من  8';
               // }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:afaq/models/order.dart';
 
 class OrderState extends ChangeNotifier {
   //   Order _currentOrder;

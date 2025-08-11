@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/app_repo/store_state.dart';
 import 'package:afaq/services/access_api.dart';
 import 'package:afaq/utils/app_colors.dart';
-import 'package:afaq/components/app_repo/progress_indicator_state.dart';
 
 class HomeAppBar extends StatefulWidget {
   @override

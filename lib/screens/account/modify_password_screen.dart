@@ -7,7 +7,6 @@ import 'package:afaq/components/custom_text_form_field/custom_text_form_field.da
 import 'package:afaq/components/progress_indicator_component/progress_indicator_component.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
-import 'package:afaq/locale/localization.dart';
 import 'package:afaq/services/access_api.dart';
 import 'package:afaq/utils/app_colors.dart';
 import 'package:afaq/utils/utils.dart';

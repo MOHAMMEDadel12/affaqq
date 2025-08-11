@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB32ejLJVrweQl_53y0P0QIOlhkAkqbgKw',
-    appId: '1:461181839516:android:274b184568d19c86182559',
+    appId: '1:461181839516:android:4d1ed9ca12351209182559',
     messagingSenderId: '461181839516',
     projectId: 'afaq-739dd',
     storageBucket: 'afaq-739dd.firebasestorage.app',
@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC5V4rsc2FkLlQETrQHlpXZGlL7xfQHTJo',
-    appId: '1:461181839516:ios:1481e7e5f7e77282182559',
+    appId: '1:461181839516:ios:dca53a26f523b059182559',
     messagingSenderId: '461181839516',
     projectId: 'afaq-739dd',
     storageBucket: 'afaq-739dd.firebasestorage.app',
-    iosBundleId: 'com.omar.afaq.afaq',
+    iosBundleId: 'com.omar.afaq',
   );
+
 }

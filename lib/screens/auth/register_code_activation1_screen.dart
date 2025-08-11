@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:afaq/models/user.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -17,7 +16,6 @@ import 'package:afaq/services/access_api.dart';
 import 'package:afaq/utils/app_colors.dart';
 import 'package:afaq/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class RegisterCodeActivation1Screen extends StatefulWidget {
   @override

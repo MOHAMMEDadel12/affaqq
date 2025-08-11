@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:afaq/screens/notifications/notifications_screen.dart';
 // import 'package:afaq/screens/driver/account/driver_profile_screen.dart';
 
-import 'package:afaq/screens/home/home_screen.dart';
 import 'package:afaq/screens/driver/orders/driver_orders_screen.dart';
 
 class DriverNavigationState extends ChangeNotifier {

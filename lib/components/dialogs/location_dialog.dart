@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:afaq/components/app_repo/location_state.dart';
 import 'package:afaq/components/buttons/custom_button.dart';
-import 'package:afaq/locale/localization.dart';
 import 'package:afaq/utils/app_colors.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';

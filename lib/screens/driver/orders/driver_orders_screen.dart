@@ -1,7 +1,6 @@
 import 'package:afaq/components/app_repo/tab_state.dart';
 import 'package:flutter/material.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
-import 'package:afaq/components/app_repo/tab_state.dart';
 
 import 'package:afaq/components/connectivity/network_indicator.dart';
 import 'package:afaq/components/not_registered/not_registered.dart';

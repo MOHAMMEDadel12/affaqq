@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 
 import 'package:provider/provider.dart';
@@ -8,47 +6,15 @@ import 'package:afaq/components/app_data/shared_preferences_helper.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/app_repo/navigation_state.dart';
 import 'package:afaq/components/connectivity/network_indicator.dart';
-import 'package:afaq/locale/localization.dart';
 import 'package:afaq/models/user.dart';
 import 'package:afaq/utils/app_colors.dart';
 import 'package:afaq/components/app_repo/location_state.dart';
 import 'package:afaq/components/MainDrawer.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as gg;
 import 'package:location/location.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:afaq/components/app_repo/app_state.dart';
-import 'package:afaq/components/connectivity/network_indicator.dart';
-import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
-import 'package:afaq/components/safe_area/page_container.dart';
-import 'package:afaq/locale/localization.dart';
 import 'package:afaq/services/access_api.dart';
-import 'package:afaq/utils/app_colors.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../../components/badge_tab_bar.dart';
-
-import 'dart:io';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:provider/provider.dart';
-
-import 'package:firebase_core/firebase_core.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -178,7 +144,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       getUnreadNotify();
       getUnreadCartt();
       _checkIsLogin();
-      _getCurrentUserLocation();
+      //  _getCurrentUserLocation();
     }
   }
 

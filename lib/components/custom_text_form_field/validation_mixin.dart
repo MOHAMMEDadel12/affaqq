@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:afaq/models/category.dart';
 import 'package:afaq/models/marka.dart';
 import 'package:afaq/models/city.dart';
-import 'package:afaq/utils/app_colors.dart';
-import 'package:validators/validators.dart';
 import 'dart:io';
 import 'package:afaq/components/response_handling/response_handling.dart';
 

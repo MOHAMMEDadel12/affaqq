@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:afaq/components/app_data/shared_preferences_helper.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/app_repo/progress_indicator_state.dart';
 import 'package:afaq/components/buttons/custom_button.dart';
@@ -13,8 +11,6 @@ import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
 import 'package:afaq/locale/localization.dart';
 import 'package:afaq/services/access_api.dart';
-import 'package:afaq/utils/app_colors.dart';
-import 'package:validators/validators.dart';
 
 class ModifyPasswordScreen extends StatefulWidget {
   @override

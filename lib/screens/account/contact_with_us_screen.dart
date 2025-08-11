@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:afaq/components/app_data/shared_preferences_helper.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/app_repo/progress_indicator_state.dart';
 import 'package:afaq/components/buttons/custom_button.dart';
 import 'package:afaq/components/connectivity/network_indicator.dart';
 import 'package:afaq/components/custom_text_form_field/custom_text_form_field.dart';
 import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
-import 'package:afaq/components/horizontal_divider/horizontal_divider.dart';
 import 'package:afaq/components/progress_indicator_component/progress_indicator_component.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
 import 'package:afaq/locale/localization.dart';
-import 'package:afaq/models/user.dart';
 import 'package:afaq/services/access_api.dart';
 import 'package:afaq/utils/app_colors.dart';
 import 'package:afaq/utils/utils.dart';
-import 'package:afaq/screens/auth/password_recovery_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:validators/validators.dart';
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/custom_text_form_field/validation_mixin.dart';
@@ -8,109 +7,24 @@ import 'package:afaq/components/app_repo/progress_indicator_state.dart';
 import 'package:afaq/components/buttons/custom_button.dart';
 import 'package:afaq/components/connectivity/network_indicator.dart';
 import 'package:afaq/components/custom_text_form_field/custom_text_form_field.dart';
-import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
-import 'package:afaq/components/horizontal_divider/horizontal_divider.dart';
 import 'package:afaq/components/progress_indicator_component/progress_indicator_component.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
 import 'package:afaq/locale/localization.dart';
 import 'package:afaq/models/city.dart';
-import 'package:afaq/models/user.dart';
 import 'package:afaq/screens/account/terms_screen.dart';
 import 'package:afaq/services/access_api.dart';
 import 'package:afaq/utils/app_colors.dart';
 import 'package:validators/validators.dart';
 import 'package:afaq/components/drop_down_list_selector/drop_down_list_selector.dart';
 
-import 'dart:async';
-import 'dart:core';
-import 'dart:core';
 import 'dart:core';
 
 import 'dart:io';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import 'package:afaq/components/MainDrawer.dart';
-import 'package:afaq/components/app_repo/navigation_state.dart';
-import 'package:afaq/components/drop_down_list_selector/drop_down_list_selector.dart';
-import 'package:afaq/components/app_repo/location_state.dart';
-import 'package:afaq/models/marka.dart';
-import 'package:afaq/models/model.dart';
-import 'package:afaq/models/type.dart';
-import 'package:afaq/screens/home/components/home_appbar.dart';
-import 'package:afaq/screens/home/components/select_location.dart';
-import 'package:afaq/screens/home/home1_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:afaq/components/app_data/shared_preferences_helper.dart';
-import 'package:afaq/components/app_repo/app_state.dart';
-import 'package:afaq/components/connectivity/network_indicator.dart';
-import 'package:afaq/components/custom_text_form_field/custom_text_form_field.dart';
-import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
-import 'package:afaq/components/no_data/no_data.dart';
-import 'package:afaq/components/safe_area/page_container.dart';
-import 'package:afaq/locale/localization.dart';
-import 'package:afaq/screens/orders/orders_screen.dart';
-import 'package:afaq/services/access_api.dart';
-import 'package:afaq/utils/app_colors.dart';
-import 'package:afaq/models/category.dart';
-import 'package:afaq/models/store.dart';
-import 'package:afaq/utils/utils.dart';
-import 'package:afaq/components/app_repo/store_state.dart';
-import 'package:afaq/components/store_card/store_card_item.dart';
-import 'package:afaq/screens/home/components/slider_images.dart';
-import 'package:afaq/screens/home/components/category_item1.dart';
-import 'package:afaq/components/app_repo/progress_indicator_state.dart';
-import 'package:afaq/components/progress_indicator_component/progress_indicator_component.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:validators/validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
-import 'package:afaq/components/app_repo/progress_indicator_state.dart';
-import 'package:afaq/components/buttons/custom_button.dart';
-import 'package:afaq/components/response_handling/response_handling.dart';
-import 'dart:math' as math;
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:afaq/services/access_api.dart';
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:afaq/components/app_repo/store_state.dart';
-import 'package:afaq/components/drop_down_list_selector/drop_down_list_selector.dart';
-import 'package:afaq/models/category.dart';
-
-import 'package:provider/provider.dart';
-import 'package:afaq/components/app_data/shared_preferences_helper.dart';
-import 'package:afaq/components/app_repo/app_state.dart';
-import 'package:afaq/components/app_repo/progress_indicator_state.dart';
-import 'package:afaq/components/buttons/custom_button.dart';
-import 'package:afaq/components/connectivity/network_indicator.dart';
-import 'package:afaq/components/custom_text_form_field/custom_text_form_field.dart';
-import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
-import 'package:afaq/components/horizontal_divider/horizontal_divider.dart';
-import 'package:afaq/components/progress_indicator_component/progress_indicator_component.dart';
-import 'package:afaq/components/response_handling/response_handling.dart';
-import 'package:afaq/components/safe_area/page_container.dart';
-import 'package:afaq/components/custom_text_form_field/validation_mixin.dart';
-import 'package:afaq/locale/localization.dart';
-import 'package:afaq/models/user.dart';
-import 'package:afaq/services/access_api.dart';
-import 'package:afaq/utils/app_colors.dart';
-import 'package:afaq/utils/utils.dart';
-import 'package:afaq/screens/auth/password_recovery_bottom_sheet.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:validators/validators.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as Path;
-import 'dart:math' as math;
-import 'package:dio/dio.dart';
-import 'dart:io';
 
 class DriverRegisterScreen extends StatefulWidget {
   DriverRegisterScreen({Key? key}) : super(key: key);
@@ -153,7 +67,7 @@ class _DriverRegisterScreenState extends State<DriverRegisterScreen>
   final _picker5 = ImagePicker();
 
   Future<List<City>> _getCityItems() async {
-    Map<dynamic, dynamic> results = await _services!.get(
+    Map<dynamic, dynamic> results = await _services.get(
       'https://mahtco.net/app/api/getcity?lang=${_appState!.currentLang!}',
     );
     List<City> cityList = <City>[];
@@ -529,7 +443,7 @@ class _DriverRegisterScreenState extends State<DriverRegisterScreen>
                     return AppLocalizations.of(context)!.phonoNoValidation;
                   }
 
-                  if (value!.trim().length != 9) {
+                  if (value.trim().length != 9) {
                     return "يجب ان يكون  رقم الهاتف مكون من 9 ارقايم ويبدء ب 5 ";
                   }
                   return null;
@@ -620,7 +534,7 @@ class _DriverRegisterScreenState extends State<DriverRegisterScreen>
                     return "من فضلك ادخل رقم الهوية";
                   }
 
-                  if (value!.trim().length != 10) {
+                  if (value.trim().length != 10) {
                     return "رقم الهوية يجب ان يكون 10 ارقام فقط";
                   }
                   return null;

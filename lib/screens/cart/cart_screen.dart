@@ -1,7 +1,6 @@
 import 'package:afaq/screens/payment/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/app_repo/location_state.dart';
 import 'package:afaq/components/app_repo/payment_state.dart';
@@ -11,12 +10,10 @@ import 'package:afaq/components/custom_text_form_field/custom_text_form_field.da
 import 'package:afaq/components/dialogs/location_dialog.dart';
 
 import 'package:afaq/components/not_registered/not_registered.dart';
-import 'package:afaq/components/option_title/option_title.dart';
 import 'package:afaq/components/progress_indicator_component/progress_indicator_component.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
 import 'package:afaq/components/title_item/title_item.dart';
-import 'package:afaq/locale/localization.dart';
 import 'package:afaq/models/cart.dart';
 import 'package:location/location.dart' as gg;
 import 'package:afaq/services/access_api.dart';
@@ -27,9 +24,7 @@ import 'package:provider/provider.dart';
 import 'package:afaq/components/no_data/no_data.dart';
 import 'package:validators/validators.dart';
 
-import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 
 class CartScreen extends StatefulWidget {
   @override

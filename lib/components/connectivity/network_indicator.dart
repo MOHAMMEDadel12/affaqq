@@ -93,14 +93,14 @@ class _NetworkIndicatorState extends State<NetworkIndicator> {
   Widget build(BuildContext context) {
     return OfflineBuilder(
       builder: (BuildContext context) {
-        return widget!.child!;
+        return widget.child!;
       },
       connectivityBuilder:
           (BuildContext context, List<ConnectivityResult> value, Widget child) {
             if (value.contains(ConnectivityResult.none)) {
               return _buildBodyItem(MediaQuery.of(context).size.height);
             }
-            return widget!.child!;
+            return widget.child!;
           },
     );
   }

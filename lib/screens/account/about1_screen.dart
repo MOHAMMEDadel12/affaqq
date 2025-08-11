@@ -6,7 +6,6 @@ import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/connectivity/network_indicator.dart';
 import 'package:afaq/components/gradient_app_bar/gradient_app_bar.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
-import 'package:afaq/locale/localization.dart';
 import 'package:afaq/services/access_api.dart';
 import 'package:afaq/utils/app_colors.dart';
 

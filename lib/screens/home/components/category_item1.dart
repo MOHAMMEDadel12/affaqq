@@ -4,8 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:afaq/models/category.dart';
 import 'package:afaq/utils/app_colors.dart';
 
-import 'package:afaq/utils/app_colors.dart';
-
 class CategoryItem1 extends StatelessWidget {
   final Category? category;
   final AnimationController? animationController;

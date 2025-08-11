@@ -28,7 +28,7 @@ class Services {
           dynamic responseDecoded = json.decode(response.body);
           print(statusCode.toString());
           print(responseDecoded);
-          if (statusCode < 200 || statusCode > 400 || json == null) {
+          if (statusCode < 200 || statusCode > 400) {
             return {'response': '0', 'message': 'حدث خطأ فى تحميل البيانات'};
           } else {
             return responseDecoded;
@@ -69,7 +69,7 @@ class Services {
           dynamic responseDecoded = json.decode(response.body);
           print(statusCode.toString());
           print(responseDecoded);
-          if (statusCode < 200 || statusCode > 400 || json == null) {
+          if (statusCode < 200 || statusCode > 400) {
             return {'response': '0', 'message': 'حدث خطأ فى تحميل البيانات'};
           } else {
             return responseDecoded;

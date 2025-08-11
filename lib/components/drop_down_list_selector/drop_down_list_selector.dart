@@ -28,7 +28,7 @@ class _DropDownListSelectorState extends State<DropDownListSelector> {
   @override
   Widget build(BuildContext context) {
     return FormField<String>(
-      validator: widget!.validationFunc as String Function(dynamic)?,
+      validator: widget.validationFunc as String Function(dynamic)?,
 
       builder: (FormFieldState<String> state) {
         return Column(
@@ -39,7 +39,7 @@ class _DropDownListSelectorState extends State<DropDownListSelector> {
               padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 0.03,
               ),
-              margin: widget!.elementHasDefaultMargin!
+              margin: widget.elementHasDefaultMargin!
                   ? EdgeInsets.only(
                       right: MediaQuery.of(context).size.width * 0.05,
                       left: MediaQuery.of(context).size.width * 0.05,
@@ -89,17 +89,17 @@ class _DropDownListSelectorState extends State<DropDownListSelector> {
               ),
             ),
 
-            widget!.availableErrorMsg!
+            widget.availableErrorMsg!
                 ? Container(
                     height: 10,
-                    margin: widget!.elementHasDefaultMargin!
+                    margin: widget.elementHasDefaultMargin!
                         ? EdgeInsets.only(
                             right: MediaQuery.of(context).size.width * 0.05,
                             left: MediaQuery.of(context).size.width * 0.05,
                           )
                         : EdgeInsets.symmetric(horizontal: 0),
                     child: Text(
-                      state.hasError ? state!.errorText! : '',
+                      state.hasError ? state.errorText! : '',
                       style: TextStyle(
                         color: Colors.redAccent.shade700,
                         fontSize: 12.0,

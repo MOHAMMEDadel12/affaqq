@@ -2,35 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/app_repo/location_state.dart';
 import 'package:afaq/components/app_repo/progress_indicator_state.dart';
 import 'package:afaq/components/custom_text_form_field/custom_text_form_field.dart';
 import 'package:afaq/components/buttons//custom_button.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
-import 'package:afaq/models/location.dart';
 import 'package:afaq/models/titles.dart';
-import 'package:afaq/screens/home/home_screen.dart';
 
 import 'package:afaq/utils/app_colors.dart';
 import 'package:afaq/components/safe_area/page_container.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:afaq/utils/app_colors.dart';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:afaq/components/connectivity/network_indicator.dart';
-import 'package:afaq/components/no_data/no_data.dart';
-import 'package:afaq/components/response_handling/response_handling.dart';
-import 'package:afaq/components/safe_area/page_container.dart';
-import 'package:afaq/locale/localization.dart';
-import 'package:afaq/models/bank.dart';
 import 'package:afaq/services/access_api.dart';
-import 'package:afaq/utils/app_colors.dart';
-import 'package:afaq/utils/utils.dart';
-import 'package:provider/provider.dart';
 
 class AddLocationScreen extends StatefulWidget {
   @override
@@ -488,59 +474,47 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                       btnLbl: "اختيار الموقع الحالي",
                                       onPressedFunction: () async {
                                         if (_formKey.currentState!.validate()) {
-                                          if (_locationState!
-                                                      .locationLatitude ==
-                                                  null ||
-                                              _locationState!
-                                                      .locationlongitude ==
-                                                  null) {
-                                            // Commons.showError(context, _homeProvider.currentLang=="ar"?"عفوا يجب تحديد اللوكيشن":"Sorry, you must specify the location");
-                                            showErrorDialog(
-                                              "عفوا يجب تحديد اللوكيشن",
-                                              context,
+                                          print(_adress);
+                                          print(_adress);
+                                          print(_adress);
+                                          print(_adress);
+                                          print(_adress);
+                                          print(_adress);
+                                          print(_adress);
+                                          print(_adress);
+
+                                          if (isSwitched == true) {
+                                            _progressIndicatorState!
+                                                .setIsLoading(true);
+
+                                            var results = await _services.get(
+                                              'https://mahtco.net/app/api/addLocation?lang=${_appState!.currentLang}&location_titles=${_appState!.selectTab}&location_details=$_adress&location_mapx=${_locationState!.locationLatitude}&location_mapy=${_locationState!.locationlongitude}&location_user=${_appState!.currentUser!.userId}',
                                             );
-                                          } else {
-                                            print(_adress);
-                                            print(_adress);
-                                            print(_adress);
-                                            print(_adress);
-                                            print(_adress);
-                                            print(_adress);
-                                            print(_adress);
-                                            print(_adress);
-
-                                            if (isSwitched == true) {
-                                              _progressIndicatorState!
-                                                  .setIsLoading(true);
-
-                                              var results = await _services.get(
-                                                'https://mahtco.net/app/api/addLocation?lang=${_appState!.currentLang}&location_titles=${_appState!.selectTab}&location_details=$_adress&location_mapx=${_locationState!.locationLatitude}&location_mapy=${_locationState!.locationlongitude}&location_user=${_appState!.currentUser!.userId}',
+                                            _progressIndicatorState!
+                                                .setIsLoading(false);
+                                            if (results['response'] == '1') {
+                                              _locationState!.setCurrentAddress(
+                                                _adress,
                                               );
-                                              _progressIndicatorState!
-                                                  .setIsLoading(false);
-                                              if (results['response'] == '1') {
-                                                _locationState!
-                                                    .setCurrentAddress(_adress);
-                                                showToast(
-                                                  context,
-                                                  message: results['message'],
-                                                );
-                                                Navigator.pushNamed(
-                                                  context,
-                                                  '/navigation',
-                                                );
-                                              } else {
-                                                showErrorDialog(
-                                                  results['message'],
-                                                  context,
-                                                );
-                                              }
-                                            } else {
+                                              showToast(
+                                                context,
+                                                message: results['message'],
+                                              );
                                               Navigator.pushNamed(
                                                 context,
                                                 '/navigation',
                                               );
+                                            } else {
+                                              showErrorDialog(
+                                                results['message'],
+                                                context,
+                                              );
                                             }
+                                          } else {
+                                            Navigator.pushNamed(
+                                              context,
+                                              '/navigation',
+                                            );
                                           }
                                         }
                                       },

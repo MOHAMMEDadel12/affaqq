@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:afaq/l10n/messages_all.dart';
-import 'package:afaq/models/product_details.dart';
 
 class AppLocalizations {
   static AppLocalizations? of(BuildContext context) {

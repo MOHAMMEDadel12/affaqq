@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:afaq/components/app_repo/app_state.dart';
 import 'package:afaq/components/app_repo/navigation_state.dart';
 import 'package:afaq/components/app_repo/progress_indicator_state.dart';
-import 'package:afaq/components/app_repo/store_state.dart';
 import 'package:afaq/components/response_handling/response_handling.dart';
 import 'package:afaq/models/favourite_store.dart';
 
@@ -79,7 +77,7 @@ class _StoreCardItemState extends State<FavouriteStoreItem> {
                             ),
                           ),
                           Text(
-                            widget!.favouriteStore!.mtgerCat!,
+                            widget.favouriteStore!.mtgerCat!,
                             style: TextStyle(fontSize: 13),
                           ),
                         ],
@@ -93,7 +91,7 @@ class _StoreCardItemState extends State<FavouriteStoreItem> {
                           size: 20,
                         ),
                         Text(
-                          widget!.favouriteStore!.mtgerAdress!,
+                          widget.favouriteStore!.mtgerAdress!,
                           style: TextStyle(
                             fontSize: 13,
                             color: Color(0xffC5C5C5),
